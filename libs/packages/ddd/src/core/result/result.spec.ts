@@ -3,8 +3,11 @@ import { Result } from './result'
 
 describe('Result', () => {
   const payload = { foo: 'bar' }
-  let result: Result
   const message = 'test message'
+  let result: Result
+  let results: Result[]
+  let successes: Result[]
+  let failures: Result[]
 
   beforeAll(() => {
     result = Result.success()
@@ -48,7 +51,7 @@ describe('Result', () => {
     beforeAll(() => {
       const errors: ResultError[] = [
         new Error('test error'),
-        'test string error',
+        'test error string',
       ]
       result = Result.failure({ message, errors })
     })
@@ -62,7 +65,9 @@ describe('Result', () => {
       expect(result.payload).toBeNull()
     })
 
-    it.todo('has an error list when created with errors')
+    it('has an error list when created with errors', () => {
+      expect(result.errors).toHaveLength(2)
+    })
 
     it('has a default success message and error', () => {
       result = Result.failure()
@@ -72,6 +77,26 @@ describe('Result', () => {
       result = Result.failure({ errors: [] })
       expect(result.message).toEqual('failure')
       expect(result.errors).toEqual([new Error('Result failure')])
+    })
+  })
+
+  describe('#combine', () => {
+    beforeAll(() => {
+      successes = [Result.success(), Result.success()]
+      failures = [Result.failure(), Result.failure()]
+      results = [...successes, ...failures]
+    })
+
+    it('succeedes only with none failure error given', () => {
+      expect(Result.combine(successes).isSuccess).toBe(true)
+    })
+
+    it('fails with at least one failure error given', () => {
+      expect(Result.combine(results).isSuccess).toBe(false)
+    })
+
+    it('combines the given result errors', () => {
+      expect(Result.combine(results).errors.length).toBe(2)
     })
   })
 })

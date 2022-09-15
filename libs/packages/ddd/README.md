@@ -9,3 +9,5 @@ Domain Driven Design (DDD) is a software development methodology that focuses on
 * Aggregate
 * Domain Event
 * Domain Service
+
+## Result
