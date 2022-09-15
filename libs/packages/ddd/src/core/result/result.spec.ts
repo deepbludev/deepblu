@@ -1,3 +1,4 @@
+import type { ResultError } from './result'
 import { Result } from './result'
 
 describe('Result', () => {
@@ -45,7 +46,7 @@ describe('Result', () => {
 
   describe('#failure', () => {
     beforeAll(() => {
-      const errors: (Error | string)[] = [
+      const errors: ResultError[] = [
         new Error('test error'),
         'test string error',
       ]

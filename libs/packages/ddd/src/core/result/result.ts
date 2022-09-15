@@ -1,4 +1,6 @@
-import _ from 'lodash'
+import isString from 'lodash/isString'
+
+export type ResultError = Error | string
 
 export class Result<TValue = unknown, E extends Error = Error> {
   protected constructor(
@@ -25,11 +27,11 @@ export class Result<TValue = unknown, E extends Error = Error> {
 
   public static failure(opts?: {
     message?: string
-    errors?: (Error | string)[]
+    errors?: ResultError[]
   }): Result<void> {
     const defaultError = new Error(opts?.message || 'Result failure')
     const errors = opts?.errors?.map(e =>
-      _.isString(e) ? new Error(e as string) : e
+      isString(e) ? new Error(e as string) : e
     ) || [defaultError]
     if (errors.length === 0) errors.push(defaultError)
 
