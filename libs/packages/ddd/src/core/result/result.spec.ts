@@ -36,7 +36,7 @@ describe('Result', () => {
     })
 
     it('contains the given result value', () => {
-      expect(result.payload).toBe(payload)
+      expect(result.value).toBe(payload)
     })
 
     it('has an empty error list', () => {
@@ -64,7 +64,7 @@ describe('Result', () => {
     })
 
     it('has a null result value', () => {
-      expect(result.payload).toBeNull()
+      expect(result.value).toBeNull()
     })
 
     it('has an error list when created with errors', () => {
@@ -99,6 +99,22 @@ describe('Result', () => {
 
     it('combines the given result errors', () => {
       expect(Result.combine(results).errors.length).toBe(2)
+    })
+  })
+
+  describe('#toDTO', () => {
+    beforeAll(() => {
+      result = Result.success({ payload, message })
+    })
+
+    it('returns a DTO', () => {
+      expect(result.toDTO()).toEqual({
+        isOk: true,
+        isFail: false,
+        message,
+        value: result.payload,
+        errors: [],
+      })
     })
   })
 })

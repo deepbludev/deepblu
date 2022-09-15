@@ -2,10 +2,26 @@ import isString from 'lodash/isString'
 
 export type ResultError = Error | string
 
-export class Result<TValue = void, E = Error> {
+export interface IResult<T = void, E = Error> {
+  value: T
+  message: string
+  errors: E[]
+  isFail: boolean
+  isOk: boolean
+}
+
+export interface IResultDTO<T = void, E = Error> {
+  value: T | null
+  message: string
+  errors: E[]
+  isFail: boolean
+  isOk: boolean
+}
+
+export class Result<T = void, E = Error> implements IResult<T, E> {
   protected constructor(
     public readonly isSuccess: boolean,
-    private readonly payload: TValue | null,
+    public readonly payload: T | null,
     public readonly message: string,
     public readonly errors: E[] = []
   ) {}
@@ -47,6 +63,17 @@ export class Result<TValue = void, E = Error> {
     return errors.length ? Result.failure({ errors }) : Result.success()
   }
 
+  // toDTO method
+  public toDTO(): IResultDTO<T, E> {
+    return {
+      value: this.payload,
+      message: this.message,
+      errors: this.errors,
+      isFail: this.isFail,
+      isOk: this.isOk,
+    }
+  }
+
   get isFailure() {
     return !this.isSuccess
   }
@@ -59,7 +86,7 @@ export class Result<TValue = void, E = Error> {
     return this.isSuccess
   }
 
-  get value(): TValue {
-    return this.payload as TValue
+  get value(): T {
+    return this.payload as T
   }
 }
