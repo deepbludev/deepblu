@@ -2,7 +2,7 @@ import isString from 'lodash/isString'
 
 export type ResultError = Error | string
 
-export class Result<TValue = unknown, E extends { message: string } = Error> {
+export class Result<TValue = void, E = Error> {
   protected constructor(
     public readonly isSuccess: boolean,
     public readonly payload: TValue | null,
@@ -14,28 +14,33 @@ export class Result<TValue = unknown, E extends { message: string } = Error> {
     return !this.isSuccess
   }
 
-  public static success<T = void>(opts?: {
+  public static success<T, E = Error>(opts?: {
     payload?: T
     message?: string
-  }): Result<T> {
-    return new Result<T>(
+  }): Result<T, E> {
+    return new Result(
       true,
       opts?.payload ?? null,
       opts?.message || 'success'
-    )
+    ) as unknown as Result<T, E>
   }
 
-  public static failure(opts?: {
+  public static failure<T, E = Error>(opts?: {
     message?: string
     errors?: ResultError[]
-  }): Result<void> {
+  }): Result<T, E> {
     const defaultError = new Error(opts?.message || 'Result failure')
     const errors = opts?.errors?.map(e =>
       isString(e) ? new Error(e as string) : e
     ) || [defaultError]
     if (!errors.length) errors.push(defaultError)
 
-    return new Result<null>(false, null, opts?.message || 'failure', errors)
+    return new Result(
+      false,
+      null,
+      opts?.message || 'failure',
+      errors
+    ) as unknown as Result<T, E>
   }
 
   public static combine(results: Result[]): Result {

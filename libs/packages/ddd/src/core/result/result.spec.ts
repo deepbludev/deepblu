@@ -1,10 +1,12 @@
 import type { ResultError } from './result'
 import { Result } from './result'
 
+type Payload = { foo: string }
+
 describe('Result', () => {
-  const payload = { foo: 'bar' }
+  const payload: Payload = { foo: 'bar' }
   const message = 'test message'
-  let result: Result
+  let result: Result<Payload>
   let results: Result[]
   let successes: Result[]
   let failures: Result[]
