@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "admin-web": "apps/admin-web",
-    "admin-web-e2e": "apps/admin-web-e2e"
+    "admin-web-e2e": "apps/admin-web-e2e",
+    "packages-ddd": "libs/packages/ddd"
   }
 }
