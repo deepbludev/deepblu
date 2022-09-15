@@ -7,6 +7,16 @@
     "build": "nx build",
     "test": "nx test"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "yarn format --uncommited"
+    ]
+  },
   "private": true,
   "dependencies": {
     "@nrwl/next": "14.7.5",
@@ -43,8 +53,11 @@
     "eslint-plugin-jsx-a11y": "6.6.1",
     "eslint-plugin-react": "7.31.1",
     "eslint-plugin-react-hooks": "4.6.0",
+    "git-commit-msg-linter": "^4.1.3",
+    "husky": "^8.0.1",
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
+    "lint-staged": "^13.0.3",
     "nx": "14.7.5",
     "prettier": "^2.6.2",
     "react-test-renderer": "18.2.0",

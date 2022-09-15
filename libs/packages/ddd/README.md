@@ -1,11 +1,11 @@
-# packages-ddd
+# DDD
 
-This library was generated with [Nx](https://nx.dev).
+Domain Driven Design (DDD) core library.
 
-## Building
+Domain Driven Design (DDD) is a software development methodology that focuses on the core logic of a software system. It is a way of thinking about software design that emphasizes the core domain and domain logic over technical infrastructure and implementation details.
 
-Run `nx build packages-ddd` to build the library.
-
-## Running unit tests
-
-Run `nx test packages-ddd` to execute the unit tests via [Jest](https://jestjs.io).
+* Value Object
+* Entity
+* Aggregate
+* Domain Event
+* Domain Service
