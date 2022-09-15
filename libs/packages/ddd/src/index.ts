@@ -1,1 +1,1 @@
-export * from './lib/packages-ddd';
+export * from './core/result/result'
