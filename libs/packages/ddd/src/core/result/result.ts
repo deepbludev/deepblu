@@ -5,14 +5,10 @@ export type ResultError = Error | string
 export class Result<TValue = void, E = Error> {
   protected constructor(
     public readonly isSuccess: boolean,
-    public readonly payload: TValue | null,
+    private readonly payload: TValue | null,
     public readonly message: string,
     public readonly errors: E[] = []
   ) {}
-
-  get isFailure() {
-    return !this.isSuccess
-  }
 
   public static success<T, E = Error>(opts?: {
     payload?: T
@@ -49,5 +45,21 @@ export class Result<TValue = void, E = Error> {
       [] as Error[]
     )
     return errors.length ? Result.failure({ errors }) : Result.success()
+  }
+
+  get isFailure() {
+    return !this.isSuccess
+  }
+
+  get isFail() {
+    return this.isFailure
+  }
+
+  get isOk() {
+    return this.isSuccess
+  }
+
+  get value(): TValue {
+    return this.payload as TValue
   }
 }
