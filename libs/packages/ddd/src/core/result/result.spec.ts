@@ -1,14 +1,16 @@
 import { Result } from './result'
 
 type Payload = { foo: string }
+type Meta = { data: string }
 
 describe('Result', () => {
   const value: Payload = { foo: 'bar' }
   const error = 'test error'
-  let result: Result<Payload>
-  let results: Result[]
-  let successes: Result[]
-  let failures: Result[]
+  const meta: Meta = { data: 'test metadata' }
+  let result: Result<Payload, string, Meta>
+  let results: Result<Payload, string, Meta>[]
+  let successes: Result<Payload, string, Meta>[]
+  let failures: Result<Payload, string, Meta>[]
 
   beforeAll(() => {
     result = Result.success()
@@ -16,7 +18,7 @@ describe('Result', () => {
 
   describe('#success', () => {
     beforeAll(() => {
-      result = Result.success(value)
+      result = Result.success(value, meta)
     })
 
     it('is a success', () => {
@@ -26,6 +28,7 @@ describe('Result', () => {
 
     it('contains the given result value', () => {
       expect(result.value).toBe(value)
+      expect(result.meta).toBe(meta)
     })
 
     it('has an empty null error', () => {
@@ -35,7 +38,7 @@ describe('Result', () => {
 
   describe('#failure', () => {
     beforeAll(() => {
-      result = Result.failure(error)
+      result = Result.failure(error, meta)
     })
 
     it('is a failure', () => {
@@ -45,6 +48,7 @@ describe('Result', () => {
 
     it('has a null result value', () => {
       expect(result.value).toBeNull()
+      expect(result.meta).toBe(meta)
     })
 
     it('has an error', () => {
@@ -74,20 +78,22 @@ describe('Result', () => {
     })
 
     it('returns a result as plain object', () => {
-      result = Result.success(value)
+      result = Result.success(value, meta)
       expect(result.toObject()).toEqual({
         isOk: true,
         isFail: false,
         value: result.value,
         error: null,
+        meta: result.meta,
       })
 
-      result = Result.failure(error)
+      result = Result.failure(error, meta)
       expect(result.toObject()).toEqual({
         isOk: false,
         isFail: true,
         value: null,
         error: result.error,
+        meta: result.meta,
       })
     })
   })
