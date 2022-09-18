@@ -1,11 +1,10 @@
-import type { ResultError } from './result'
 import { Result } from './result'
 
 type Payload = { foo: string }
 
 describe('Result', () => {
-  const payload: Payload = { foo: 'bar' }
-  const message = 'test message'
+  const value: Payload = { foo: 'bar' }
+  const error = 'test error'
   let result: Result<Payload>
   let results: Result[]
   let successes: Result[]
@@ -15,19 +14,9 @@ describe('Result', () => {
     result = Result.success()
   })
 
-  it('has a non-empty result message', () => {
-    expect(result.message).toBeTruthy()
-    expect(result.message).not.toBe('')
-  })
-
-  it('contains the given result message', () => {
-    result = Result.success({ message })
-    expect(result.message).toEqual(message)
-  })
-
   describe('#success', () => {
     beforeAll(() => {
-      result = Result.success({ payload, message })
+      result = Result.success(value)
     })
 
     it('is a success', () => {
@@ -36,26 +25,17 @@ describe('Result', () => {
     })
 
     it('contains the given result value', () => {
-      expect(result.value).toBe(payload)
+      expect(result.value).toBe(value)
     })
 
-    it('has an empty error list', () => {
-      expect(result.errors).toEqual([])
-    })
-
-    it('has a default success message', () => {
-      result = Result.success({ payload })
-      expect(result.message).toEqual('success')
+    it('has an empty null error', () => {
+      expect(result.error).toBeNull()
     })
   })
 
   describe('#failure', () => {
     beforeAll(() => {
-      const errors: ResultError[] = [
-        new Error('test error'),
-        'test error string',
-      ]
-      result = Result.failure({ message, errors })
+      result = Result.failure(error)
     })
 
     it('is a failure', () => {
@@ -67,18 +47,8 @@ describe('Result', () => {
       expect(result.value).toBeNull()
     })
 
-    it('has an error list when created with errors', () => {
-      expect(result.errors).toHaveLength(2)
-    })
-
-    it('has a default success message and error', () => {
-      result = Result.failure()
-      expect(result.message).toEqual('failure')
-      expect(result.errors).toEqual([new Error('Result failure')])
-
-      result = Result.failure({ errors: [] })
-      expect(result.message).toEqual('failure')
-      expect(result.errors).toEqual([new Error('Result failure')])
+    it('has an error', () => {
+      expect(result.error).toEqual(error)
     })
   })
 
@@ -90,30 +60,34 @@ describe('Result', () => {
     })
 
     it('succeedes only with none failure error given', () => {
-      expect(Result.combine(successes).isSuccess).toBe(true)
+      expect(Result.combine(successes)).toEqual(successes[0])
     })
 
     it('fails with at least one failure error given', () => {
-      expect(Result.combine(results).isSuccess).toBe(false)
-    })
-
-    it('combines the given result errors', () => {
-      expect(Result.combine(results).errors.length).toBe(2)
+      expect(Result.combine(results)).toEqual(failures[0])
     })
   })
 
-  describe('#toDTO', () => {
+  describe('#toObject', () => {
     beforeAll(() => {
-      result = Result.success({ payload, message })
+      result = Result.success(value)
     })
 
-    it('returns a DTO', () => {
-      expect(result.toDTO()).toEqual({
+    it('returns a result as plain object', () => {
+      result = Result.success(value)
+      expect(result.toObject()).toEqual({
         isOk: true,
         isFail: false,
-        message,
-        value: result.payload,
-        errors: [],
+        value: result.value,
+        error: null,
+      })
+
+      result = Result.failure(error)
+      expect(result.toObject()).toEqual({
+        isOk: false,
+        isFail: true,
+        value: null,
+        error: result.error,
       })
     })
   })
