@@ -2,8 +2,8 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "admin-web": "apps/admin-web",
-    "admin-web-e2e": "apps/admin-web-e2e",
+    "demo-tasks": "apps/demo/tasks",
+    "demo-tasks-e2e": "apps/demo/tasks-e2e",
     "packages-ddd": "libs/packages/ddd"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/admin-web",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/demo/tasks",
   "projectType": "application",
   "targets": {
     "build": {
@@ -8,12 +8,12 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "root": "apps/admin-web",
-        "outputPath": "dist/apps/admin-web"
+        "root": "apps/demo/tasks",
+        "outputPath": "dist/apps/demo/tasks"
       },
       "configurations": {
         "development": {
-          "outputPath": "apps/admin-web"
+          "outputPath": "apps/demo/tasks"
         },
         "production": {}
       }
@@ -22,16 +22,16 @@
       "executor": "@nrwl/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "admin-web:build",
+        "buildTarget": "demo-tasks:build",
         "dev": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "admin-web:build:development",
+          "buildTarget": "demo-tasks:build:development",
           "dev": true
         },
         "production": {
-          "buildTarget": "admin-web:build:production",
+          "buildTarget": "demo-tasks:build:production",
           "dev": false
         }
       }
@@ -39,14 +39,14 @@
     "export": {
       "executor": "@nrwl/next:export",
       "options": {
-        "buildTarget": "admin-web:build:production"
+        "buildTarget": "demo-tasks:build:production"
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/admin-web"],
+      "outputs": ["coverage/apps/demo/tasks"],
       "options": {
-        "jestConfig": "apps/admin-web/jest.config.ts",
+        "jestConfig": "apps/demo/tasks/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -54,7 +54,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/admin-web/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["apps/demo/tasks/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },
