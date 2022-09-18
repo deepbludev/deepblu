@@ -1,50 +1,42 @@
-export interface IResult<V = void, E = string, M = string> {
+export interface IResult<V = void, E = string> {
   value: V
   error: E
-  meta: M
   isFail: boolean
   isOk: boolean
-  toObject(): IResultObject<V, E, M>
+  toObject(): IResultObject<V, E>
 }
 
-export interface IResultObject<V, E, M> {
+export interface IResultObject<V, E> {
   value: V
   error: E
-  meta: M
   isFail: boolean
   isOk: boolean
 }
 
-export class Result<V = void, E = string, M = string>
-  implements IResult<V, E, M>
-{
+export class Result<V = void, E = string> implements IResult<V, E> {
   protected constructor(
     public readonly isSuccess: boolean,
     private readonly _payload: V | null,
-    private readonly _error: E | null,
-    private readonly _meta: M | null
+    private readonly _error: E | null
   ) {}
 
-  public static success<V, E, M>(value?: V, meta?: M): Result<V, E, M> {
-    return new Result(true, value, null, meta) as unknown as Result<V, E, M>
+  public static ok<V, E>(value?: V): Result<V, E> {
+    return new Result(true, value, null) as unknown as Result<V, E>
   }
 
-  public static failure<V, E, M>(error?: E, meta?: M): Result<V, E, M> {
-    return new Result(false, null, error, meta) as unknown as Result<V, E, M>
+  public static fail<V, E>(error?: E): Result<V, E> {
+    return new Result(false, null, error) as unknown as Result<V, E>
   }
 
-  public static combine<V, E, M>(results: Result<V, E, M>[]): Result<V, E, M> {
-    const error = 'No results provided as parameters' as unknown as E
-    if (!results.length) return Result.failure<V, E, M>(error)
-    for (const result of results) if (result.isFailure) return result
-    return results.at(0) as Result<V, E, M>
+  public static combine<V, E>(results: Result<V, E>[]): Result<void, E> {
+    for (const r of results) if (r.isFailure) return Result.fail(r.error)
+    return Result.ok()
   }
 
-  toObject(): IResultObject<V, E, M> {
+  toObject(): IResultObject<V, E> {
     return {
       value: this.value,
       error: this.error,
-      meta: this.meta,
       isFail: this.isFail,
       isOk: this.isOk,
     }
@@ -68,9 +60,5 @@ export class Result<V = void, E = string, M = string>
 
   get error() {
     return this._error as E
-  }
-
-  get meta() {
-    return this._meta as M
   }
 }
