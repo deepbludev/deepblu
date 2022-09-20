@@ -1,3 +1,4 @@
+import { InvalidPropError } from './errors'
 import { IProps, Props } from './props'
 import { IResult, Result } from './result'
 
@@ -48,9 +49,11 @@ export class ValueObject<P extends VOProps> extends Props<P> {
    * @returns instance of result with a new Value Object on state if success.
    * @summary result state will be `null` case failure.
    */
-  public static create<P extends VOProps>(props: P): IResult<ValueObject<P>> {
+  public static create<P extends VOProps>(
+    props: P
+  ): IResult<ValueObject<P>, InvalidPropError> {
     if (!this.isValidProps(props))
-      return Result.fail('Invalid props to create an instance of ' + this.name)
+      return Result.fail(new InvalidPropError('props', 'Invalid props'))
     return Result.ok(new this(props))
   }
 }

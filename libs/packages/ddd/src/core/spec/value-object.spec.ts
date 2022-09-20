@@ -1,3 +1,4 @@
+import { InvalidPropError } from '../errors'
 import { ValueObject } from '../value-object'
 
 type PropType = { foo: string }
@@ -66,10 +67,6 @@ describe('ValueObject', () => {
 
   it('should not be able to create a new instance with invalid props', () => {
     const result = TestValueObject.create({ foo: 1 })
-    expect(result.error).toEqual(
-      new Error(
-        'Invalid props to create an instance of ' + TestValueObject.name
-      )
-    )
+    expect(result.error).toEqual(new InvalidPropError('props', 'Invalid props'))
   })
 })
