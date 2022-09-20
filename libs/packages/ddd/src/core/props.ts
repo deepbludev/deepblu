@@ -46,8 +46,12 @@ export abstract class Props<P extends IProps = IProps>
    * @description Check if the props are equal.
    * @returns true if the props are equal in value.
    */
-  hasSameProps(p: Props<P>): boolean {
-    return JSON.stringify(this.props) === JSON.stringify(p.props)
+  hasEqualProps(p: Props<P>): boolean {
+    if (Object.keys(this.props).length !== Object.keys(p.props).length)
+      return false
+    for (const key in this.props)
+      if (this.props[key] !== p.props[key]) return false
+    return true
   }
 
   /**
