@@ -1,14 +1,14 @@
 import v from '../utils/validator'
 import { Serializable } from './types'
 
-export interface IResultObject<V, E> {
+export interface IResultObject<V, E extends Error = Error> {
   value: V
   error: E
   isFail: boolean
   isOk: boolean
 }
 
-export interface IResult<V, E>
+export interface IResult<V, E extends Error = Error>
   extends IResultObject<V, E>,
     Serializable<IResultObject<V, E>> {}
 
