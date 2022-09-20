@@ -1,13 +1,27 @@
 import { InvalidPropError, Props } from '../props'
 
 describe('Props', () => {
+  type PropType = { foo: string }
+
+  class TestProps extends Props<PropType> {
+    constructor(props: PropType) {
+      super(props)
+    }
+
+    equals(p: Props<PropType>): boolean {
+      return !!p
+    }
+  }
+
+  const props: PropType = { foo: 'bar' }
+  const p = new TestProps(props)
+  const p1 = new TestProps({ foo: 'bar' })
+  const p2 = new TestProps({ foo: 'baz' })
+  const p3 = { props: { foo: 'baz' } }
+
   it('should be defined', () => {
     expect(Props).toBeDefined()
   })
-
-  type PropType = { foo: string }
-  const props: PropType = { foo: 'bar' }
-  const p = new Props(props)
 
   it('should be able to create a new instance', () => {
     expect(p).toBeDefined()
@@ -24,11 +38,16 @@ describe('Props', () => {
     expect(set).toThrow()
   })
 
+  it('should be able to compare props type', () => {
+    expect(p.isSameClass(p1)).toBeTruthy()
+    expect(p.isSameClass(p2)).toBeTruthy()
+    expect(p.isSameClass(p3 as Props<PropType>)).toBeFalsy()
+  })
+
   it('should be able to compare props', () => {
-    const p1 = new Props({ foo: 'bar' })
-    const p2 = new Props({ foo: 'baz' })
-    expect(p.equals(p1)).toBeTruthy()
-    expect(p.equals(p2)).toBeFalsy()
+    expect(p.hasSameProps(p1)).toBeTruthy()
+    expect(p.hasSameProps(p2)).toBeFalsy()
+    expect(p.isSameClass(p3 as Props<PropType>)).toBeFalsy()
   })
 })
 
