@@ -1,4 +1,5 @@
 import { Serializable } from './types'
+import v from '../utils/validator'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IProps {
@@ -18,12 +19,15 @@ export interface IProps {
 export abstract class Props<P extends IProps = IProps>
   implements Serializable<P>
 {
+  protected validator = v
+  protected static validator = v
+
   protected constructor(public readonly props: P) {
     this.props = Object.freeze({ ...props })
   }
 
   /**
-   * @description Getter for the props.
+   * Getter for the props.
    * @returns the value of a given prop
    */
   get<K extends keyof P>(key: K): P[K] {
@@ -31,13 +35,14 @@ export abstract class Props<P extends IProps = IProps>
   }
 
   /**
-   * @description Abstract method to check if two props are equal.
+   * Abstract method to check if two props are equal.
+   * @abstract
    * @returns true if the props are equal in value.
    */
   abstract equals(p: Props<P>): boolean
 
   /**
-   * @description Check if the props are of the same class.
+   * Check if the props are of the same class.
    * @returns true if the props are of the same class.
    */
   isSameClass(p: Props<P>): boolean {
@@ -45,7 +50,7 @@ export abstract class Props<P extends IProps = IProps>
   }
 
   /**
-   * @description Check if the props are equal.
+   * Check if the props are equal.
    * @returns true if the props are equal in value.
    */
   hasEqualProps(p: Props<P>): boolean {
@@ -57,10 +62,18 @@ export abstract class Props<P extends IProps = IProps>
   }
 
   /**
-   * @description Returns a serialized version of the props.
+   * Returns a serialized version of the props.
    * @returns the serialized props as a plain JS object.
    */
   serialize(): P {
     return { ...this.props }
+  }
+
+  /**
+   * @description Method to validate prop value.
+   * @param props to validate
+   */
+  public static isValidProps(props: IProps): boolean {
+    return !this.validator.void(props)
   }
 }

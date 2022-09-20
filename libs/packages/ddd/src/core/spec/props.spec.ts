@@ -55,4 +55,10 @@ describe('Props', () => {
   it('should serialize', () => {
     expect(p.serialize()).toEqual({ foo: 'bar', bar: 'baz' })
   })
+
+  it('should be able to validate props', () => {
+    expect(TestProps.isValidProps({ foo: 'bar', bar: 'baz' })).toBeTruthy()
+    expect(TestProps.isValidProps(null as unknown as PropType)).toBeFalsy()
+    expect(TestProps.isValidProps(undefined as unknown as PropType)).toBeFalsy()
+  })
 })
