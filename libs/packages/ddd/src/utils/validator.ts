@@ -1,6 +1,10 @@
-import isString from 'lodash/isString'
+import z from 'zod'
+
+export const string = (value: unknown): value is string => {
+  return z.string().safeParse(value).success
+}
 
 export const validator = {
-  isString,
+  string,
 }
 export default validator

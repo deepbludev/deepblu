@@ -1,4 +1,4 @@
-import { validator } from '../utils/validator'
+import v from '../utils/validator'
 import { Serializable } from './types'
 
 export interface IResultObject<V, E> {
@@ -39,7 +39,7 @@ export class Result<V = void, E extends Error = Error>
     errorOrMessage?: E | string
   ): Result<V, E> {
     const error: E =
-      validator.isString(errorOrMessage) || errorOrMessage === undefined
+      v.string(errorOrMessage) || errorOrMessage === undefined
         ? (new Error(errorOrMessage as string) as E)
         : errorOrMessage
     return new Result(false, null, error) as unknown as Result<V, E>
