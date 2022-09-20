@@ -9,9 +9,9 @@
  * // => Error: foo: bar
  * @example
  * try {
- *  throw new InvalidPropError('foo', 'bar')
+ *   throw new InvalidPropError('foo', 'bar')
  * } catch (e) {
- * console.log(e instanceof InvalidPropError) // => true
+ *   console.log(e instanceof InvalidPropError) // => true
  * }
  */
 export class InvalidPropError extends Error {
