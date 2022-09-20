@@ -1,3 +1,5 @@
+import { Serializable } from './types'
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IProps {
   [index: string]: any
@@ -7,9 +9,11 @@ export interface IProps {
  * @desc ValueObjects are immutable objects
  * Their equality is determined through their structural property and class.
  */
-export abstract class Props<P extends IProps = IProps> {
+export abstract class Props<P extends IProps = IProps>
+  implements Serializable<P>
+{
   protected constructor(public readonly props: P) {
-    this.props = Object.freeze({ ...this.props })
+    this.props = Object.freeze({ ...props })
   }
 
   get<K extends keyof P>(key: K): P[K] {
@@ -26,6 +30,10 @@ export abstract class Props<P extends IProps = IProps> {
 
   hasSameProps(p: Props<P>): boolean {
     return JSON.stringify(this.props) === JSON.stringify(p.props)
+  }
+
+  serialize(): P {
+    return { ...this.props }
   }
 }
 

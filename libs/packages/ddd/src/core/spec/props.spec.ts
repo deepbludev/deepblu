@@ -49,6 +49,10 @@ describe('Props', () => {
     expect(p.hasSameProps(p2)).toBeFalsy()
     expect(p.isSameClass(p3 as Props<PropType>)).toBeFalsy()
   })
+
+  it('should serialize', () => {
+    expect(p.serialize()).toEqual({ foo: 'bar' })
+  })
 })
 
 describe('InvalidPropError', () => {

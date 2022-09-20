@@ -72,14 +72,14 @@ describe('Result', () => {
     })
   })
 
-  describe('#toObject', () => {
+  describe('#serialize', () => {
     beforeAll(() => {
       result = Result.ok(value)
     })
 
     it('returns a result as plain object', () => {
       result = Result.ok(value)
-      expect(result.toObject()).toEqual({
+      expect(result.serialize()).toEqual({
         isOk: true,
         isFail: false,
         value: result.value,
@@ -87,7 +87,7 @@ describe('Result', () => {
       })
 
       result = Result.fail(message)
-      expect(result.toObject()).toEqual({
+      expect(result.serialize()).toEqual({
         isOk: false,
         isFail: true,
         value: null,
