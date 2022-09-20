@@ -4,11 +4,11 @@ type Payload = { foo: string }
 
 describe('Result', () => {
   const value: Payload = { foo: 'bar' }
-  const error = 'test error'
-  let result: Result<Payload, string>
-  let results: Result<Payload, string>[]
-  let successes: Result<Payload, string>[]
-  let failures: Result<Payload, string>[]
+  const message = 'test error'
+  let result: Result<Payload>
+  let results: Result<Payload>[]
+  let successes: Result<Payload>[]
+  let failures: Result<Payload>[]
 
   beforeAll(() => {
     result = Result.ok()
@@ -35,7 +35,7 @@ describe('Result', () => {
 
   describe('#failure', () => {
     beforeAll(() => {
-      result = Result.fail(error)
+      result = Result.fail(message)
     })
 
     it('is a failure', () => {
@@ -48,7 +48,7 @@ describe('Result', () => {
     })
 
     it('has an error', () => {
-      expect(result.error).toEqual(error)
+      expect(result.error).toEqual(new Error(message))
     })
   })
 
@@ -82,7 +82,7 @@ describe('Result', () => {
         error: null,
       })
 
-      result = Result.fail(error)
+      result = Result.fail(message)
       expect(result.toObject()).toEqual({
         isOk: false,
         isFail: true,
