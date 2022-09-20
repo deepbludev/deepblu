@@ -1,7 +1,7 @@
 import { Props } from '../props'
 
 describe('Props', () => {
-  type PropType = { foo: string }
+  type PropType = { foo: string; bar: string }
 
   class TestProps extends Props<PropType> {
     constructor(props: PropType) {
@@ -13,11 +13,12 @@ describe('Props', () => {
     }
   }
 
-  const props: PropType = { foo: 'bar' }
+  const props: PropType = { foo: 'bar', bar: 'baz' }
   const p = new TestProps(props)
-  const p1 = new TestProps({ foo: 'bar' })
-  const p2 = new TestProps({ foo: 'baz' })
+  const p1 = new TestProps({ foo: 'bar', bar: 'baz' })
+  const p2 = new TestProps({ foo: 'foo', bar: 'baz' })
   const p3 = { props: { foo: 'baz' } }
+  const p4 = new TestProps({ bar: 'baz', foo: 'bar' })
 
   it('should be defined', () => {
     expect(Props).toBeDefined()
@@ -25,7 +26,7 @@ describe('Props', () => {
 
   it('should be able to create a new instance', () => {
     expect(p).toBeDefined()
-    expect(p.props).toEqual({ foo: 'bar' })
+    expect(p.props).toEqual({ foo: 'bar', bar: 'baz' })
   })
 
   it('should be able to get a prop', () => {
@@ -45,12 +46,13 @@ describe('Props', () => {
   })
 
   it('should be able to compare props', () => {
-    expect(p.hasSameProps(p1)).toBeTruthy()
-    expect(p.hasSameProps(p2)).toBeFalsy()
+    expect(p.hasEqualProps(p1)).toBeTruthy()
+    expect(p.hasEqualProps(p2)).toBeFalsy()
     expect(p.isSameClass(p3 as Props<PropType>)).toBeFalsy()
+    expect(p.hasEqualProps(p4)).toBeTruthy()
   })
 
   it('should serialize', () => {
-    expect(p.serialize()).toEqual({ foo: 'bar' })
+    expect(p.serialize()).toEqual({ foo: 'bar', bar: 'baz' })
   })
 })
