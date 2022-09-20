@@ -8,16 +8,15 @@ interface VOProps extends IProps {}
  * @abstract
  * @classdesc Value Objects are immutable objects that do not contain any state
  * besides their props.
- * They Are only identified by their values, not by their ids.
- * They Should be immutable, behaviors should not change the state of a value object,
+ * They are only identified by their values, not by unique ids as entities do.
+ * They are be immutable. Behaviors should not change the state of a value object,
  * but can rather create a new value object.
- * Have value semantics (equality defined by property values and class).
+ * They have value semantics (equality defined by property values and class).
  * You can combine other value types that usually go together into a new value object type,
  * like address (city, street, country, postal code) or ...range, or ...type.
  * They can are used as entities props, encapsulating the validation logic.
  * The constructor should be private, and the static factory method that ensures
  * validity should be used instead.
- *
  * @see https://martinfowler.com/bliki/EvansClassification.html
  * @see https://martinfowler.com/bliki/ValueObject.html
  */
@@ -27,7 +26,7 @@ export abstract class ValueObject<P extends VOProps> extends Props<P> {
   }
 
   /**
-   * @description ValueObjects are compared by their properties and class
+   * @description Value Objects are compared by their properties and class
    * @returns true if the value objects are equal in value.
    */
   equals<V extends ValueObject<P>>(vo: V): boolean {
