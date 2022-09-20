@@ -51,8 +51,6 @@ export class ValueObject<P extends VOProps> extends Props<P> {
   public static create<P extends VOProps>(props: P): IResult<ValueObject<P>> {
     if (!this.isValidProps(props))
       return Result.fail('Invalid props to create an instance of ' + this.name)
-    const constructor = Reflect.getPrototypeOf(new this(props))?.constructor
-    if (!constructor) return Result.fail('Cannot create value object')
-    return Result.ok(Reflect.construct(constructor, [props]))
+    return Result.ok(new this(props))
   }
 }
