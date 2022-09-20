@@ -1,8 +1,12 @@
-import { Result } from './result'
+import { Result } from '../result'
 
 type Payload = { foo: string }
 
 describe('Result', () => {
+  it('should be defined', () => {
+    expect(Result).toBeDefined()
+  })
+
   const value: Payload = { foo: 'bar' }
   const message = 'test error'
   let result: Result<Payload>
