@@ -6,8 +6,12 @@ export interface IProps {
 }
 
 /**
- * @desc ValueObjects are immutable objects
- * Their equality is determined through their structural property and class.
+ * @class Props
+ * @abstract
+ * @classdesc Props are the base class for all value objects and entities.
+ * They are immutable objects that contain the state of the domain.
+ * They are used to create value objects and entities.
+ * @see https://martinfowler.com/bliki/EvansClassification.html
  */
 export abstract class Props<P extends IProps = IProps>
   implements Serializable<P>
@@ -16,30 +20,41 @@ export abstract class Props<P extends IProps = IProps>
     this.props = Object.freeze({ ...props })
   }
 
+  /**
+   * @description Getter for the props.
+   * @returns the value of a given prop
+   */
   get<K extends keyof P>(key: K): P[K] {
     return this.props[key]
   }
 
+  /**
+   * @description Abstract method to check if two props are equal.
+   * @returns true if the props are equal in value.
+   */
   abstract equals(p: Props<P>): boolean
 
+  /**
+   * @description Check if the props are of the same class.
+   * @returns true if the props are of the same class.
+   */
   isSameClass(p: Props<P>): boolean {
-    if (this === p) return true
-    if (p === null || p === undefined) return false
     return this.constructor === p.constructor
   }
 
+  /**
+   * @description Check if the props are equal.
+   * @returns true if the props are equal in value.
+   */
   hasSameProps(p: Props<P>): boolean {
     return JSON.stringify(this.props) === JSON.stringify(p.props)
   }
 
+  /**
+   * @description Returns a serialized version of the props.
+   * @returns the serialized props as a plain JS object.
+   */
   serialize(): P {
     return { ...this.props }
-  }
-}
-
-export class InvalidPropError extends Error {
-  constructor(public readonly prop: string, public readonly details: string) {
-    super(`${prop}: ${details}`)
-    this.name = InvalidPropError.name
   }
 }

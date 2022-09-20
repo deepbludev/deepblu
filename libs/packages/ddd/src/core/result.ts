@@ -12,6 +12,16 @@ export interface IResult<V, E>
   extends IResultObject<V, E>,
     Serializable<IResultObject<V, E>> {}
 
+/**
+ * @class Result
+ * @classdesc Result is a monad that represents a value or an error.
+ * It is used to return a value or an error from a function.
+ * Particularily useful for functions that can fail.
+ * Also useful for functions that can return a value or throw an error.
+ * In DDD, it is used to return a value or an error from domain services,
+ * commands / queries / usecases, or aggregate / entity / value object creation.
+ * @see https://en.wikipedia.org/wiki/Monad_(functional_programming)
+ */
 export class Result<V = void, E extends Error = Error>
   implements IResult<V, E>
 {

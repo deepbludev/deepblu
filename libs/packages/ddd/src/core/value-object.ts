@@ -4,8 +4,12 @@ import { IProps, Props } from './props'
 interface VOProps extends IProps {}
 
 /**
- * @desc ValueObjects are immutable objects
- * Their equality is determined through their structural property.
+ * @class ValueObject
+ * @abstract
+ * @classdesc ValueObjects are immutable objects that do not contain any state
+ * besides their props. They can be mapped 1-to-1 to the props given to create it,
+ * i.e. two ValueObjects are equal if their props are equal and they are of the same class.
+ * @see https://martinfowler.com/bliki/EvansClassification.html
  */
 export abstract class ValueObject<P extends VOProps> extends Props<P> {
   protected constructor(props: P) {
@@ -14,7 +18,7 @@ export abstract class ValueObject<P extends VOProps> extends Props<P> {
 
   /**
    * @description ValueObjects are compared by their properties and class
-   * @returns
+   * @returns true if the value objects are equal in value.
    */
   equals<V extends ValueObject<P>>(vo: V): boolean {
     return this.isSameClass(vo) && this.hasSameProps(vo)
@@ -22,7 +26,7 @@ export abstract class ValueObject<P extends VOProps> extends Props<P> {
 
   /**
    * @description Get an instance copy.
-   * @returns a new instance of value object.
+   * @returns a copy of the value object.
    */
   clone<V extends ValueObject<P>>(): V {
     const constructor = Reflect.getPrototypeOf(this)?.constructor
