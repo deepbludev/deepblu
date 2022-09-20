@@ -1,11 +1,11 @@
 import { IProps, Props } from './props'
+import { IResult, Result } from './result'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface VOProps extends IProps {}
 
 /**
  * @class ValueObject
- * @abstract
  * @classdesc Value Objects are immutable objects that do not contain any state
  * besides their props.
  * They are only identified by their values, not by unique ids as entities do.
@@ -20,7 +20,7 @@ interface VOProps extends IProps {}
  * @see https://martinfowler.com/bliki/EvansClassification.html
  * @see https://martinfowler.com/bliki/ValueObject.html
  */
-export abstract class ValueObject<P extends VOProps> extends Props<P> {
+export class ValueObject<P extends VOProps> extends Props<P> {
   protected constructor(props: P) {
     super(props)
   }
@@ -41,5 +41,18 @@ export abstract class ValueObject<P extends VOProps> extends Props<P> {
     const constructor = Reflect.getPrototypeOf(this)?.constructor
     if (!constructor) throw new Error('Cannot clone value object')
     return Reflect.construct(constructor, [this.props])
+  }
+
+  /**
+   * @param props params as Props
+   * @returns instance of result with a new Value Object on state if success.
+   * @summary result state will be `null` case failure.
+   */
+  public static create<P extends VOProps>(props: P): IResult<ValueObject<P>> {
+    if (!this.isValidProps(props))
+      return Result.fail('Invalid props to create an instance of ' + this.name)
+    const constructor = Reflect.getPrototypeOf(new this(props))?.constructor
+    if (!constructor) return Result.fail('Cannot create value object')
+    return Result.ok(Reflect.construct(constructor, [props]))
   }
 }
