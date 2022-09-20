@@ -11,6 +11,8 @@ export interface IProps {
  * @classdesc Props are the base class for all value objects and entities.
  * They are immutable objects that contain the state of the domain.
  * They are used to create value objects and entities.
+ * The constructor should be private, and the static factory method that ensures
+ * validity should be used instead.
  * @see https://martinfowler.com/bliki/EvansClassification.html
  */
 export abstract class Props<P extends IProps = IProps>
