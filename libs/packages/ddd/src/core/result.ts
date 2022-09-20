@@ -1,12 +1,5 @@
-import isString from 'lodash/isString'
-
-export interface IResult<V = void, E extends Error = Error> {
-  value: V
-  error: E
-  isFail: boolean
-  isOk: boolean
-  toObject(): IResultObject<V, E>
-}
+import { validator } from '../utils/validator'
+import { Serializable } from './types'
 
 export interface IResultObject<V, E> {
   value: V
@@ -14,6 +7,10 @@ export interface IResultObject<V, E> {
   isFail: boolean
   isOk: boolean
 }
+
+export interface IResult<V, E>
+  extends IResultObject<V, E>,
+    Serializable<IResultObject<V, E>> {}
 
 export class Result<V = void, E extends Error = Error>
   implements IResult<V, E>
@@ -32,7 +29,7 @@ export class Result<V = void, E extends Error = Error>
     errorOrMessage?: E | string
   ): Result<V, E> {
     const error: E =
-      isString(errorOrMessage) || errorOrMessage === undefined
+      validator.isString(errorOrMessage) || errorOrMessage === undefined
         ? (new Error(errorOrMessage as string) as E)
         : errorOrMessage
     return new Result(false, null, error) as unknown as Result<V, E>
@@ -45,7 +42,7 @@ export class Result<V = void, E extends Error = Error>
     return Result.ok()
   }
 
-  toObject(): IResultObject<V, E> {
+  serialize(): IResultObject<V, E> {
     return {
       value: this.value,
       error: this.error,
