@@ -21,7 +21,7 @@ export interface VOProps extends IProps {}
  */
 export class ValueObject<P extends VOProps> extends Props<P> {
   protected constructor(props: P) {
-    super(props)
+    super(props, 'ValueObject')
   }
 
   /**
