@@ -5,7 +5,7 @@ describe('Props', () => {
 
   class TestProps extends Props<PropType> {
     constructor(props: PropType) {
-      super(props)
+      super(props, 'Entity')
     }
 
     equals(p: Props<PropType>): boolean {
@@ -22,6 +22,10 @@ describe('Props', () => {
 
   it('should be defined', () => {
     expect(Props).toBeDefined()
+  })
+
+  it('should know what type of domain object it is', () => {
+    expect(p.domainObjectType).toEqual('Entity')
   })
 
   it('should be able to create a new instance', () => {
