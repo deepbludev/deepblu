@@ -1,5 +1,5 @@
-import { DomainObject } from '../types/domain-object.type'
-import { ISerializable } from '../types/serializable.interface'
+import { DomainObject } from './types/domain-object.type'
+import { ISerializable } from './types/serializable.interface'
 import v from '../utils/validator'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
