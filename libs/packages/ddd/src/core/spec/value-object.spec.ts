@@ -37,6 +37,10 @@ describe('ValueObject', () => {
     expect(vo.props).toEqual({ foo: 'bar' })
   })
 
+  it('should be a Value Object domain object type', () => {
+    expect(vo.domainObjectType).toEqual('ValueObject')
+  })
+
   it('should be able to compare value objects', () => {
     const vo1 = new TestValueObject({ foo: 'bar' })
     const vo2 = new TestValueObject({ foo: 'baz' })
