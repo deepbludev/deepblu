@@ -1,4 +1,5 @@
-import { Serializable } from './types'
+import { DomainObject } from '../types/domain-object.type'
+import { Serializable } from '../types/serializable.interface'
 import v from '../utils/validator'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -22,7 +23,10 @@ export abstract class Props<P extends IProps = IProps>
   protected validator = v
   protected static validator = v
 
-  protected constructor(public readonly props: P) {
+  protected constructor(
+    public readonly props: P,
+    public readonly domainObjectType: DomainObject = 'DomainObject'
+  ) {
     this.props = Object.freeze({ ...props })
   }
 
