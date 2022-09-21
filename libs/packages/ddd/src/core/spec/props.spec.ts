@@ -1,4 +1,4 @@
-import { Props } from '../props'
+import { Props } from '../props.abstract'
 
 describe('Props', () => {
   type PropType = { foo: string; bar: string }

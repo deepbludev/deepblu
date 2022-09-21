@@ -1,4 +1,4 @@
-import { IProps, Props } from './props'
+import { IProps, Props } from './props.abstract'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface VOProps extends IProps {}
