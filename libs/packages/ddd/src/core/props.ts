@@ -1,5 +1,5 @@
 import { DomainObject } from '../types/domain-object.type'
-import { Serializable } from '../types/serializable.interface'
+import { ISerializable } from '../types/serializable.interface'
 import v from '../utils/validator'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -18,7 +18,7 @@ export interface IProps {
  * @see https://martinfowler.com/bliki/EvansClassification.html
  */
 export abstract class Props<P extends IProps = IProps>
-  implements Serializable<P>
+  implements ISerializable<P>
 {
   protected validator = v
   protected static validator = v

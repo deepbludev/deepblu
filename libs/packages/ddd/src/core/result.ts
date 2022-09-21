@@ -1,5 +1,5 @@
 import v from '../utils/validator'
-import { Serializable } from './types'
+import { ISerializable } from '../types/serializable.interface'
 
 export interface IResultObject<V, E extends Error = Error> {
   value: V
@@ -10,7 +10,7 @@ export interface IResultObject<V, E extends Error = Error> {
 
 export interface IResult<V, E extends Error = Error>
   extends IResultObject<V, E>,
-    Serializable<IResultObject<V, E>> {}
+    ISerializable<IResultObject<V, E>> {}
 
 /**
  * @class Result
