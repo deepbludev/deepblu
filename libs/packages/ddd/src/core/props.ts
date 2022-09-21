@@ -1,5 +1,7 @@
 import { Serializable } from './types'
 import v from '../utils/validator'
+import { InvalidPropError } from './errors'
+import { IResult, Result } from './result'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IProps {
