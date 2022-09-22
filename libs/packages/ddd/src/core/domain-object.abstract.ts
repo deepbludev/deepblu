@@ -1,14 +1,14 @@
-import { DomainObject } from './types/domain-object.type'
+import { DomainObjectType } from './types/domain-object.type'
 import { ISerializable } from './types/serializable.interface'
 import v from '../utils/validator'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export interface IProps {
+export interface IDomainObjectProps {
   [index: string]: any
 }
 
 /**
- * @class Props
+ * @class DomainObject
  * @abstract
  * @classdesc Props are the base class for all value objects and entities.
  * They are immutable objects that contain the state of the domain.
@@ -17,7 +17,7 @@ export interface IProps {
  * validity should be used instead.
  * @see https://martinfowler.com/bliki/EvansClassification.html
  */
-export abstract class Props<P extends IProps = IProps>
+export abstract class DomainObject<P extends IDomainObjectProps>
   implements ISerializable<P>
 {
   protected validator = v
@@ -25,17 +25,9 @@ export abstract class Props<P extends IProps = IProps>
 
   protected constructor(
     public readonly props: P,
-    public readonly domainObjectType: DomainObject = 'DomainObject'
+    public readonly domainObjectType: DomainObjectType = 'DomainObject'
   ) {
     this.props = Object.freeze({ ...props })
-  }
-
-  /**
-   * Getter for the props.
-   * @returns the value of a given prop
-   */
-  get<K extends keyof P>(key: K): P[K] {
-    return this.props[key]
   }
 
   /**
@@ -43,13 +35,13 @@ export abstract class Props<P extends IProps = IProps>
    * @abstract
    * @returns true if the props are equal in value.
    */
-  abstract equals(p: Props<P>): boolean
+  abstract equals(p: DomainObject<P>): boolean
 
   /**
    * Check if the props are of the same class.
    * @returns true if the props are of the same class.
    */
-  isSameClass(p: Props<P>): boolean {
+  isSameClass(p: DomainObject<P>): boolean {
     return this.constructor === p.constructor
   }
 
@@ -57,7 +49,7 @@ export abstract class Props<P extends IProps = IProps>
    * Check if the props are equal.
    * @returns true if the props are equal in value.
    */
-  hasEqualProps(p: Props<P>): boolean {
+  hasEqualProps(p: DomainObject<P>): boolean {
     if (Object.keys(this.props).length !== Object.keys(p.props).length)
       return false
     for (const key in this.props)
@@ -77,7 +69,7 @@ export abstract class Props<P extends IProps = IProps>
    * @description Method to validate prop value.
    * @param props to validate
    */
-  public static isValidProps(props: IProps): boolean {
+  public static isValidProps(props: IDomainObjectProps): boolean {
     return !this.validator.void(props)
   }
 }

@@ -1,9 +1,5 @@
-export type DomainObject =
+export type DomainObjectType =
+  | 'DomainObject'
   | 'Entity'
   | 'ValueObject'
   | 'AggregateRoot'
-  | 'DomainEvent'
-  | 'DomainService'
-  | 'DomainError'
-  | 'DomainModel'
-  | 'DomainObject'
