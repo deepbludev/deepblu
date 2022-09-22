@@ -24,13 +24,8 @@ export abstract class UniqueID
 
   cloneAsNew<UniqueID>(): UniqueID {
     const constructor = Reflect.getPrototypeOf(this)?.constructor || UniqueID
-    const clone = Reflect.construct(constructor, [
-      {
-        value: this.value,
-        isNew: true,
-      },
-    ])
-    return clone
+    const args = [{ value: this.value, isNew: true }]
+    return Reflect.construct(constructor, args)
   }
 
   get value(): string {
