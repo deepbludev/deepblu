@@ -13,11 +13,10 @@ export class ObjectID extends UniqueID {
   }
 
   static from(id: string): Result<ObjectID> {
+    const error = id + ' is not a valid ObjectId'
     return ObjectID.isValid(id)
       ? Result.ok(new ObjectID({ value: id }))
-      : Result.fail(
-          new InvalidPropError('ObjectId', id + ' is not a valid ObjectId')
-        )
+      : Result.fail(new InvalidPropError('ObjectId', error))
   }
 
   static create(): ObjectID {
