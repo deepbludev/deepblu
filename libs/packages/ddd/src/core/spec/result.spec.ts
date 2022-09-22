@@ -1,18 +1,18 @@
 import { Result } from '../result'
 
-type Payload = { foo: string }
+type DummyPayload = { foo: string }
 
 describe('Result', () => {
   it('should be defined', () => {
     expect(Result).toBeDefined()
   })
 
-  const value: Payload = { foo: 'bar' }
+  const value: DummyPayload = { foo: 'bar' }
   const message = 'test error'
-  let result: Result<Payload>
-  let results: Result<Payload>[]
-  let successes: Result<Payload>[]
-  let failures: Result<Payload>[]
+  let result: Result<DummyPayload>
+  let results: Result<DummyPayload>[]
+  let successes: Result<DummyPayload>[]
+  let failures: Result<DummyPayload>[]
 
   beforeAll(() => {
     result = Result.ok()
@@ -24,8 +24,8 @@ describe('Result', () => {
     })
 
     it('is a success', () => {
-      expect(result.isSuccess).toBe(true)
-      expect(result.isFailure).toBe(false)
+      expect(result.isOk).toBe(true)
+      expect(result.isFail).toBe(false)
     })
 
     it('contains the given result value', () => {
@@ -43,8 +43,8 @@ describe('Result', () => {
     })
 
     it('is a failure', () => {
-      expect(result.isSuccess).toBe(false)
-      expect(result.isFailure).toBe(true)
+      expect(result.isOk).toBe(false)
+      expect(result.isFail).toBe(true)
     })
 
     it('has a null result value', () => {
