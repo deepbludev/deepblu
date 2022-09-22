@@ -11,7 +11,7 @@ export class UUID extends UniqueID {
   static from(id: string): Result<UUID> {
     return UUID.isValid(id)
       ? Result.ok(new UUID({ value: id, isNew: false }))
-      : Result.fail(new InvalidPropError('uuid', id))
+      : Result.fail(new InvalidPropError('uuid', id + ' is not a valid UUID'))
   }
 
   static create(): UUID {
