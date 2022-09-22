@@ -20,8 +20,8 @@ export interface IDomainObjectProps {
 export abstract class DomainObject<P extends IDomainObjectProps>
   implements ISerializable<P>
 {
-  protected validator = v
-  protected static validator = v
+  protected static readonly validator = v
+  protected readonly validator = DomainObject.validator
 
   protected constructor(
     public readonly props: P,
