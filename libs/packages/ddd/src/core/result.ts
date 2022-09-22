@@ -1,5 +1,5 @@
 import v from '../utils/validator'
-import { ISerializable } from './types/serializable.interface'
+import { ISerializable } from '../types/serializable.interface'
 
 export interface IResultObject<V, E extends Error> {
   value: V

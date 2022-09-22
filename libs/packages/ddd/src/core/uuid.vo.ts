@@ -5,7 +5,7 @@ import { UniqueID } from './unique-id.abstract'
 
 export class UUID extends UniqueID {
   static isValid(value: string): value is string {
-    return uuid.validate(value)
+    return uuid.isValid(value)
   }
 
   static from(id: string): Result<UUID> {

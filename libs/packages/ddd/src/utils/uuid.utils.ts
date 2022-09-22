@@ -2,7 +2,7 @@ import * as uuidv4 from 'uuid'
 
 export const uuid = {
   create: (): string => uuidv4.v4(),
-  validate: (value: unknown): value is string => {
+  isValid: (value: unknown): value is string => {
     return typeof value === 'string' && uuidv4.validate(value)
   },
 }

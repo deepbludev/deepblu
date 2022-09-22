@@ -1,4 +1,4 @@
-import { IUniqueID } from './types/unique-id.interface'
+import { IUniqueID } from '../types/unique-id.interface'
 import { ValueObject, VOProps } from './value-object'
 
 export interface UniqueIDProps extends VOProps {
