@@ -16,9 +16,7 @@ describe('UniqueID', () => {
     expect(MockUniqueID).toBeDefined()
   })
   it('should be able to create a new instance', () => {
-    expect(id).toBeDefined()
     expect(id.value).toEqual('123')
-    expect(id.isNew).toEqual(true)
   })
 
   it('should be able to compare UUIDs', () => {
@@ -28,13 +26,9 @@ describe('UniqueID', () => {
 
   it('should be able to clone UUIDs', () => {
     const clone = id.clone<MockUniqueID>()
-    expect(clone).toBeDefined()
     expect(clone.value).toEqual('123')
-    expect(clone.isNew).toEqual(true)
 
     const clone2: MockUniqueID = id.clone()
-    expect(clone2).toBeDefined()
     expect(clone2.value).toEqual('123')
-    expect(clone2.isNew).toEqual(true)
   })
 })

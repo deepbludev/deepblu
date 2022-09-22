@@ -13,14 +13,17 @@ describe('UUID', () => {
   it('should be able to create a new instance', () => {
     const id = UUID.create()
     expect(id.value).toBeDefined()
-    expect(id.isNew).toEqual(true)
+  })
+
+  it('should validate props', () => {
+    expect(UUID.isValidProps({ value: uuid.create() })).toEqual(true)
+    expect(UUID.isValidProps({ value: 'invalid-uuid' })).toEqual(false)
   })
 
   it('should be able to create a non-new UUID from valid string', () => {
     const id = UUID.create()
     const id2 = UUID.from(id.value).value
     expect(id2.value).toEqual(id.value)
-    expect(id2.isNew).toEqual(false)
   })
 
   it('should be fail to create an UUID from invalid string', () => {

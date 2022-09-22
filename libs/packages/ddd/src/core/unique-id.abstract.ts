@@ -3,7 +3,6 @@ import { ValueObject, VOProps } from './value-object'
 
 export interface UniqueIDProps extends VOProps {
   value: string
-  isNew: boolean
 }
 
 export abstract class UniqueID
@@ -24,15 +23,11 @@ export abstract class UniqueID
 
   cloneAsNew<UniqueID>(): UniqueID {
     const constructor = Reflect.getPrototypeOf(this)?.constructor || UniqueID
-    const args = [{ value: this.value, isNew: true }]
+    const args = [{ value: this.value }]
     return Reflect.construct(constructor, args)
   }
 
   get value(): string {
     return this.props.value
-  }
-
-  get isNew(): boolean {
-    return this.props.isNew
   }
 }
