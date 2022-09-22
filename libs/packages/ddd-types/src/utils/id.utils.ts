@@ -1,4 +1,5 @@
 import * as uuidv4 from 'uuid'
+import { ObjectId } from 'mongodb'
 
 export const uuid = {
   create: (): string => uuidv4.v4(),
@@ -7,4 +8,14 @@ export const uuid = {
   },
 }
 
-export default uuid
+export const objectId = {
+  create: (): string => new ObjectId().toHexString(),
+  instance: ObjectId,
+}
+
+export const id = {
+  uuid,
+  objectId,
+}
+
+export default id
