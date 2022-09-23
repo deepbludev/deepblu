@@ -60,26 +60,11 @@ ClassDiagram [frame=true framecolor=steelblue label="Class Diagram"] {
     id: UUID
   }
 
-  Entity -c-> UUID
-
   class EntityWithObjectID extends BaseEntity {
-    id: ObjeciID
+    id: ObjectID
   }
 
-  EntityWithObjectID -c-> ObjectID
-
-  align {
-    UUID
-    ObjectID
-  }
-
-  align {
-    Entity
-    EntityWithObjectID
-  }
-
-
-
+  IIdentifiable -c-> UniqueID
 
 
 }
