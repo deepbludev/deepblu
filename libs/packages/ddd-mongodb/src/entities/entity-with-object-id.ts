@@ -1,4 +1,4 @@
-import { BaseEntity, id, IEntityProps } from '../core'
+import { BaseEntity, id, IEntityProps } from '@deepblu/ddd'
 import { ObjectID } from '../value-objects/object-id.vo'
 
 @id(ObjectID.create)

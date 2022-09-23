@@ -17,7 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@deepblu/ddd": ["libs/packages/ddd/src/index.ts"],
-      "@deepblu/ddd/types": ["libs/packages/ddd-types/src/index.ts"]
+      "@deepblu/ddd/mongodb": ["libs/packages/ddd-mongodb/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

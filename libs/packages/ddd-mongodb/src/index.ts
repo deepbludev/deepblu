@@ -1,5 +1,3 @@
-export * from './core'
-
 // entities
 export * from './entities/entity-with-object-id'
 

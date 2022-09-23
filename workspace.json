@@ -5,6 +5,6 @@
     "demo-tasks": "apps/demo/tasks",
     "demo-tasks-e2e": "apps/demo/tasks-e2e",
     "packages-ddd": "libs/packages/ddd",
-    "packages-ddd-types": "libs/packages/ddd-types"
+    "packages-ddd-mongodb": "libs/packages/ddd-mongodb"
   }
 }

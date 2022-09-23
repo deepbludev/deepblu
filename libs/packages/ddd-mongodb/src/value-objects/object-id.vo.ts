@@ -1,5 +1,5 @@
 import { ObjectId as MongoObjectID } from 'mongodb'
-import { InvalidPropError, UniqueIDProps } from '../core'
+import { InvalidPropError, UniqueIDProps } from '@deepblu/ddd'
 import { Result } from '@deepblu/ddd'
 import { UniqueID } from '@deepblu/ddd'
 

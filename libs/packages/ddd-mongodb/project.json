@@ -1,16 +1,16 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/packages/ddd-types/src",
+  "sourceRoot": "libs/packages/ddd-mongodb/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/packages/ddd-types",
-        "main": "libs/packages/ddd-types/src/index.ts",
-        "tsConfig": "libs/packages/ddd-types/tsconfig.lib.json",
-        "assets": ["libs/packages/ddd-types/*.md"]
+        "outputPath": "dist/libs/packages/ddd-mongodb",
+        "main": "libs/packages/ddd-mongodb/src/index.ts",
+        "tsConfig": "libs/packages/ddd-mongodb/tsconfig.lib.json",
+        "assets": ["libs/packages/ddd-mongodb/*.md"]
       }
     },
     "publish": {
@@ -29,14 +29,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/packages/ddd-types/**/*.ts"]
+        "lintFilePatterns": ["libs/packages/ddd-mongodb/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/packages/ddd-types"],
+      "outputs": ["coverage/libs/packages/ddd-mongodb"],
       "options": {
-        "jestConfig": "libs/packages/ddd-types/jest.config.ts",
+        "jestConfig": "libs/packages/ddd-mongodb/jest.config.ts",
         "passWithNoTests": true
       }
     }
