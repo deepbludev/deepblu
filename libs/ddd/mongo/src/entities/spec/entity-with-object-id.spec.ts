@@ -28,6 +28,7 @@ describe('EntityWithObjectID', () => {
   it('should have a valid objectid as id', () => {
     expect(entity.id).toBeInstanceOf(ObjectID)
     expect(entity.id.value.length).toBe(24)
+    expect(ObjectID.isValid(entity.id.value)).toBeTruthy()
   })
 
   it('should be a Entity domain object type', () => {
