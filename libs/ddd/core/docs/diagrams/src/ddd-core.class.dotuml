@@ -1,4 +1,4 @@
-ClassDiagram [frame=true framecolor=steelblue label="Class Diagram"] {
+ClassDiagram [frame=true framecolor=steelblue label="DDD Core Class Diagram"] {
 
   interface ISerializable {
     serialize(): T
@@ -10,8 +10,6 @@ ClassDiagram [frame=true framecolor=steelblue label="Class Diagram"] {
     isFail: boolean
     isOk: boolean
   }
-
-
 
   class Result extends IResult implements ISerializable {
     static ok(value: V): Result
@@ -60,7 +58,7 @@ ClassDiagram [frame=true framecolor=steelblue label="Class Diagram"] {
     id: UUID
   }
 
-  class EntityWithObjectID extends BaseEntity {
+  class EntityOID extends BaseEntity {
     id: ObjectID
   }
 

@@ -1,5 +1,5 @@
 // entities
-export * from './entities/entity-with-object-id'
+export * from './entities/entity-oid'
 
 // value-objects
 export * from './value-objects/object-id.vo'
