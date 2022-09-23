@@ -1,0 +1,85 @@
+ClassDiagram [frame=true framecolor=steelblue label="Class Diagram"] {
+
+  interface ISerializable {
+    serialize(): T
+  }
+
+  interface IResult {
+    value: V
+    error: E
+    isFail: boolean
+    isOk: boolean
+  }
+
+
+
+  class Result extends IResult implements ISerializable {
+    static ok(value: V): Result
+    static fail(error: Error): Result
+    static fail(error: string): Result
+    static combine(results: Array): Result
+  }
+
+  abstract class DomainObject implements ISerializable {
+    props: P
+    domainObjectType: DomainObjectType
+    static isValidProps(props: P): boolean
+    abstract equals(p: DomainObject): boolean
+    isSameClass(p: DomainObject): boolean
+    hasEqualProps(p: DomainObject): boolean
+    serialize(): P
+  }
+
+  class ValueObject extends DomainObject {
+    domainObjectType = 'ValueObject'
+    clone(): ValueObject
+  }
+
+  class UniqueID extends ValueObject {
+    value: string
+    cloneAsNew(): UniqueID
+    static create(from: string): UniqueID
+  }
+
+  class UUID extends UniqueID {
+  }
+
+  class ObjectID extends UniqueID {
+  }
+
+  interface IIdentifiable {
+    id: UniqueID
+  }
+
+  abstract class BaseEntity extends DomainObject implements IIdentifiable {
+    domainObjectType = 'Entity'
+    clone(): ValueObject
+  }
+
+  class Entity extends BaseEntity {
+    id: UUID
+  }
+
+  Entity -c-> UUID
+
+  class EntityWithObjectID extends BaseEntity {
+    id: ObjeciID
+  }
+
+  EntityWithObjectID -c-> ObjectID
+
+  align {
+    UUID
+    ObjectID
+  }
+
+  align {
+    Entity
+    EntityWithObjectID
+  }
+
+
+
+
+
+}

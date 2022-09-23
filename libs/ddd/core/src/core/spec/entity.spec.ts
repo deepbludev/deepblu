@@ -1,4 +1,5 @@
-import { Entity, id, IEntityProps } from '../entity'
+import { Entity } from '../entity'
+import { BaseEntity, id, IEntityProps } from '../base-entity.abstract'
 import { UUID } from '../uuid.vo'
 
 interface Props extends IEntityProps {
@@ -21,7 +22,7 @@ class TestEntity2 extends Entity<Props> {
 @id(() => {
   return UUID.from('ebf75941-6861-4c19-ab1e-ae56ba059003').value
 })
-class TestEntityWithIDGenerator extends Entity<Props> {
+class TestEntityWithIDGenerator extends BaseEntity<Props, UUID> {
   constructor(props: Props, id?: UUID) {
     super(props, id)
   }

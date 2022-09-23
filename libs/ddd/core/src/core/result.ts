@@ -1,16 +1,6 @@
 import v from '../utils/validator'
 import { ISerializable } from '../types/serializable.interface'
-
-export interface IResultObject<V, E extends Error> {
-  value: V
-  error: E
-  isFail: boolean
-  isOk: boolean
-}
-
-export interface IResult<V, E extends Error>
-  extends IResultObject<V, E>,
-    ISerializable<IResultObject<V, E>> {}
+import { IResult } from '../types/result.interface'
 
 /**
  * @class Result
@@ -23,7 +13,7 @@ export interface IResult<V, E extends Error>
  * @see https://en.wikipedia.org/wiki/Monad_(functional_programming)
  */
 export class Result<V = void, E extends Error = Error>
-  implements IResult<V, E>
+  implements IResult<V, E>, ISerializable<IResult<V, E>>
 {
   protected constructor(
     public readonly isOk: boolean,
@@ -52,7 +42,7 @@ export class Result<V = void, E extends Error = Error>
     return Result.ok()
   }
 
-  serialize(): IResultObject<V, E> {
+  serialize(): IResult<V, E> {
     return {
       value: this.value,
       error: this.error,
