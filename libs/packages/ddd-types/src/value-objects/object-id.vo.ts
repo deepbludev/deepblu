@@ -1,5 +1,5 @@
 import { ObjectId as MongoObjectID } from 'mongodb'
-import { InvalidPropError, UniqueIDProps } from '@deepblu/ddd'
+import { InvalidPropError, UniqueIDProps } from '../core'
 import { Result } from '@deepblu/ddd'
 import { UniqueID } from '@deepblu/ddd'
 
@@ -19,7 +19,7 @@ export class ObjectID extends UniqueID {
       : Result.fail(new InvalidPropError('ObjectId', error))
   }
 
-  static create(): ObjectID {
+  static override create(): ObjectID {
     return new ObjectID({
       value: new MongoObjectID().toHexString(),
       isNew: true,
