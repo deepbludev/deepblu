@@ -1,5 +1,5 @@
 {
-  "name": "@deepblu/ddd/mongodb",
+  "name": "@deepblu/ddd/mongo",
   "version": "0.0.1",
   "type": "commonjs"
 }

@@ -2,9 +2,9 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "ddd-core": "libs/ddd/core",
+    "ddd-mongo": "libs/ddd/mongo",
     "demo-tasks": "apps/demo/tasks",
-    "demo-tasks-e2e": "apps/demo/tasks-e2e",
-    "packages-ddd": "libs/packages/ddd",
-    "packages-ddd-mongodb": "libs/packages/ddd-mongodb"
+    "demo-tasks-e2e": "apps/demo/tasks-e2e"
   }
 }

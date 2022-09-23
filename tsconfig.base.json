@@ -11,14 +11,24 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2022", "dom"],
+    "lib": [
+      "es2022",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@deepblu/ddd": ["libs/packages/ddd/src/index.ts"],
-      "@deepblu/ddd/mongodb": ["libs/packages/ddd-mongodb/src/index.ts"]
+      "@deepblu/ddd/mongo": [
+        "libs/ddd/mongo/src/index.ts"
+      ],
+      "@deepblu/ddd": [
+        "libs/ddd/core/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
