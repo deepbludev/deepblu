@@ -5,10 +5,7 @@ export interface UniqueIDProps extends VOProps {
   value: string
 }
 
-export abstract class UniqueID
-  extends ValueObject<UniqueIDProps>
-  implements IUniqueID
-{
+export class UniqueID extends ValueObject<UniqueIDProps> implements IUniqueID {
   protected constructor(props: UniqueIDProps) {
     super(props)
   }
@@ -29,5 +26,9 @@ export abstract class UniqueID
 
   get value(): string {
     return this.props.value
+  }
+
+  static create(from?: string): UniqueID {
+    return new UniqueID({ value: from ?? '' })
   }
 }

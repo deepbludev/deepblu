@@ -1,18 +1,28 @@
-import { Entity, EntityProps } from '../entity'
+import { Entity, id, IEntityProps } from '../entity'
 import { UUID } from '../uuid.vo'
 
-interface PropType extends EntityProps {
+interface Props extends IEntityProps {
   foo: string
   is: boolean
 }
-class TestEntity extends Entity<PropType> {
-  constructor(props: PropType, id?: UUID) {
+
+class TestEntity extends Entity<Props> {
+  constructor(props: Props, id?: UUID) {
     super(props, id)
   }
 }
 
-class TestEntity2 extends Entity<PropType> {
-  constructor(props: PropType, id?: UUID) {
+class TestEntity2 extends Entity<Props> {
+  constructor(props: Props, id?: UUID) {
+    super(props, id)
+  }
+}
+
+@id(() => {
+  return UUID.from('ebf75941-6861-4c19-ab1e-ae56ba059003').value
+})
+class TestEntityWithIDGenerator extends Entity<Props> {
+  constructor(props: Props, id?: UUID) {
     super(props, id)
   }
 }
@@ -50,5 +60,13 @@ describe('Entity', () => {
   it('should be able to clone entities', () => {
     const entity1 = entity.clone()
     expect(entity.equals(entity1)).toBeTruthy()
+  })
+
+  it('should be able to create a new instance with a generator', () => {
+    const entity = new TestEntityWithIDGenerator({ foo: 'bar', is: true })
+    expect(entity).toBeDefined()
+    expect(entity.props).toEqual({ foo: 'bar', is: true })
+    expect(entity.id).toBeDefined()
+    expect(entity.id.value).toEqual('ebf75941-6861-4c19-ab1e-ae56ba059003')
   })
 })

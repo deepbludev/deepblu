@@ -1,7 +1,7 @@
 import uuid from '../utils/uuid.utils'
 import { InvalidPropError } from './errors'
 import { Result } from './result'
-import { UniqueID, UniqueIDProps } from './unique-id.abstract'
+import { UniqueID, UniqueIDProps } from './unique-id'
 
 export class UUID extends UniqueID {
   static isValid(value: string): value is string {
@@ -18,7 +18,7 @@ export class UUID extends UniqueID {
       : Result.fail(new InvalidPropError('uuid', id + ' is not a valid UUID'))
   }
 
-  static create(): UUID {
+  static override create(): UUID {
     return new UUID({ value: uuid.create() })
   }
 }

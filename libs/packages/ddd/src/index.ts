@@ -3,8 +3,9 @@ export * from './core/result'
 export * from './core/errors'
 export * from './core/domain-object.abstract'
 export * from './core/value-object'
-export * from './core/unique-id.abstract'
+export * from './core/unique-id'
 export * from './core/uuid.vo'
+export * from './core/entity'
 
 // types
 export * from './types/serializable.interface'

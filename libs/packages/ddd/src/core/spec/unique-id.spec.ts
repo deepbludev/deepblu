@@ -1,4 +1,4 @@
-import { UniqueID, UniqueIDProps } from '../unique-id.abstract'
+import { UniqueID, UniqueIDProps } from '../unique-id'
 
 class MockUniqueID extends UniqueID {
   constructor(props: UniqueIDProps) {
