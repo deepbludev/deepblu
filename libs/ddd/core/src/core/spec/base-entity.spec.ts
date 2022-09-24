@@ -1,20 +1,29 @@
-import { ObjectID } from '../../value-objects/object-id.vo'
-import { EntityWithObjectID } from '../entity-oid'
+import { UUID } from '../uuid.vo'
+import { BaseEntity, unique, IEntityProps } from '../base-entity.abstract'
+import { Entity } from '../entity'
 
-interface Props {
+interface Props extends IEntityProps {
   foo: string
   is: boolean
 }
 
-class TestEntity extends EntityWithObjectID<Props> {
-  constructor(props: Props, id?: ObjectID) {
+@unique(() => UUID.create())
+class TestEntity extends BaseEntity<Props, UUID> {
+  constructor(props: Props, id?: UUID) {
     super(props, id)
   }
 }
 
-describe('EntityWithObjectID', () => {
+@unique(() => UUID.create())
+class TestEntity2 extends BaseEntity<Props, UUID> {
+  constructor(props: Props, id?: UUID) {
+    super(props, id)
+  }
+}
+
+describe('Entity', () => {
   it('should be defined', () => {
-    expect(EntityWithObjectID).toBeDefined()
+    expect(Entity).toBeDefined()
   })
 
   const entity = new TestEntity({ foo: 'bar', is: true })
@@ -23,12 +32,6 @@ describe('EntityWithObjectID', () => {
     expect(entity).toBeDefined()
     expect(entity.props).toEqual({ foo: 'bar', is: true })
     expect(entity.id).toBeDefined()
-  })
-
-  it('should have a valid objectid as id', () => {
-    expect(entity.id).toBeInstanceOf(ObjectID)
-    expect(entity.id.value.length).toBe(24)
-    expect(ObjectID.isValid(entity.id.value)).toBeTruthy()
   })
 
   it('should be a Entity domain object type', () => {
@@ -43,8 +46,13 @@ describe('EntityWithObjectID', () => {
     expect(entity.equals(entity)).toBeTruthy()
   })
 
+  it('should be able to compare of different class', () => {
+    const entity2 = new TestEntity2({ foo: 'bar', is: true }, entity.id)
+    expect(entity.equals(entity2)).toBeFalsy()
+  })
+
   it('should be able to clone entities', () => {
-    const entity1 = entity.clone<TestEntity>()
+    const entity1 = entity.clone()
     expect(entity.equals(entity1)).toBeTruthy()
   })
 })

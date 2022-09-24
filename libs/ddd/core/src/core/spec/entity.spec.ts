@@ -1,6 +1,8 @@
-import { Entity } from '../entity'
-import { BaseEntity, id, IEntityProps } from '../base-entity.abstract'
 import { UUID } from '../uuid.vo'
+import { IEntityProps } from '../base-entity.abstract'
+import { Entity } from '../entity'
+import { Result } from '../result'
+import { InvalidPropError } from '../errors'
 
 interface Props extends IEntityProps {
   foo: string
@@ -11,18 +13,17 @@ class TestEntity extends Entity<Props> {
   constructor(props: Props, id?: UUID) {
     super(props, id)
   }
-}
 
-class TestEntity2 extends Entity<Props> {
-  constructor(props: Props, id?: UUID) {
-    super(props, id)
+  static create(props: Props, id?: UUID): Result<TestEntity> {
+    return !this.isValidProps(props)
+      ? Result.fail(
+          new InvalidPropError('props', 'Invalid props' + props.toString())
+        )
+      : Result.ok(new TestEntity(props, id))
   }
 }
 
-@id(() => {
-  return UUID.from('ebf75941-6861-4c19-ab1e-ae56ba059003').value
-})
-class TestEntityWithIDGenerator extends BaseEntity<Props, UUID> {
+class TestEntity2 extends Entity<Props> {
   constructor(props: Props, id?: UUID) {
     super(props, id)
   }
@@ -63,11 +64,10 @@ describe('Entity', () => {
     expect(entity.equals(entity1)).toBeTruthy()
   })
 
-  it('should be able to create a new instance with a generator', () => {
-    const entity = new TestEntityWithIDGenerator({ foo: 'bar', is: true })
-    expect(entity).toBeDefined()
-    expect(entity.props).toEqual({ foo: 'bar', is: true })
-    expect(entity.id).toBeDefined()
-    expect(entity.id.value).toEqual('ebf75941-6861-4c19-ab1e-ae56ba059003')
+  it('should be able to create a new instance with create method', () => {
+    const result = TestEntity.create({ foo: 'bar', is: true })
+    expect(result.isOk).toBeTruthy()
+    expect(result.value.props).toEqual({ foo: 'bar', is: true })
+    expect(result.value.id).toBeDefined()
   })
 })
