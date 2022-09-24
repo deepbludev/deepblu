@@ -15,11 +15,9 @@ class TestEntity extends Entity<Props> {
   }
 
   static create(props: Props, id?: UUID): Result<TestEntity> {
-    return !this.isValidProps(props)
-      ? Result.fail(
-          new InvalidPropError('props', 'Invalid props' + props.toString())
-        )
-      : Result.ok(new TestEntity(props, id))
+    return this.isValidProps(props)
+      ? Result.ok(new TestEntity(props, id))
+      : Result.fail(new InvalidPropError('props', 'Invalid props'))
   }
 }
 
