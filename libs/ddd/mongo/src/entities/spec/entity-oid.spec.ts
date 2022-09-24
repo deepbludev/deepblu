@@ -1,12 +1,12 @@
 import { ObjectID } from '../../value-objects/object-id.vo'
-import { EntityWithObjectID } from '../entity-oid'
+import { EntityOID } from '../entity-oid'
 
 interface Props {
   foo: string
   is: boolean
 }
 
-class TestEntity extends EntityWithObjectID<Props> {
+class TestEntity extends EntityOID<Props> {
   constructor(props: Props, id?: ObjectID) {
     super(props, id)
   }
@@ -14,7 +14,7 @@ class TestEntity extends EntityWithObjectID<Props> {
 
 describe('EntityWithObjectID', () => {
   it('should be defined', () => {
-    expect(EntityWithObjectID).toBeDefined()
+    expect(EntityOID).toBeDefined()
   })
 
   const entity = new TestEntity({ foo: 'bar', is: true })
