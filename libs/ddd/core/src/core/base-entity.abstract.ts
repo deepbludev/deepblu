@@ -75,12 +75,14 @@ export abstract class BaseEntity<P extends IEntityProps, I extends UniqueID>
  * @returns class decorator
  */
 export const unique = <I extends typeof UniqueID>(idType: I) =>
-  function <T extends { new (...args: any[]): {} }>(EntityClass: T) {
-    return class extends EntityClass {
+  function <T extends { new (...args: any[]): {} }>(BaseClass: T) {
+    const UniqueClass = class extends BaseClass {
       readonly id: I
       protected constructor(...[props, id]: any[]) {
         super(props)
         this.id = id ?? idType.create()
       }
     }
+    Object.defineProperty(UniqueClass, 'name', { value: BaseClass.name })
+    return UniqueClass
   }

@@ -1,6 +1,5 @@
 import { UUID } from '../uuid.vo'
 import { BaseEntity, unique, IEntityProps } from '../base-entity.abstract'
-import { Entity } from '../entity'
 
 interface Props extends IEntityProps {
   foo: string
@@ -22,8 +21,13 @@ class TestEntity2 extends BaseEntity<Props, UUID> {
 }
 
 describe('Entity', () => {
-  it('should be defined', () => {
-    expect(Entity).toBeDefined()
+  it('should be defined and have the correct class name', () => {
+    expect(BaseEntity).toBeDefined()
+    expect(TestEntity).toBeDefined()
+  })
+
+  it('should have the correct class name', () => {
+    expect(TestEntity.name).toEqual('TestEntity')
   })
 
   const entity = new TestEntity({ foo: 'bar', is: true })
