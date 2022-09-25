@@ -21,24 +21,23 @@ export interface IEntityProps extends IDomainObjectProps {}
  * @see https://martinfowler.com/bliki/EvansClassification.html
  */
 
-export abstract class BaseEntity<P extends IEntityProps, TID extends UniqueID>
+export abstract class BaseEntity<P extends IEntityProps, I extends UniqueID>
   extends DomainObject<P>
-  implements IIdentifiable<TID>
+  implements IIdentifiable<I>
 {
-  public readonly id: TID
-  protected readonly _generator: IGenerator<TID> = () =>
-    UniqueID.create() as TID
+  public readonly id: I
+  protected readonly _generator: IGenerator<I> = () => UniqueID.create() as I
 
-  protected constructor(props: P, id?: TID) {
+  protected constructor(props: P, id?: I) {
     super(props, 'Entity')
-    this.id = id ?? (this._generator() as TID)
+    this.id = id ?? (this._generator() as I)
   }
 
   /**
    * @description Entities are compared by their id and class.
    * @returns true if the value objects are equal in value.
    */
-  equals<E extends BaseEntity<P, TID>>(entity: E): boolean {
+  equals<E extends BaseEntity<P, I>>(entity: E): boolean {
     return this.isSameClass(entity) && this.id.equals(entity.id)
   }
 
@@ -46,7 +45,7 @@ export abstract class BaseEntity<P extends IEntityProps, TID extends UniqueID>
    * @description Get an instance copy.
    * @returns a copy of the entity.
    */
-  clone<E extends BaseEntity<P, TID>>(): E {
+  clone<E extends BaseEntity<P, I>>(): E {
     const constructor = Reflect.getPrototypeOf(this)?.constructor
     if (!constructor) throw new Error('Cannot clone entity')
     return Reflect.construct(constructor, [this.props, this.id.clone()])
