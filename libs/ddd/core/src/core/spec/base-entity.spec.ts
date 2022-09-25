@@ -7,14 +7,14 @@ interface Props extends IEntityProps {
   is: boolean
 }
 
-@unique(() => UUID.create())
+@unique(UUID)
 class TestEntity extends BaseEntity<Props, UUID> {
   constructor(props: Props, id?: UUID) {
     super(props, id)
   }
 }
 
-@unique(() => UUID.create())
+@unique(UUID)
 class TestEntity2 extends BaseEntity<Props, UUID> {
   constructor(props: Props, id?: UUID) {
     super(props, id)
@@ -52,7 +52,7 @@ describe('Entity', () => {
   })
 
   it('should be able to clone entities', () => {
-    const entity1 = entity.clone()
+    const entity1 = entity.clone<TestEntity>()
     expect(entity.equals(entity1)).toBeTruthy()
   })
 })

@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-empty-interface */
+
 import { IIdentifiable } from '../types/identifiable.interface'
 import { IDomainObjectProps, DomainObject } from './domain-object.abstract'
 import { UniqueID } from './unique-id'
 
 export type IGenerator<T extends UniqueID> = () => T
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IEntityProps extends IDomainObjectProps {}
 
 /**
@@ -61,27 +64,23 @@ export abstract class BaseEntity<P extends IEntityProps, I extends UniqueID>
  * in a ValueObject class.
  *
  * @example
- * @id(ObjectID.create)
+ * @id(ObjectID)
  * class MyEntity extends BaseEntity<Props, ObjectID> {
  *   constructor(props: MyEntityProps, id?: ObjectID) {
  *     super(props, id)
  *   }
  * }
  *
- * @param generator A function that generates UniqueID values for the entity.
+ * @param idType A class that extends UniqueID.
  * @returns class decorator
  */
-export const unique = <I extends UniqueID>(generator: IGenerator<I>) =>
-  function <
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
-    T extends { new (...args: any[]): {} }
-  >(EntityClass: T) {
+export const unique = <I extends typeof UniqueID>(idType: I) =>
+  function <T extends { new (...args: any[]): {} }>(EntityClass: T) {
     return class extends EntityClass {
-      readonly id: ReturnType<typeof generator>
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      readonly id: I
       protected constructor(...[props, id]: any[]) {
         super(props)
-        this.id = id ?? generator()
+        this.id = id ?? idType.create()
       }
     }
   }
