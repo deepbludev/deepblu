@@ -1,20 +1,19 @@
 import { UUID } from '../uuid.vo'
 import { BaseEntity, unique, IEntityProps } from '../base-entity.abstract'
-import { Entity } from '../entity'
 
 interface Props extends IEntityProps {
   foo: string
   is: boolean
 }
 
-@unique(() => UUID.create())
+@unique(UUID)
 class TestEntity extends BaseEntity<Props, UUID> {
   constructor(props: Props, id?: UUID) {
     super(props, id)
   }
 }
 
-@unique(() => UUID.create())
+@unique(UUID)
 class TestEntity2 extends BaseEntity<Props, UUID> {
   constructor(props: Props, id?: UUID) {
     super(props, id)
@@ -22,8 +21,13 @@ class TestEntity2 extends BaseEntity<Props, UUID> {
 }
 
 describe('Entity', () => {
-  it('should be defined', () => {
-    expect(Entity).toBeDefined()
+  it('should be defined and have the correct class name', () => {
+    expect(BaseEntity).toBeDefined()
+    expect(TestEntity).toBeDefined()
+  })
+
+  it('should have the correct class name', () => {
+    expect(TestEntity.name).toEqual('TestEntity')
   })
 
   const entity = new TestEntity({ foo: 'bar', is: true })
@@ -52,7 +56,7 @@ describe('Entity', () => {
   })
 
   it('should be able to clone entities', () => {
-    const entity1 = entity.clone()
+    const entity1 = entity.clone<TestEntity>()
     expect(entity.equals(entity1)).toBeTruthy()
   })
 })

@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-empty-interface */
+
 import { IIdentifiable } from '../types/identifiable.interface'
 import { IDomainObjectProps, DomainObject } from './domain-object.abstract'
 import { UniqueID } from './unique-id'
 
 export type IGenerator<T extends UniqueID> = () => T
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IEntityProps extends IDomainObjectProps {}
 
 /**
@@ -21,24 +24,23 @@ export interface IEntityProps extends IDomainObjectProps {}
  * @see https://martinfowler.com/bliki/EvansClassification.html
  */
 
-export abstract class BaseEntity<P extends IEntityProps, TID extends UniqueID>
+export abstract class BaseEntity<P extends IEntityProps, I extends UniqueID>
   extends DomainObject<P>
-  implements IIdentifiable<TID>
+  implements IIdentifiable<I>
 {
-  public readonly id: TID
-  protected readonly _generator: IGenerator<TID> = () =>
-    UniqueID.create() as TID
+  public readonly id: I
+  protected readonly _generator: IGenerator<I> = () => UniqueID.create() as I
 
-  protected constructor(props: P, id?: TID) {
+  protected constructor(props: P, id?: I) {
     super(props, 'Entity')
-    this.id = id ?? (this._generator() as TID)
+    this.id = id ?? (this._generator() as I)
   }
 
   /**
    * @description Entities are compared by their id and class.
    * @returns true if the value objects are equal in value.
    */
-  equals<E extends BaseEntity<P, TID>>(entity: E): boolean {
+  equals<E extends BaseEntity<P, I>>(entity: E): boolean {
     return this.isSameClass(entity) && this.id.equals(entity.id)
   }
 
@@ -46,7 +48,7 @@ export abstract class BaseEntity<P extends IEntityProps, TID extends UniqueID>
    * @description Get an instance copy.
    * @returns a copy of the entity.
    */
-  clone<E extends BaseEntity<P, TID>>(): E {
+  clone<E extends BaseEntity<P, I>>(): E {
     const constructor = Reflect.getPrototypeOf(this)?.constructor
     if (!constructor) throw new Error('Cannot clone entity')
     return Reflect.construct(constructor, [this.props, this.id.clone()])
@@ -62,27 +64,25 @@ export abstract class BaseEntity<P extends IEntityProps, TID extends UniqueID>
  * in a ValueObject class.
  *
  * @example
- * @id(ObjectID.create)
+ * @id(ObjectID)
  * class MyEntity extends BaseEntity<Props, ObjectID> {
  *   constructor(props: MyEntityProps, id?: ObjectID) {
  *     super(props, id)
  *   }
  * }
  *
- * @param generator A function that generates UniqueID values for the entity.
+ * @param idType A class that extends UniqueID.
  * @returns class decorator
  */
-export const unique = <I extends UniqueID>(generator: IGenerator<I>) =>
-  function <
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
-    T extends { new (...args: any[]): {} }
-  >(EntityClass: T) {
-    return class extends EntityClass {
-      readonly id: ReturnType<typeof generator>
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const unique = <I extends typeof UniqueID>(idType: I) =>
+  function <T extends { new (...args: any[]): {} }>(BaseClass: T) {
+    const UniqueClass = class extends BaseClass {
+      readonly id: I
       protected constructor(...[props, id]: any[]) {
         super(props)
-        this.id = id ?? generator()
+        this.id = id ?? idType.create()
       }
     }
+    Object.defineProperty(UniqueClass, 'name', { value: BaseClass.name })
+    return UniqueClass
   }
