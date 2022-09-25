@@ -53,13 +53,32 @@ export class UniqueID extends ValueObject<UniqueIDProps> implements IUniqueID {
   }
 }
 
+/**
+ * Decorator to create a unique ID class with a static create method
+ * with the given generator and validator functions.
+ * @example
+ * <pre>
+ * @id({
+ *  generator: () => new ObjectID().toHexString(),
+ *  validator: (id: string) => ObjectID.isValid(id)
+ * })
+ * class ObjectID extends UniqueID {
+ *   constructor(props: UniqueIDProps) {
+ *     super(props)
+ *   }
+ * }
+ *</pre>
+ *
+ * @param opts Options for the ID class. Object containing the generator and validator functions.
+ * @returns class decorator
+ */
 export const id = (opts: {
   generator: () => string
   validator: (id: string) => boolean
 }) =>
   function <
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
-    T extends { new (...args: any[]): {} } & {
+    T extends typeof UniqueID & {
       generate: () => string
       validate: (id: string) => boolean
     }
