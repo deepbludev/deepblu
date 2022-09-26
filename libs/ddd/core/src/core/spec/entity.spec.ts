@@ -65,7 +65,7 @@ describe('Entity', () => {
   it('should be able to create a new instance with create method', () => {
     const result = TestEntity.create({ foo: 'bar', is: true })
     expect(result.isOk).toBeTruthy()
-    expect(result.value.props).toEqual({ foo: 'bar', is: true })
-    expect(result.value.id).toBeDefined()
+    expect(result.data.props).toEqual({ foo: 'bar', is: true })
+    expect(result.data.id).toBeDefined()
   })
 })

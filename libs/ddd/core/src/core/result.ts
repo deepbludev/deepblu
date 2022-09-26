@@ -21,8 +21,8 @@ export class Result<V = void, E extends Error = Error>
     private readonly _error: E | null
   ) {}
 
-  public static ok<V, E extends Error = Error>(value?: V): Result<V, E> {
-    return new Result(true, value, null) as unknown as Result<V, E>
+  public static ok<V, E extends Error = Error>(payload?: V): Result<V, E> {
+    return new Result(true, payload, null) as unknown as Result<V, E>
   }
 
   public static fail<V, E extends Error>(
@@ -44,7 +44,7 @@ export class Result<V = void, E extends Error = Error>
 
   serialize(): IResult<V, E> {
     return {
-      value: this.value,
+      data: this.data,
       error: this.error,
       isFail: this.isFail,
       isOk: this.isOk,
@@ -55,7 +55,7 @@ export class Result<V = void, E extends Error = Error>
     return !this.isOk
   }
 
-  get value() {
+  get data() {
     return this._payload as V
   }
 

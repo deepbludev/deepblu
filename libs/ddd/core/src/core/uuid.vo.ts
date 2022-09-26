@@ -1,5 +1,5 @@
 import { uuid } from '../utils/id.utils'
-import { id, UniqueID, UniqueIDProps } from './unique-id'
+import { id, UniqueID, UniqueIDProps } from './unique-id.vo'
 
 @id({
   generator: uuid.create,

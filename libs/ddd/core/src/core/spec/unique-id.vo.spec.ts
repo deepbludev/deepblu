@@ -1,5 +1,5 @@
 import { InvalidPropError } from '../errors'
-import { id, UniqueID, UniqueIDProps } from '../unique-id'
+import { id, UniqueID, UniqueIDProps } from '../unique-id.vo'
 
 @id({
   generator: () => 'valid' + UniqueID.generate(),
@@ -22,8 +22,8 @@ describe('UniqueID', () => {
     expect(MockUniqueID).toBeDefined()
   })
   it('should be able to create a new instance from a value', () => {
-    expect(id.value.value).toEqual('valid')
     expect(id.isOk).toBeTruthy()
+    expect(id.data.value).toEqual('valid')
   })
 
   it('should fail with invalid value', () => {
@@ -34,15 +34,15 @@ describe('UniqueID', () => {
   })
 
   it('should be able to compare UUIDs', () => {
-    expect(id.value.equal(id2.value)).toEqual(true)
-    expect(id.value.equal(id3.value)).toEqual(false)
+    expect(id.data.equal(id2.data)).toEqual(true)
+    expect(id.data.equal(id3.data)).toEqual(false)
   })
 
   it('should be able to clone UUIDs', () => {
-    const clone = id.value.clone<MockUniqueID>()
+    const clone = id.data.clone<MockUniqueID>()
     expect(clone.value).toEqual('valid')
 
-    const clone2: MockUniqueID = id.value.clone()
+    const clone2: MockUniqueID = id.data.clone()
     expect(clone2.value).toEqual('valid')
   })
 

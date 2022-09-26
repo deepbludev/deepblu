@@ -29,7 +29,7 @@ describe('Result', () => {
     })
 
     it('contains the given result value', () => {
-      expect(result.value).toBe(value)
+      expect(result.data).toBe(value)
     })
 
     it('has an empty null error', () => {
@@ -48,7 +48,7 @@ describe('Result', () => {
     })
 
     it('has a null result value', () => {
-      expect(result.value).toBeNull()
+      expect(result.data).toBeNull()
     })
 
     it('has an error', () => {
@@ -82,7 +82,7 @@ describe('Result', () => {
       expect(result.serialize()).toEqual({
         isOk: true,
         isFail: false,
-        value: result.value,
+        data: result.data,
         error: null,
       })
 
@@ -90,7 +90,7 @@ describe('Result', () => {
       expect(result.serialize()).toEqual({
         isOk: false,
         isFail: true,
-        value: null,
+        data: null,
         error: result.error,
       })
     })

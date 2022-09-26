@@ -1,5 +1,5 @@
 export interface IResult<V, E extends Error> {
-  value: V
+  data: V
   error: E
   isFail: boolean
   isOk: boolean

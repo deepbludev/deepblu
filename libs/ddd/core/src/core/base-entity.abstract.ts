@@ -4,7 +4,7 @@
 
 import { IIdentifiable } from '../types/identifiable.interface'
 import { IDomainObjectProps, DomainObject } from './domain-object.abstract'
-import { UniqueID } from './unique-id'
+import { UniqueID } from './unique-id.vo'
 
 export interface IEntityProps extends IDomainObjectProps {}
 

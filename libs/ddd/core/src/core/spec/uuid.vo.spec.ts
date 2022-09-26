@@ -22,7 +22,7 @@ describe('UUID', () => {
 
   it('should be able to create a non-new UUID from valid string', () => {
     const id = UUID.create()
-    const id2 = UUID.from(id.value).value
+    const id2 = UUID.from(id.value).data
     expect(id2.value).toEqual(id.value)
   })
 
@@ -39,7 +39,7 @@ describe('UUID', () => {
   it('should be able to compare UUIDs', () => {
     const id = UUID.create()
     const id2 = UUID.create()
-    const id3 = UUID.from(id.value).value
+    const id3 = UUID.from(id.value).data
     expect(id.equal(id2)).toBeFalsy()
     expect(id.equal(id)).toBeTruthy()
     expect(id.equal(id3)).toBeTruthy()
