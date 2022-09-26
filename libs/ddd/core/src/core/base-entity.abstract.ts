@@ -6,8 +6,6 @@ import { IIdentifiable } from '../types/identifiable.interface'
 import { IDomainObjectProps, DomainObject } from './domain-object.abstract'
 import { UniqueID } from './unique-id'
 
-export type IGenerator<T extends UniqueID> = () => T
-
 export interface IEntityProps extends IDomainObjectProps {}
 
 /**
@@ -24,16 +22,18 @@ export interface IEntityProps extends IDomainObjectProps {}
  * @see https://martinfowler.com/bliki/EvansClassification.html
  */
 
-export abstract class BaseEntity<P extends IEntityProps, I extends UniqueID>
+export abstract class BaseEntity<
+    P extends IEntityProps,
+    I extends UniqueID = UniqueID
+  >
   extends DomainObject<P>
   implements IIdentifiable<I>
 {
   public readonly id: I
-  protected readonly _generator: IGenerator<I> = () => UniqueID.create() as I
 
   protected constructor(props: P, id?: I) {
     super(props, 'Entity')
-    this.id = id ?? (this._generator() as I)
+    this.id = id ?? (UniqueID.create() as I)
   }
 
   /**
