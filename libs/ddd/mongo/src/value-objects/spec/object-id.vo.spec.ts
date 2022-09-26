@@ -24,7 +24,7 @@ describe('ObjectID', () => {
 
   it('should be able to create a non-new ObjectID from valid string', () => {
     const id = ObjectID.create()
-    const id2 = ObjectID.from(id.value).value
+    const id2 = ObjectID.from(id.value).data
     expect(id2.value).toEqual(id.value)
   })
 

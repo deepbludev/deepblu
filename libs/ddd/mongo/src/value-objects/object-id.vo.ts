@@ -4,7 +4,8 @@ import { UniqueID } from '@deepblu/ddd'
 
 @id({
   generator: () => new MongoObjectID().toHexString(),
-  validator: MongoObjectID.isValid,
+  validator: (id: string) =>
+    MongoObjectID.isValid(id) && String(new MongoObjectID(id)) === id,
 })
 export class ObjectID extends UniqueID {
   constructor(props: UniqueIDProps) {
