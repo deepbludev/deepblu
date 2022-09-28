@@ -1,7 +1,7 @@
 import { InvalidPropError } from '../errors'
-import { id, UniqueID, UniqueIDProps } from '../unique-id.vo'
-
-@id({
+import { UniqueID, UniqueIDProps } from '../unique-id.vo'
+import { uid } from '../../decorators/uid.decorator'
+@uid({
   generator: () => 'valid' + UniqueID.generate(),
   validator: (id: string) => id.startsWith('valid'),
 })
