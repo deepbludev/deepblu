@@ -1,4 +1,4 @@
-import { BaseEntity, unique, IEntityProps } from '@deepblu/ddd'
+import { BaseEntity, IEntityProps, unique } from '@deepblu/ddd'
 import { ObjectID } from '../value-objects/object-id.vo'
 
 @unique(ObjectID)

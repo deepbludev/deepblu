@@ -16,3 +16,4 @@ export * from './types/unique-id.interface'
 
 // decorators
 export * from './decorators/uid.decorator'
+export * from './decorators/unique.decorator'

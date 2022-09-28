@@ -1,4 +1,5 @@
-import { BaseEntity, unique, IEntityProps } from './base-entity.abstract'
+import { unique } from '../decorators/unique.decorator'
+import { BaseEntity, IEntityProps } from './base-entity.abstract'
 import { UUID } from './uuid.vo'
 
 /**
