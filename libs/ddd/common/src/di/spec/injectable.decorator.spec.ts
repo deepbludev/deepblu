@@ -25,6 +25,7 @@ class SomeServiceImpl {}
 describe('@injectable', () => {
   describe('when called with no options', () => {
     it('set injectable watermark', () => {
+      expect(Reflect.getMetadata(di.INJECTABLE, Injectable)).toBeTruthy()
       expect(Reflect.getMetadata(di.INJECTABLE_TYPE, Injectable)).toEqual(
         'Injectable'
       )
