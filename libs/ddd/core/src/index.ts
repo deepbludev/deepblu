@@ -13,6 +13,7 @@ export * from './types/serializable.interface'
 export * from './types/result.interface'
 export * from './types/domain-object.type'
 export * from './types/unique-id.interface'
+export * from './types/type.interface'
 
 // decorators
 export * from './decorators/uid.decorator'
