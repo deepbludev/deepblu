@@ -1,6 +1,5 @@
 import { ObjectId as MongoObjectID } from 'mongodb'
-import { uid, UniqueIDProps } from '@deepblu/ddd'
-import { UniqueID } from '@deepblu/ddd'
+import { uid, UniqueIDProps, UniqueID } from '@deepblu/ddd/core'
 
 @uid({
   generator: () => new MongoObjectID().toHexString(),
