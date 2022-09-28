@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { UniqueID } from '../core/unique-id.vo'
+import { Type } from '../types/type.interface'
 
 /**
  * Decorator used to set the id generator for an entity in the case
@@ -22,7 +23,7 @@ import { UniqueID } from '../core/unique-id.vo'
  * @returns class decorator
  */
 export const unique = <I extends typeof UniqueID>(idType: I) =>
-  function <T extends { new (...args: any[]): {} }>(BaseClass: T) {
+  function <T extends Type<any>>(BaseClass: T) {
     const UniqueClass = class extends BaseClass {
       readonly id: I
       protected constructor(...[props, id]: any[]) {
