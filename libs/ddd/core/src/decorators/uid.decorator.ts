@@ -1,4 +1,4 @@
-import { UniqueID } from '../core/unique-id'
+import { UniqueID } from '../core/unique-id.vo'
 import { Type } from '../types/type.interface'
 
 /**
