@@ -6,9 +6,9 @@
       - persistence
         + event-store
           - redis
-          - mongodb
-        + read-model
-          - redis
+          - cassandra
+        + read-model-store
+          - cassandra
           - mongodb
           - elasticsearch
       - messaging
@@ -98,6 +98,22 @@
                 teams.queries.trpc.ts
                 teams.members.queries.trpc.ts
       - persistence
+        - boards
+          + event-store
+            - redis
+          + read-model-store
+            - cassandra
+            - mongodb
+            - elasticsearch
+
+
+        - repositories
+          - boards
+            + event-store
+              - cassandra
+
+
+
         - mongodb
         - cassandra
     - ui
