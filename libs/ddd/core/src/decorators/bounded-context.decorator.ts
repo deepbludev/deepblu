@@ -105,17 +105,10 @@
             - cassandra
             - mongodb
             - elasticsearch
+          + repositories
+            - cassandra
+            - mongodb
 
-
-        - repositories
-          - boards
-            + event-store
-              - cassandra
-
-
-
-        - mongodb
-        - cassandra
     - ui
   - salescrm
     - main
