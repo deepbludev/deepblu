@@ -192,13 +192,28 @@ export class IdentityAccess extends BoundedContext {
 // --------------------------------------------------
 
 @contextMap({
-  eventBus: KafkaEventBus,
-  commandBus: InMemoryCommandBus,
-  queryBus: RabbitMQQueryBus,
+  messagging: {
+    eventBus: KafkaEventBus,
+    commandBus: InMemoryCommandBus,
+    queryBus: RabbitMQQueryBus
+  },
   boundedContexts: {
-    core: [AgilePM, SalesCRM, Finances],
-    supporting: [Calendar, Email, Chat],
-    generic: [IdentityAccess, Payments, Analytics, Notifications],
+    core: [
+      AgilePM,
+      SalesCRM,
+      Finances
+    ],
+    supporting: [
+      Calendar,
+      Email,
+      Chat
+    ],
+    generic: [
+      IdentityAccess,
+      Payments,
+      Analytics,
+      Notifications
+    ],
   }
 })
 class Deepblu extends ContextMap {
@@ -218,16 +233,16 @@ const tasksRouter = createRouter()
     input: CreateTaskSchema,
     resolve: async ({ input }) => {
       const result = await deepblu.dispatch(
-        new CreateTaskCommand(input)
+        CreateTask.with(input)
       )
       return result
     },
   })
 
   .query('all', {
-    resolve: async () => {
+    resolve: async ({input}) => {
       const result = await deepblu.dispatch(
-        new GetAllTasksQuery()
+        GetAllTasks.with(input)
       )
       return result
     },
