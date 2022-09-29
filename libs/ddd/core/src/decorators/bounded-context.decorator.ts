@@ -232,19 +232,13 @@ const tasksRouter = createRouter()
   .mutation('create', {
     input: CreateTaskSchema,
     resolve: async ({ input }) => {
-      const result = await deepblu.dispatch(
-        CreateTask.with(input)
-      )
-      return result
+      deepblu.dispatch(CreateTask.with(input))
     },
   })
 
   .query('all', {
     resolve: async ({input}) => {
-      const result = await deepblu.dispatch(
-        GetAllTasks.with(input)
-      )
-      return result
+      return await deepblu.fetch(AllTasks.with(input))
     },
   })
 
