@@ -1,5 +1,20 @@
 /**
 
+- bounded-contexts
+  - agile-pm
+    - main
+      -- agile-pm.bounded-context.ts
+    - domain
+    - application
+    - infrastructure
+    - ui
+  - sales-crm
+    - main
+    - domain
+    - application
+    - infrastructure
+    - ui
+
 @module({
   submodules: [TasksModule],
   events: {
@@ -66,9 +81,9 @@ export class IdentityAccess extends BoundedContext {
 }
 
 
-//
+// --------------------------------------------------
 
-const map = createContextMap({
+@contextMap({
   eventBus: KafkaEventBus,
   commandBus: InMemoryCommandBus,
   queryBus: RabbitMQQueryBus,
@@ -78,14 +93,23 @@ const map = createContextMap({
     generic: [IdentityAccess, Payments, Analytics, Notifications],
   }
 })
+class Deepblu extends ContextMap {
+  constructor(
+    private readonly eventBus: IEventBus,
+    private readonly commandBus: ICommandBus,
+    private readonly queryBus: IQueryBus,
+  ) {}
+}
 
-//
+export const deepblu = Deepblu.create();
+
+// --------------------------------------------------
 
 const tasksRouter = createRouter()
   .mutation('create', {
     input: CreateTaskSchema,
     resolve: async ({ input }) => {
-      const result = await map.dispatch(
+      const result = await deepblu.dispatch(
         new CreateTaskCommand(input)
       )
       return result
@@ -94,7 +118,7 @@ const tasksRouter = createRouter()
 
   .query('all', {
     resolve: async () => {
-      const result = await map.dispatch(
+      const result = await deepblu.dispatch(
         new GetAllTasksQuery()
       )
       return result
