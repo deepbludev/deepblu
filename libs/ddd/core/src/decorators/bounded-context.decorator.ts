@@ -33,6 +33,7 @@
           agilepm.domain.boards.messages.ts
         + module
           - model
+          - projections
           - repositories
           - services
           agilepm.domain.boards.module.ts
@@ -45,6 +46,7 @@
               agilepm.domain.boards.tasks.messages.ts
             + module
               - model
+              - projections
               - repositories
               - services
               agilepm.domain.boards.tasks.module.ts
@@ -56,6 +58,7 @@
           agilepm.domain.teams.messages.ts
        + module
           - model
+          - projections
           - repositories
           - services
           agilepm.domain.teams.module.ts
@@ -68,6 +71,7 @@
               agilepm.domain.teams.members.messages.ts
             + module
               - model
+              - projections
               - repositories
               - services
               agilepm.domain.teams.members.module.ts
