@@ -1,21 +1,116 @@
 /**
 
 - bounded-contexts
-  - agile-pm
-    - main
-      -- agile-pm.bounded-context.ts
-    - domain
-    - application
+  - shared
     - infrastructure
+      - persistence
+        + event-store
+          - redis
+          - mongodb
+        + read-model
+          - redis
+          - mongodb
+          - elasticsearch
+      - messaging
+        + event-bus
+          - kafka
+          - rabbitmq
+        + command-bus
+          - in-memory
+        + query-bus
+          - in-memory
+  - agilepm
+    + main
+      -- agilepm.bounded.ts
+    - domain
+      + shared
+        agilepm.domain.shared.module.ts
+      - boards
+        + messages
+          - events
+          - commands
+          - queries
+          agilepm.domain.boards.messages.ts
+        + module
+          - model
+          - repositories
+          - services
+          agilepm.domain.boards.module.ts
+        - submodules
+          - tasks
+            + messages
+              - events
+              - commands
+              - queries
+              agilepm.domain.boards.tasks.messages.ts
+            + module
+              - model
+              - repositories
+              - services
+              agilepm.domain.boards.tasks.module.ts
+      - teams
+        + messages
+          - events
+          - commands
+          - queries
+          agilepm.domain.teams.messages.ts
+       + module
+          - model
+          - repositories
+          - services
+          agilepm.domain.teams.module.ts
+        - submodules
+          - members
+            + messages
+              - events
+              - commands
+              - queries
+              agilepm.domain.teams.members.messages.ts
+            + module
+              - model
+              - repositories
+              - services
+              agilepm.domain.teams.members.module.ts
+    - application
+      - common
+        + services
+          agilepm.app.common.services.ts
+        + subscriptions
+          - events
+          - queries
+          - commands
+          agilepm.app.common.messages.ts
+    - infrastructure
+      - http
+        - trpc
+          + commands
+            agilepm.trpc.commands.ts
+              - modules
+                boards.commands.trpc.ts
+                boards.tasks.commands.trpc.ts
+                teams.commands.trpc.ts
+                teams.members.commands.trpc.ts
+          + queries
+              agilepm.trpc.queries.ts
+              - modules
+                boards.queries.trpc.ts
+                boards.tasks.queries.trpc.ts
+                teams.queries.trpc.ts
+                teams.members.queries.trpc.ts
+      - persistence
+        - mongodb
+        - cassandra
     - ui
-  - sales-crm
+  - salescrm
     - main
     - domain
     - application
     - infrastructure
     - ui
 
+
 @module({
+  name: 'boards',
   submodules: [TasksModule],
   events: {
     store: RedisBoardsEventStore,
@@ -47,7 +142,7 @@
   projections: [TaskStatsProjection, BoardProjection],
   readModelStore: [TasksReadModelStore, BoardsReadModelStore],
 })
-export class TasksModule {
+export class BoardsModule {
   constructor(
     private readonly eventBus: IEventBus,
     private readonly commandBus: ICommandBus,
