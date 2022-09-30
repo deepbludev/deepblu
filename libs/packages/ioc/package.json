@@ -1,5 +1,5 @@
 {
-  "name": "@deepblu/ddd/common",
+  "name": "@deepblu/ioc",
   "version": "0.0.1",
   "type": "commonjs"
 }

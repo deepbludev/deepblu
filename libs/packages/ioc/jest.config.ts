@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'ddd-core',
+  displayName: 'packages-ioc',
   preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -12,5 +12,5 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../coverage/libs/ddd/core',
+  coverageDirectory: '../../../coverage/libs/packages/ioc',
 }

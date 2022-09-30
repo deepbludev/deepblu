@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { AnyClassType } from '@deepblu/ddd/core'
+import { AnyClassType } from '@deepblu/ddd'
 import { di } from '../constants'
 
 export function injectable(opts?: { injectableType: string }): ClassDecorator {

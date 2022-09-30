@@ -1,22 +1,22 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/ddd/common/src",
+  "sourceRoot": "libs/packages/ddd-types/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/ddd/common",
-        "main": "libs/ddd/common/src/index.ts",
-        "tsConfig": "libs/ddd/common/tsconfig.lib.json",
-        "assets": ["libs/ddd/common/*.md"]
+        "outputPath": "dist/libs/packages/ddd-types",
+        "main": "libs/packages/ddd-types/src/index.ts",
+        "tsConfig": "libs/packages/ddd-types/tsconfig.lib.json",
+        "assets": ["libs/packages/ddd-types/*.md"]
       }
     },
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs ddd-common {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs packages-ddd-types {args.ver} {args.tag}"
       },
       "dependsOn": [
         {
@@ -29,14 +29,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/ddd/common/**/*.ts"]
+        "lintFilePatterns": ["libs/packages/ddd-types/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ddd/common"],
+      "outputs": ["coverage/libs/packages/ddd-types"],
       "options": {
-        "jestConfig": "libs/ddd/common/jest.config.ts",
+        "jestConfig": "libs/packages/ddd-types/jest.config.ts",
         "passWithNoTests": true
       }
     }

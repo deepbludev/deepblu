@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'ddd-mongo',
+  displayName: 'packages-ddd-types',
   preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -12,5 +12,5 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../coverage/libs/ddd/mongo',
+  coverageDirectory: '../../../coverage/libs/packages/ddd-types',
 }

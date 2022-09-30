@@ -1,22 +1,22 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/ddd/mongo/src",
+  "sourceRoot": "libs/packages/ioc/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/ddd/mongo",
-        "main": "libs/ddd/mongo/src/index.ts",
-        "tsConfig": "libs/ddd/mongo/tsconfig.lib.json",
-        "assets": ["libs/ddd/mongo/*.md"]
+        "outputPath": "dist/libs/packages/ioc",
+        "main": "libs/packages/ioc/src/index.ts",
+        "tsConfig": "libs/packages/ioc/tsconfig.lib.json",
+        "assets": ["libs/packages/ioc/*.md"]
       }
     },
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs packages-ddd-types {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs packages-ioc {args.ver} {args.tag}"
       },
       "dependsOn": [
         {
@@ -29,14 +29,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/ddd/mongo/**/*.ts"]
+        "lintFilePatterns": ["libs/packages/ioc/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ddd/mongo"],
+      "outputs": ["coverage/libs/packages/ioc"],
       "options": {
-        "jestConfig": "libs/ddd/mongo/jest.config.ts",
+        "jestConfig": "libs/packages/ioc/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -1,16 +1,16 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/ddd/core/src",
+  "sourceRoot": "libs/packages/ddd/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/ddd/core",
-        "main": "libs/ddd/core/src/index.ts",
-        "tsConfig": "libs/ddd/core/tsconfig.lib.json",
-        "assets": ["libs/ddd/core/*.md"]
+        "outputPath": "dist/libs/packages/ddd",
+        "main": "libs/packages/ddd/src/index.ts",
+        "tsConfig": "libs/packages/ddd/tsconfig.lib.json",
+        "assets": ["libs/packages/ddd/*.md"]
       }
     },
     "publish": {
@@ -29,14 +29,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/ddd/core/**/*.ts"]
+        "lintFilePatterns": ["libs/packages/ddd/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ddd/core"],
+      "outputs": ["coverage/libs/packages/ddd"],
       "options": {
-        "jestConfig": "libs/ddd/core/jest.config.ts",
+        "jestConfig": "libs/packages/ddd/jest.config.ts",
         "passWithNoTests": true
       }
     }

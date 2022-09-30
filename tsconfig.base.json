@@ -16,9 +16,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@deepblu/ddd/common": ["libs/ddd/common/src/index.ts"],
-      "@deepblu/ddd/core": ["libs/ddd/core/src/index.ts"],
-      "@deepblu/ddd/mongo": ["libs/ddd/mongo/src/index.ts"]
+      "@deepblu/ddd": ["libs/packages/ddd/src/index.ts"],
+      "@deepblu/ddd/types": ["libs/packages/ddd-types/src/index.ts"],
+      "@deepblu/ioc": ["libs/packages/ioc/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -2,10 +2,10 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "ddd-common": "libs/ddd/common",
-    "ddd-core": "libs/ddd/core",
-    "ddd-mongo": "libs/ddd/mongo",
     "demo-tasks": "apps/demo/tasks",
-    "demo-tasks-e2e": "apps/demo/tasks-e2e"
+    "demo-tasks-e2e": "apps/demo/tasks-e2e",
+    "packages-ddd": "libs/packages/ddd",
+    "packages-ddd-types": "libs/packages/ddd-types",
+    "packages-ioc": "libs/packages/ioc"
   }
 }
