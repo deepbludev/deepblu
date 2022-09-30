@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { di } from '../../constants'
+import { ioc } from '../../constants'
 import { provider } from '../provider.decorator'
 
 abstract class AbstractInjectable {
@@ -7,7 +7,7 @@ abstract class AbstractInjectable {
 }
 
 @provider()
-class Injectable implements AbstractInjectable {
+class Provider implements AbstractInjectable {
   constructor(
     public foo: string,
     private readonly bar: number,
@@ -25,26 +25,26 @@ class SomeServiceImpl {}
 describe('@injectable', () => {
   describe('when called with no options', () => {
     it('set injectable watermark', () => {
-      expect(Reflect.getMetadata(di.INJECTABLE, Injectable)).toBeTruthy()
-      expect(Reflect.getMetadata(di.INJECTABLE_TOKEN, Injectable)).toEqual(
+      expect(Reflect.getMetadata(ioc.INJECTABLE, Provider)).toBeTruthy()
+      expect(Reflect.getMetadata(ioc.INJECTABLE_TOKEN, Provider)).toEqual(
         'Injectable'
       )
-      expect(Reflect.getMetadata(di.INJECTABLE_TOKEN, Injectable)).toEqual(
-        Injectable.name
+      expect(Reflect.getMetadata(ioc.INJECTABLE_TOKEN, Provider)).toEqual(
+        Provider.name
       )
     })
   })
 
   describe('when called with options', () => {
     it('set injectable watermark', () => {
-      expect(Reflect.getMetadata(di.INJECTABLE_TOKEN, SomeServiceImpl)).toEqual(
-        'SomeService'
-      )
+      expect(
+        Reflect.getMetadata(ioc.INJECTABLE_TOKEN, SomeServiceImpl)
+      ).toEqual('SomeService')
     })
   })
 
   it('get param types', () => {
-    const params = Reflect.getMetadata('design:paramtypes', Injectable)
+    const params = Reflect.getMetadata('design:paramtypes', Provider)
     expect(params[0]).toEqual(String)
     expect(params[0].name).toEqual('String')
     expect(params[1]).toEqual(Number)
