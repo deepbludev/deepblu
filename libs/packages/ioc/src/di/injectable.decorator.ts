@@ -1,6 +1,6 @@
 import 'reflect-metadata'
-import { AnyClassType } from '@deepblu/ddd'
 import { di } from '../constants'
+import { AnyClassType } from '../interfaces/type.interface'
 
 export function injectable(opts?: { injectableType: string }): ClassDecorator {
   return (target: object) => {

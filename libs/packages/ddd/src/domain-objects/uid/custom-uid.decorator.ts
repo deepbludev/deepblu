@@ -1,4 +1,4 @@
-import { Type } from '../../types/type.interface'
+import { Type } from '@deepblu/ioc'
 import { UniqueID } from './unique-id.vo'
 
 /**

@@ -13,8 +13,7 @@ export * from './domain-objects/entity/entity'
 
 // types
 export * from './domain-objects/base/result.interface'
-export * from './types/domain-object.type'
-export * from './types/type.interface'
+export * from './domain-objects/base/domain-object.type'
 
 // utils
 export * from './utils/id.utils'

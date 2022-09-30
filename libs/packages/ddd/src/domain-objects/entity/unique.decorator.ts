@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Type } from '@deepblu/ioc'
 import { UniqueID } from '../uid/unique-id.vo'
-import { Type } from '../../types/type.interface'
 
 /**
  * Decorator used to set the id generator for an entity in the case

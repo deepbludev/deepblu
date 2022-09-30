@@ -1,4 +1,4 @@
-import { DomainObjectType } from '../../types/domain-object.type'
+import { DomainObjectType } from './domain-object.type'
 import v from '../../utils/validator'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
