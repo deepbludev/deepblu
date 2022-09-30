@@ -1,6 +1,6 @@
 import { idUtils } from '../id.utils'
 
-describe('defaultID()', () => {
+describe('uid()', () => {
   it('should generate a default id', () => {
     const id = idUtils.uid()
     expect(id.length).toBe(21)

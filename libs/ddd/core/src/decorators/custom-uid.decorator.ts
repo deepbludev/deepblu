@@ -6,7 +6,7 @@ import { Type } from '../types/type.interface'
  * with the given generator and validator functions.
  * @example
  * <pre>
- * @uid({
+ * @customUID({
  *  generator: () => new ObjectID().toHexString(),
  *  validator: (id: string) => ObjectID.isValid(id)
  * })
@@ -20,7 +20,7 @@ import { Type } from '../types/type.interface'
  * @param opts Options for the ID class. Object containing the generator and validator functions.
  * @returns class decorator
  */
-export const uid = (opts: {
+export const customUID = (opts: {
   generator: () => string
   validator: (id: string) => boolean
 }) =>

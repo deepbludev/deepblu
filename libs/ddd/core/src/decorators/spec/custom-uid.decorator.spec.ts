@@ -1,9 +1,9 @@
 import 'reflect-metadata'
 import { InvalidPropError } from '../../core/errors'
 import { UniqueID, UniqueIDProps } from '../../core/unique-id.vo'
-import { uid } from '../uid.decorator'
+import { customUID } from '../custom-uid.decorator'
 
-@uid({
+@customUID({
   generator: () => 'valid' + Date.now(),
   validator: (id: string) => id.startsWith('valid'),
 })
@@ -15,7 +15,7 @@ class MockUniqueID extends UniqueID {
 
 describe('@uid', () => {
   it('should be defined', () => {
-    expect(uid).toBeDefined()
+    expect(customUID).toBeDefined()
   })
   it('should be able to create a new instance from a value', () => {
     const id = MockUniqueID.from('valid')
