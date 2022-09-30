@@ -1,23 +1,20 @@
-// core
-export * from './core/result'
-export * from './core/errors'
-export * from './core/domain-object.abstract'
-export * from './core/value-object'
-export * from './core/unique-id.vo'
-export * from './core/uuid.vo'
-export * from './core/base-entity.abstract'
-export * from './core/entity'
+// domain-objects
+export * from './domain-objects/base/result'
+export * from './domain-objects/base/errors'
+export * from './domain-objects/base/domain-object.abstract'
+export * from './domain-objects/value-object/value-object'
+export * from './domain-objects/uid/unique-id.vo'
+export * from './domain-objects/uid/unique-id.interface'
+export * from './domain-objects/uid/uuid.vo'
+export * from './domain-objects/uid/custom-uid.decorator'
+export * from './domain-objects/entity/unique.decorator'
+export * from './domain-objects/entity/base-entity.abstract'
+export * from './domain-objects/entity/entity'
 
 // types
-export * from './types/serializable.interface'
-export * from './types/result.interface'
+export * from './domain-objects/base/result.interface'
 export * from './types/domain-object.type'
-export * from './types/unique-id.interface'
 export * from './types/type.interface'
-
-// decorators
-export * from './decorators/custom-uid.decorator'
-export * from './decorators/unique.decorator'
 
 // utils
 export * from './utils/id.utils'
