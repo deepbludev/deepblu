@@ -2,12 +2,12 @@ import 'reflect-metadata'
 import { ioc } from '../../constants'
 import { provider } from '../provider.decorator'
 
-abstract class AbstractInjectable {
+abstract class AbstractProvider {
   abstract someMethod(): void
 }
 
 @provider()
-class Provider implements AbstractInjectable {
+class Provider implements AbstractProvider {
   constructor(
     public foo: string,
     private readonly bar: number,
@@ -19,27 +19,10 @@ class Provider implements AbstractInjectable {
   }
 }
 
-@provider({ token: 'SomeService' })
-class SomeServiceImpl {}
-
 describe('@injectable', () => {
   describe('when called with no options', () => {
     it('set injectable watermark', () => {
-      expect(Reflect.getMetadata(ioc.INJECTABLE, Provider)).toBeTruthy()
-      expect(Reflect.getMetadata(ioc.INJECTABLE_TOKEN, Provider)).toEqual(
-        'Injectable'
-      )
-      expect(Reflect.getMetadata(ioc.INJECTABLE_TOKEN, Provider)).toEqual(
-        Provider.name
-      )
-    })
-  })
-
-  describe('when called with options', () => {
-    it('set injectable watermark', () => {
-      expect(
-        Reflect.getMetadata(ioc.INJECTABLE_TOKEN, SomeServiceImpl)
-      ).toEqual('SomeService')
+      expect(Reflect.getMetadata(ioc.PROVIDER, Provider)).toBeTruthy()
     })
   })
 

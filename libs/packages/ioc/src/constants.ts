@@ -1,4 +1,3 @@
 export enum ioc {
-  INJECTABLE,
-  INJECTABLE_TOKEN,
+  PROVIDER = 'ioc:provider',
 }
