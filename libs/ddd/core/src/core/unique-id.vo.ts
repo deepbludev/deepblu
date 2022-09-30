@@ -26,7 +26,7 @@ export class UniqueID extends ValueObject<UniqueIDProps> implements IUniqueID {
   }
 
   public static generate(): string {
-    return idUtils.defaultID()
+    return idUtils.uid()
   }
 
   public static validate(id: string): boolean {
