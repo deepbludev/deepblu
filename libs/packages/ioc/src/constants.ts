@@ -1,4 +1,4 @@
 export enum di {
   INJECTABLE,
-  INJECTABLE_TYPE,
+  INJECTABLE_TOKEN,
 }

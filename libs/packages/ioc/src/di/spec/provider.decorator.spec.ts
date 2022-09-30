@@ -1,12 +1,12 @@
 import 'reflect-metadata'
 import { di } from '../../constants'
-import { injectable } from '../injectable.decorator'
+import { provider } from '../provider.decorator'
 
 abstract class AbstractInjectable {
   abstract someMethod(): void
 }
 
-@injectable()
+@provider()
 class Injectable implements AbstractInjectable {
   constructor(
     public foo: string,
@@ -19,17 +19,17 @@ class Injectable implements AbstractInjectable {
   }
 }
 
-@injectable({ injectableType: 'SomeService' })
+@provider({ token: 'SomeService' })
 class SomeServiceImpl {}
 
 describe('@injectable', () => {
   describe('when called with no options', () => {
     it('set injectable watermark', () => {
       expect(Reflect.getMetadata(di.INJECTABLE, Injectable)).toBeTruthy()
-      expect(Reflect.getMetadata(di.INJECTABLE_TYPE, Injectable)).toEqual(
+      expect(Reflect.getMetadata(di.INJECTABLE_TOKEN, Injectable)).toEqual(
         'Injectable'
       )
-      expect(Reflect.getMetadata(di.INJECTABLE_TYPE, Injectable)).toEqual(
+      expect(Reflect.getMetadata(di.INJECTABLE_TOKEN, Injectable)).toEqual(
         Injectable.name
       )
     })
@@ -37,7 +37,7 @@ describe('@injectable', () => {
 
   describe('when called with options', () => {
     it('set injectable watermark', () => {
-      expect(Reflect.getMetadata(di.INJECTABLE_TYPE, SomeServiceImpl)).toEqual(
+      expect(Reflect.getMetadata(di.INJECTABLE_TOKEN, SomeServiceImpl)).toEqual(
         'SomeService'
       )
     })
