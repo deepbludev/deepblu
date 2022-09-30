@@ -1,13 +1,15 @@
-import { ObjectId as MongoObjectID } from 'mongodb'
 import { customUID, UniqueIDProps, UniqueID } from '@deepblu/ddd/core'
+import { customAlphabet } from 'nanoid'
+
+export const generateObjectID = customAlphabet('1234567890abcdef', 24)
+export const validateObjectID = (id: string) => /^[0-9a-f]{24}$/.test(id)
 
 @customUID({
-  generator: () => new MongoObjectID().toHexString(),
-  validator: (id: string) =>
-    MongoObjectID.isValid(id) && String(new MongoObjectID(id)) === id,
+  generator: generateObjectID,
+  validator: validateObjectID,
 })
 export class ObjectID extends UniqueID {
   constructor(props: UniqueIDProps) {
-    super(props)
+    super({ value: props.value.toLowerCase() })
   }
 }
