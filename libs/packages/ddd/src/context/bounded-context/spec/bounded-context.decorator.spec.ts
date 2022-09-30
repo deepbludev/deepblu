@@ -131,7 +131,7 @@ describe('BoundedContext', () => {
   name: 'boards',
   submodules: [TasksModule],
   events: {
-    store: RedisBoardsEventStore,
+    stores: [RedisBoardsEventStore],
     subscribers: [
       TaskAddedToBoard,
       TaskMarkedComplete,
