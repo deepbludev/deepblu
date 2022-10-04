@@ -1,4 +1,5 @@
 import { container } from '../../core'
+import { module } from '../module.decorator'
 import {
   IProviderC,
   Token,
@@ -7,11 +8,13 @@ import {
   ProviderC,
   AbstractProviderD,
   ProviderD,
+  ImportedModule,
 } from './fixtures'
-import { module } from '../module.decorator'
+import { ImportedProvider } from './fixtures/imported-provider'
 
 const providerAValue = new ProviderA()
 @module({
+  imports: [ImportedModule],
   providers: [
     ProviderA,
     ProviderB,
@@ -39,6 +42,7 @@ describe('@module decorator', () => {
   const aproviderD = container.resolve<AbstractProviderD>(
     AbstractProviderD.name
   )
+  const importedProvider = container.resolve(ImportedProvider)
 
   it('register a list of providers to the global container', () => {
     expect(providerA).toBeInstanceOf(ProviderA)
@@ -47,6 +51,7 @@ describe('@module decorator', () => {
     expect(providerA3).toBeInstanceOf(ProviderA)
     expect(iproviderC).toBeInstanceOf(ProviderC)
     expect(aproviderD).toBeInstanceOf(ProviderD)
+    expect(importedProvider).toBeInstanceOf(ImportedProvider)
 
     expect(providerB).toBe(providerB)
     expect(providerB.providerA).toBe(providerA)
@@ -55,6 +60,7 @@ describe('@module decorator', () => {
     expect(providerB.providerA3).toBe(providerA3)
     expect(providerB.iproviderC).toBe(iproviderC)
     expect(providerB.providerD).toBe(aproviderD)
+    expect(providerB.importedProvider).toBeInstanceOf(ImportedProvider)
 
     expect(aproviderD.providerA).toBe(providerA)
   })

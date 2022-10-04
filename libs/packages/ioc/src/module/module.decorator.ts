@@ -12,6 +12,7 @@ import {
 } from '../core'
 
 export interface ModuleOptions {
+  imports?: constructor<any>[]
   providers?: (constructor<any> | ProviderRegistration)[]
 }
 
