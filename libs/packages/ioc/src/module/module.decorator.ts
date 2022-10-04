@@ -27,8 +27,7 @@ const isProviderRegistration = (
 
 /**
  * @description Decorator for modules. Registers all providers in the module and imports submodules.
- * @param options
- * @returns
+ * @param options object containing providers and submodules as arrays
  */
 
 export function module(
