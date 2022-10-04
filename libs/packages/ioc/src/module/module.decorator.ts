@@ -25,6 +25,12 @@ const isProviderRegistration = (
   return provider.token !== undefined
 }
 
+/**
+ * @description Decorator for modules. Registers all providers in the module and imports submodules.
+ * @param options
+ * @returns
+ */
+
 export function module(
   options: ModuleOptions = { providers: [] }
 ): ClassDecorator {
