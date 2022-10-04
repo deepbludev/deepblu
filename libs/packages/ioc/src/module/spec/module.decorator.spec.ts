@@ -53,9 +53,7 @@ describe('@module decorator', () => {
   it('works with no providers', () => {
     const someOtherModule = container.resolve(SomeOtherModule)
 
-    expect(() => {
-      container.resolve(SomeOtherModule)
-    }).not.toThrow()
+    expect(() => container.resolve(SomeOtherModule)).not.toThrow()
     expect(someOtherModule.providerB).toBe(providerB)
   })
 })
