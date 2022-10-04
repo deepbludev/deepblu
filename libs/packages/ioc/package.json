@@ -14,7 +14,7 @@
     "typescript"
   ],
   "author": "Carlo Casorzo",
-  "license": "MIT",
+  "license": "ISC",
   "homepage": "https://deepblu.dev",
   "repository": {
     "type": "git",
