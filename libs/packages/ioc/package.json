@@ -1,5 +1,27 @@
 {
   "name": "@deepblu/ioc",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "Lightweight dependency injection / Inversion of Control library for JavaScript/TypeScript built on top of tysringe",
+  "keywords": [
+    "ioc",
+    "inversion of control",
+    "di",
+    "dependency injection",
+    "dependency",
+    "injection",
+    "container",
+    "javascript",
+    "typescript"
+  ],
+  "author": "Carlo Casorzo",
+  "license": "MIT",
+  "homepage": "https://deepblu.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deepbludev/deepblu"
+  },
+  "bugs": {
+    "url": "https://github.com/deepbludev/deepblu/issues"
+  },
   "type": "commonjs"
 }
