@@ -8,6 +8,7 @@ import {
   registry,
   Lifecycle,
   isClassProvider,
+  singleton,
 } from '../core'
 
 export interface ModuleOptions {
@@ -31,16 +32,17 @@ const isProviderRegistration = (
 export function module(
   options: ModuleOptions = { providers: [] }
 ): ClassDecorator {
-  const registrations: ProviderRegistration[] =
-    options.providers?.filter(isProviderRegistration).map(p => ({
-      ...p,
-      options:
-        !p.options && isClassProvider(p)
-          ? { lifecycle: Lifecycle.Singleton }
-          : p.options,
-    })) || []
-
-  return (target: any) => {
-    return registry(registrations)(target)
+  return function (target: any) {
+    return singleton()(
+      registry(
+        options.providers?.filter(isProviderRegistration).map(p => ({
+          ...p,
+          options:
+            !p.options && isClassProvider(p)
+              ? { lifecycle: Lifecycle.Singleton }
+              : p.options,
+        }))
+      )(target)
+    )
   }
 }
