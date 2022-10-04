@@ -1,1 +1,2 @@
-export * from './interfaces/type.interface'
+export * from './core'
+export * from './interfaces'
