@@ -1,6 +1,7 @@
 import { inject, singleton } from '../../../core'
 import { ProviderA } from './provider-a'
 import { IProviderC, Token } from './provider-c.interface'
+import { AbstractProviderD } from './provider-d.abstract'
 
 @singleton()
 export class ProviderB {
@@ -9,6 +10,7 @@ export class ProviderB {
     @inject('ProviderA1') public providerA1: ProviderA,
     @inject('ProviderA2') public providerA2: ProviderA,
     @inject('ProviderA3') public providerA3: ProviderA,
-    @inject(Token.IProviderC) public iproviderC: IProviderC
+    @inject(Token.IProviderC) public iproviderC: IProviderC,
+    @inject(AbstractProviderD.name) public providerD: AbstractProviderD
   ) {}
 }
