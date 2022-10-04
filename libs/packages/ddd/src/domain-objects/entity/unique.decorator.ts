@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Type } from '@deepblu/ioc'
+import { Constructor } from '../../interfaces'
 import { UniqueID } from '../uid/unique-id.vo'
 
 /**
@@ -23,7 +23,7 @@ import { UniqueID } from '../uid/unique-id.vo'
  * @returns class decorator
  */
 export const unique = <I extends typeof UniqueID>(idType: I) =>
-  function <T extends Type<any>>(BaseClass: T) {
+  function <T extends Constructor>(BaseClass: T) {
     const UniqueClass = class extends BaseClass {
       readonly id: I
       protected constructor(...[props, id]: any[]) {

@@ -1,4 +1,4 @@
-import { Type } from '@deepblu/ioc'
+import { Constructor } from '../../interfaces'
 import { UniqueID } from './unique-id.vo'
 
 /**
@@ -25,7 +25,7 @@ export const customUID = (opts: {
   validator: (id: string) => boolean
 }) =>
   function <
-    T extends Type<UniqueID> & {
+    T extends Constructor<UniqueID> & {
       generate: () => string
       validate: (id: string) => boolean
     }
