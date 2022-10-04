@@ -1,4 +1,2 @@
-import * as tsyringe from 'tsyringe'
-
-export const ioc = tsyringe
-export default ioc
+import 'reflect-metadata'
+export * from 'tsyringe'
