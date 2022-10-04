@@ -40,7 +40,7 @@ export function module(
           ...p,
           options:
             !p.options && isClassProvider(p)
-              ? { lifecycle: Lifecycle.Singleton }
+              ? { lifecycle: Lifecycle.Singleton } // set default lifecycle to singleton for class providers
               : p.options,
         }))
       )(target)
