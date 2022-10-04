@@ -9,8 +9,8 @@ import {
   AbstractProviderD,
   ProviderD,
   ImportedModule,
-} from './fixtures'
-import { ImportedProvider } from './fixtures/imported-provider'
+} from './__mocks__'
+import { ImportedProvider } from './__mocks__/imported-provider'
 
 const providerAValue = new ProviderA()
 @module({
@@ -44,7 +44,7 @@ describe('@module decorator', () => {
   )
   const importedProvider = container.resolve(ImportedProvider)
 
-  it('register a list of providers to the global container', () => {
+  it('registers a list of providers to the global container', () => {
     expect(providerA).toBeInstanceOf(ProviderA)
     expect(providerA1).toBeInstanceOf(ProviderA)
     expect(providerA2).toBeInstanceOf(ProviderA)
@@ -65,7 +65,7 @@ describe('@module decorator', () => {
     expect(aproviderD.providerA).toBe(providerA)
   })
 
-  it('it registers the module as singleton', () => {
+  it('registers the module as singleton', () => {
     const module1 = container.resolve(SomeModule)
     const module2 = container.resolve(SomeModule)
 
