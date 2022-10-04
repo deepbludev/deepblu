@@ -21,9 +21,7 @@ type ProviderRegistration = {
 
 const isProviderRegistration = (
   provider: any
-): provider is ProviderRegistration => {
-  return provider.token !== undefined
-}
+): provider is ProviderRegistration => !!provider.token
 
 /**
  * @description Decorator for modules. Registers all providers in the module and imports submodules.
