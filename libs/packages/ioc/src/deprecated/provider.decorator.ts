@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { ioc } from '../constants'
+import { ioc } from './constants'
 
 export function provider(): ClassDecorator {
   return (target: object) => {

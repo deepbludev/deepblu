@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { ioc } from '../../constants'
+import { ioc } from '../constants'
 import { provider } from '../provider.decorator'
 
 abstract class AbstractProvider {
