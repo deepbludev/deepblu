@@ -29,7 +29,7 @@ export abstract class BaseAggregate<
 > extends BaseEntity<P, I> {
   public override readonly domainObjectType: DomainObjectType = 'Aggregate'
 
-  protected constructor(props: P, id?: I) {
+  constructor(props: P, id?: I) {
     super(props, id)
   }
 }
