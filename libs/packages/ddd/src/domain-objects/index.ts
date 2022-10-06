@@ -12,8 +12,9 @@ export * from './entity/base-entity.abstract'
 export * from './entity/unique.decorator'
 
 export * from './event/domain-event'
-export * from './event/event-from.decorator'
+export * from './event/domain-event.decorator'
 export * from './event/event.interface'
+export * from './event/create-event-from-as.util'
 
 export * from './uid/custom-uid.decorator'
 export * from './uid/unique-id.vo'

@@ -1,7 +1,7 @@
 import { BaseAggregate } from '../../aggregate/base-aggregate.abstract'
 import { UniqueID } from '../../uid/unique-id.vo'
 import { DomainEvent } from '../domain-event'
-import { eventFrom } from '../event-from.decorator'
+import { domainEvent } from '../domain-event.decorator'
 
 interface Props {
   foo: string
@@ -19,7 +19,7 @@ class TestAggregate extends BaseAggregate<Props> {
   }
 }
 
-@eventFrom(TestAggregate.name)
+@domainEvent(TestAggregate.name)
 class Created extends DomainEvent {
   constructor(id: string, public readonly payload: Props) {
     super(id)
