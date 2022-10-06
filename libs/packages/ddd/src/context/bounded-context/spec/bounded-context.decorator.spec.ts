@@ -256,4 +256,43 @@ const tasksRouter = createRouter()
     resolve: async ({input}) =>  await deepblu.agile.boards.tasks.getUrgentTasks(input);
   })
 
+
+
+
+// --------------------------------------------------
+
+
+    $ tree
+  .
+  ├── package.json
+  ├── README.md
+  └── src
+       ├── configs
+       │    └── env
+       │
+       ├── shared
+       │    └── infra
+       │         └── server
+       │
+       └── modules
+            │
+            └── [module-name]
+                  │
+                  │── domain
+                  │     ├── value-objects
+                  │     ├── entities
+                  │     ├── aggregates
+                  │     ├── events
+                  │     ├── subscriptions
+                  │     ├── adapter
+                  │     ├── repository-interface
+                  │     └── domain-services
+                  │
+                  ├── application
+                  │     └── use-cases
+                  │
+                  └── infra
+                        ├── models
+                        └── repository
+
 */
