@@ -7,6 +7,7 @@ export interface IEventPayload {
 
 export interface IEvent<P extends IEventPayload = Record<string, never>>
   extends IMessage {
+  eventName: string
   aggregateName: string
   aggregateId: string
   payload: P

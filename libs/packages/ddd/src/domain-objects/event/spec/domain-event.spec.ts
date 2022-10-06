@@ -1,6 +1,7 @@
-import { Event } from '../../event/event'
 import { BaseAggregate } from '../../aggregate/base-aggregate.abstract'
 import { UniqueID } from '../../uid/unique-id.vo'
+import { DomainEvent } from '../domain-event'
+import { eventFrom } from '../event-from.decorator'
 
 interface TestProps {
   foo: string
@@ -13,26 +14,28 @@ class TestAggregate extends BaseAggregate<TestProps> {
   }
 }
 
-class TestEvent extends Event<TestAggregate, TestProps> {
-  constructor(aggregate: TestAggregate) {
-    super(aggregate, { foo: 'foo', is: true })
+@eventFrom(TestAggregate)
+class TestEvent extends DomainEvent<TestProps> {
+  constructor(id: string, payload: TestProps) {
+    super(id, payload)
   }
 }
 
 describe('Event', () => {
-  const aggregate = new TestAggregate({ foo: 'bar', is: true })
-  const event = new TestEvent(aggregate)
+  const payload = { foo: 'bar', is: true }
+  const aggregate = new TestAggregate(payload)
+  const event = new TestEvent(aggregate.id.value, payload)
 
   it('should have a timestamp', () => {
     expect(event.timestamp).toBeGreaterThan(0)
   })
 
   it('should have a payload', () => {
-    expect(event.payload).toEqual({ foo: 'foo', is: true })
+    expect(event.payload).toEqual({ foo: 'bar', is: true })
   })
 
-  it('should have an aggregate', () => {
-    expect(event.aggregate).toBeDefined()
+  it('should have an event name set to the class name and aggregate name', () => {
+    expect(event.eventName).toEqual('TestAggregate.TestEvent')
   })
 
   it('should have an aggregate name', () => {
