@@ -82,9 +82,6 @@ export abstract class BaseAggregate<
     events: IEvent[],
     snapshot?: A
   ): A {
-    // const aggregate: A = Reflect.construct(this, [{}, id])
-    // events.forEach(event => aggregate.apply(event))
-    // return aggregate
     const aggregate: A = snapshot || (Reflect.construct(this, [{}, id]) as A)
     events.forEach(event => {
       aggregate.apply(event)
