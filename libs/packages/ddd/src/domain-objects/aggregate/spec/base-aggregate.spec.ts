@@ -64,9 +64,10 @@ describe('AggregateBase', () => {
       snapshot
     )
     expect(rehydrated.equals(snapshot)).toBeTruthy()
+    expect(rehydrated.props).toEqual({ foo: 'bar4', is: true })
+    expect(rehydrated.id.equals(original.id)).toBeTruthy()
     expect(rehydrated.changes.length).toEqual(4)
     expect(original.changes.length).toEqual(3)
-    expect(rehydrated.props).toEqual({ foo: 'bar4', is: true })
     expect(rehydrated.version).toBe(14)
   })
 
