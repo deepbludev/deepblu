@@ -1,3 +1,4 @@
+import { UniqueID } from '../../uid/unique-id.vo'
 import { UUID } from '../../uid/uuid.vo'
 import { BaseEntity, IEntityProps } from '../base-entity.abstract'
 import { unique } from '../unique.decorator'
@@ -59,5 +60,13 @@ describe('Entity', () => {
   it('should be able to clone entities', () => {
     const entity1 = entity.clone<TestEntity>()
     expect(entity.equals(entity1)).toBeTruthy()
+  })
+
+  it('should have a hashcode based on its id, class name and domain object type', () => {
+    const entity = new TestEntity({ foo: 'bar', is: true })
+    const expectedHashCode = UniqueID.from(
+      `[Entity@TestEntity]:${entity.id.value}`
+    ).data
+    expect(entity.hashcode.equals(expectedHashCode)).toBeTruthy()
   })
 })

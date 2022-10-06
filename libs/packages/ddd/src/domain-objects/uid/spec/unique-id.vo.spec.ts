@@ -35,8 +35,8 @@ describe('UniqueID', () => {
   })
 
   it('should be able to compare UUIDs', () => {
-    expect(id.data.equal(id2.data)).toEqual(true)
-    expect(id.data.equal(id3.data)).toEqual(false)
+    expect(id.data.equals(id2.data)).toBeTruthy()
+    expect(id.data.equals(id3.data)).toBeFalsy()
   })
 
   it('should be able to clone UUIDs', () => {

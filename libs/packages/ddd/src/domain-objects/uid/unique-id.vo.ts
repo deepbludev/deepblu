@@ -13,12 +13,13 @@ export class UniqueID extends ValueObject<UniqueIDProps> implements IUniqueID {
     super(props)
   }
 
-  equal(id: IUniqueID): boolean {
-    return typeof this.value === typeof id.value && this.value === id.value
-  }
-
   override clone<UniqueID>(): UniqueID {
     return super.clone() as UniqueID
+  }
+
+  // override equals
+  override equals(id: ValueObject<UniqueIDProps>): boolean {
+    return Reflect.has(id, 'value') && this.value === (id as UniqueID).value
   }
 
   get value(): string {

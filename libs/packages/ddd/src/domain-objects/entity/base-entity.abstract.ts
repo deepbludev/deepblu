@@ -53,4 +53,11 @@ export abstract class BaseEntity<
     if (!constructor) throw new Error('Cannot clone entity')
     return Reflect.construct(constructor, [this.props, this.id.clone()])
   }
+
+  get hashcode(): UniqueID {
+    const constructor = Reflect.getPrototypeOf(this)?.constructor.name
+    return UniqueID.from(
+      `[${this.domainObjectType}@${constructor}]:${this.id.value}`
+    ).data
+  }
 }

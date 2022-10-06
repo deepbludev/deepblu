@@ -33,15 +33,15 @@ describe('UUID', () => {
   it('should be able to clone UUIDs', () => {
     const id = UUID.create()
     const clone: UUID = id.clone()
-    expect(clone.equal(id)).toBeTruthy()
+    expect(clone.equals(id)).toBeTruthy()
   })
 
   it('should be able to compare UUIDs', () => {
     const id = UUID.create()
     const id2 = UUID.create()
     const id3 = UUID.from(id.value).data
-    expect(id.equal(id2)).toBeFalsy()
-    expect(id.equal(id)).toBeTruthy()
-    expect(id.equal(id3)).toBeTruthy()
+    expect(id.equals(id2)).toBeFalsy()
+    expect(id.equals(id)).toBeTruthy()
+    expect(id.equals(id3)).toBeTruthy()
   })
 })
