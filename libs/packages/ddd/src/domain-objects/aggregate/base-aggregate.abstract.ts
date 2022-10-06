@@ -51,13 +51,13 @@ export abstract class BaseAggregate<
     return super.equals(other) && this.version === other.version
   }
 
-  protected applyChange(event: IEvent) {
+  protected applyChange(event: IEvent): void {
     this.apply(event, true)
   }
 
   private apply(event: IEvent, isNew = false): void {
     const self = this as any
-    self[`apply${event.name}`](event)
+    self[`on${event.name}`](event)
     if (isNew) this._changes.push(event)
   }
 
