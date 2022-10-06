@@ -160,39 +160,42 @@ describe('BoundedContext', () => {
   projections: [TaskStatsProjection, BoardProjection],
   readModelStore: [TasksReadModelStore, BoardsReadModelStore],
 })
-export class BoardsModule {
+export class BoardsModule extends BoundedContextModule {
   constructor(
-    private readonly eventBus: IEventBus,
     private readonly commandBus: ICommandBus,
     private readonly queryBus: IQueryBus,
-  ) {}
+    private readonly tasks: TasksModule,
+  ) {
+
+    addTaskToBoard (payload: AddTaskToBoardDTO) {
+      return this.commandBus.dispatch(AddTaskToBoard.with(payload))
+    }
+
+    archiveBoard (payload: ArchiveBoardDTO) {
+      return this.commandBus.dispatch(ArchiveBoard.with(payload))
+    }
+
+    getUrgentTasks (payload: GetUrgentTasksDTO) {
+      return this.queryBus.dispatch(GetUrgentTasks.with(payload))
+    }
+
+  }
 }
 
 
 @boundedContext({
   name: 'AgilePM',
-  modules: [BoardsModule, TeamModule]
+  modules: [
+    { token: IBoardsModule.name, useClass: BoardsModule },
+    { token: ITeamModule.name, useClass: TeamModule },
+  ]
 })
-export class AgilePM extends BoundedContext {
+export class AgileBoundedContext extends BoundedContext {
   constructor(
-    private readonly eventBus: IEventBus,
-    private readonly commandBus: ICommandBus,
-    private readonly queryBus: IQueryBus,
+    public readonly boards: IBoardsModule,
+    public readonly teams: ITeamModule,
   ) {}
 }
-
-@boundedContext({
-  name: 'IdentityAccess',
-  modules: [UsersModule, RolesModule, PermissionsModule],
-})
-export class IdentityAccess extends BoundedContext {
-  constructor(
-    private readonly eventBus: IEventBus,
-    private readonly commandBus: ICommandBus,
-    private readonly queryBus: IQueryBus,
-  ) {}
-}
-
 
 // --------------------------------------------------
 
@@ -204,28 +207,35 @@ export class IdentityAccess extends BoundedContext {
   },
   boundedContexts: {
     core: [
-      AgilePM,
-      SalesCRM,
-      Finances
+      { token: IAgileACL.name, useClass: AgileBoundedContext },
+      { token: ISalesACL.name, useClass: SalesBoundedContext },
+      { token: IFinancesACL.name, useClass: FinancesBoundedContext },
+      { token: IProjectsACL.name, useClass: ProjectsClient},
     ],
     supporting: [
-      Calendar,
-      Email,
-      Chat
+      { token: ICalendarACL.name, useClass: CalendarBoundedContext },
+      { token: IEmailACL.name, useClass: EmailBoundedContext },
+      { token: IChatACL.name, useClass: ChatBoundedContext },
     ],
     generic: [
-      IdentityAccess,
-      Payments,
-      Analytics,
-      Notifications
+     { token: IIdentityAccessACL.name, useClass: IdentityAccessClient },
+     { token: IAnalyticsACL.name, useClass: AnalyticsBoundedContext },
+     { token: IReportingACL.name, useClass: NotificationsClient },
     ],
   }
 })
 class Deepblu extends ContextMap {
   constructor(
-    private readonly eventBus: IEventBus,
-    private readonly commandBus: ICommandBus,
-    private readonly queryBus: IQueryBus,
+    public readonly agile: IAgileACL,
+    public readonly salescrm: ISalesACL,
+    public readonly finances: IFinancesACL,
+    public readonly projects: IProjectsACL,
+    public readonly calendar: ICalendarACL,
+    public readonly email: IEmailACL,
+    public readonly chat: IChatACL,
+    public readonly identity: IIdentityAccessACL,
+    public readonly analytics: IAnalyticsACL,
+    public readonly reporting: IReportingACL,
   ) {}
 }
 
@@ -235,16 +245,15 @@ export const deepblu = Deepblu.create();
 
 const tasksRouter = createRouter()
   .mutation('create', {
-    input: CreateTaskSchema,
-    resolve: async ({ input }) => {
-      deepblu.dispatch(CreateTask.with(input))
-    },
+    input: AddTaskToBoardSchema,
+    resolve: async ({ input }) => deepblu.agile.boards.addTaskToBoard(input);
+    ,
   })
 
-  .query('all', {
-    resolve: async ({input}) => {
-      return await deepblu.fetch(AllTasks.with(input))
-    },
+  .query('urgentTasks', {
+    input: GetUrgentTasksrRequestSchema,
+    output: GetUrgentTasksResponseSchema,
+    resolve: async ({input}) =>  await deepblu.agile.boards.tasks.getUrgentTasks(input);
   })
 
 */
