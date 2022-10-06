@@ -25,7 +25,7 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
     return Result.ok(aggregate)
   }
 
-  protected onMockAggregateCreated(event: MockPropsUpdated): void {
+  protected _onMockAggregateCreated(event: MockPropsUpdated): void {
     this.id = UniqueID.from(event.aggregateId).data as UniqueID
     this.props.foo = event.payload.foo
     this.props.is = !!event.payload.is
@@ -35,11 +35,19 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
     this.applyChange(new MockPropsUpdated(this.id.value, payload))
   }
 
-  protected onMockPropsUpdated(event: MockPropsUpdated): void {
+  protected _onMockPropsUpdated(event: MockPropsUpdated): void {
     this.props.foo = event.payload.foo || this.props.foo
     this.props.is = Reflect.has(event.payload, 'is')
       ? !!event.payload.is
       : this.props.is
+  }
+
+  toggle(): void {
+    this.applyChange(new MockToggled(this.id.value))
+  }
+
+  protected _onMockToggled(): void {
+    this.props.is = !this.props.is
   }
 
   get foo(): string {
@@ -72,3 +80,11 @@ export class MockPropsUpdated extends DomainEvent {
     super(id)
   }
 }
+
+/**
+ * @event MockToggled
+ * @description Event fired after toggling the 'is' property of a MockAggregate.
+ */
+export const MockToggled = createEvent()
+  .as('MockToggled')
+  .from(MockAggregate.name)

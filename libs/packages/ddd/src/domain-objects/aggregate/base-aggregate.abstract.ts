@@ -31,14 +31,10 @@ export abstract class BaseAggregate<
 > extends BaseEntity<Partial<P>, I> {
   public override readonly domainObjectType: DomainObjectType = 'Aggregate'
   private _version = -1
-  private readonly _changes: IEvent[] = []
+  private _changes: IEvent[] = []
 
   protected constructor(props: Partial<P>, id?: I) {
     super(props, id)
-  }
-
-  get version(): number {
-    return this._version
   }
 
   /**
@@ -57,26 +53,51 @@ export abstract class BaseAggregate<
 
   private apply(event: IEvent, isNew = false): void {
     const self = this as any
-    self[`on${event.name}`](event)
+    self[`_on${event.name}`](event)
     if (isNew) this._changes.push(event)
   }
 
   commit(): IEvent[] {
-    const commited = this._changes
-    this._changes.splice(0, this._changes.length)
+    const commited: IEvent[] = [...this._changes]
+    this._changes = []
     return commited
+  }
+
+  override clone<A extends BaseEntity<Partial<P>, I>>(): A {
+    const clone = super.clone<A>()
+    clone.id = this.id
+    Reflect.set(clone, 'props', { ...this.props })
+    return clone
+  }
+
+  snapshot<A extends BaseAggregate<P, I>>(version?: number): A {
+    const snapshot = this.clone<A>()
+    snapshot._version = version ?? this._version
+    snapshot.commit()
+    return snapshot
+  }
+
+  static rehydrate<A extends BaseAggregate<IAggregateProps>>(
+    id: UniqueID,
+    events: IEvent[],
+    snapshot?: A
+  ): A {
+    // const aggregate: A = Reflect.construct(this, [{}, id])
+    // events.forEach(event => aggregate.apply(event))
+    // return aggregate
+    const aggregate: A = snapshot || (Reflect.construct(this, [{}, id]) as A)
+    events.forEach(event => {
+      aggregate.apply(event)
+      aggregate._version++
+    })
+    return aggregate
   }
 
   get changes(): IEvent[] {
     return this._changes
   }
 
-  static rehydrate<A extends BaseAggregate<IAggregateProps>>(
-    id: UniqueID,
-    events: IEvent[]
-  ): A {
-    const aggregate: A = Reflect.construct(this, [{}, id])
-    events.forEach(event => aggregate.apply(event))
-    return aggregate
+  get version(): number {
+    return this._version
   }
 }
