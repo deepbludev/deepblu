@@ -3,20 +3,32 @@ import { UniqueID } from '../../uid/unique-id.vo'
 import { DomainEvent } from '../domain-event'
 import { eventFrom } from '../event-from.decorator'
 
-interface TestProps {
+interface Props {
   foo: string
   is: boolean
 }
 
-class TestAggregate extends BaseAggregate<TestProps> {
-  constructor(props: TestProps, id?: UniqueID) {
+class TestAggregate extends BaseAggregate<Props> {
+  constructor(props: Props, id?: UniqueID) {
     super(props, id)
+  }
+
+  create(payload: Partial<Props>): TestAggregate {
+    this.applyChange(new Created(this.id.value, payload as Props))
+    return this
   }
 }
 
-@eventFrom(TestAggregate)
+@eventFrom(TestAggregate.name)
+class Created extends DomainEvent {
+  constructor(id: string, public readonly payload: Props) {
+    super(id)
+  }
+}
+
 class TestEvent extends DomainEvent {
-  constructor(id: string, public readonly payload: TestProps) {
+  static override aggregate = 'TestAggregate'
+  constructor(id: string, public readonly payload: Props) {
     super(id)
   }
 }

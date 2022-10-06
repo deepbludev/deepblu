@@ -1,14 +1,8 @@
 import { Constructor } from '../../interfaces'
-import {
-  BaseAggregate,
-  IAggregateProps,
-} from '../aggregate/base-aggregate.abstract'
 
-export function eventFrom(
-  aggregateClass: Constructor<BaseAggregate<IAggregateProps>>
-) {
+export function eventFrom(aggregateClass: string) {
   return function (target: Constructor & { aggregate: string }) {
-    target.aggregate = aggregateClass.name
+    target.aggregate = aggregateClass
     return target
   }
 }

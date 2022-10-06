@@ -28,17 +28,27 @@ export interface IAggregateProps extends IEntityProps {}
 export abstract class BaseAggregate<
   P extends IAggregateProps,
   I extends UniqueID = UniqueID
-> extends BaseEntity<P, I> {
+> extends BaseEntity<Partial<P>, I> {
   public override readonly domainObjectType: DomainObjectType = 'Aggregate'
   private _version = -1
   private readonly _changes: IEvent[] = []
 
-  constructor(props: P, id?: I) {
+  protected constructor(props: Partial<P>, id?: I) {
     super(props, id)
   }
 
   get version(): number {
     return this._version
+  }
+
+  /**
+   * @description Aggregates are compared by their id, class and version.
+   * Subclasses should override this method if they have additional properties.
+   * @param other - the other aggregate to compare.
+   * @returns true if the aggregate are equal in props and id.
+   */
+  override equals(other: BaseAggregate<P, I>): boolean {
+    return super.equals(other) && this.version === other.version
   }
 
   protected applyChange(event: IEvent) {
@@ -59,5 +69,14 @@ export abstract class BaseAggregate<
 
   get changes(): IEvent[] {
     return this._changes
+  }
+
+  static rehydrate<A extends BaseAggregate<IAggregateProps>>(
+    id: UniqueID,
+    events: IEvent[]
+  ): A {
+    const aggregate: A = Reflect.construct(this, [{}, id])
+    events.forEach(event => aggregate.apply(event))
+    return aggregate
   }
 }

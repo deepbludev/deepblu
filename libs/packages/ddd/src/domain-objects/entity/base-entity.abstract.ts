@@ -31,7 +31,7 @@ export abstract class BaseEntity<
   implements IIdentifiable<I>
 {
   public override readonly domainObjectType: DomainObjectType = 'Entity'
-  public readonly id: I
+  public id: I
 
   protected constructor(props: P, id?: I) {
     super(props)
@@ -40,10 +40,12 @@ export abstract class BaseEntity<
 
   /**
    * @description Entities are compared by their id and class.
-   * @returns true if the value objects are equal in value.
+   * Subclasses should override this method if they have additional properties.
+   * @param other - the other entity to compare.
+   * @returns true if the entities are equal in props and id.
    */
-  equals<E extends BaseEntity<P, I>>(entity: E): boolean {
-    return this.isSameClass(entity) && this.id.equals(entity.id)
+  equals(other: BaseEntity<P, I>): boolean {
+    return this.isSameClass(other) && this.id.equals(other.id)
   }
 
   /**
