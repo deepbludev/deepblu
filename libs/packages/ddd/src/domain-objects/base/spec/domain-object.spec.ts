@@ -37,11 +37,6 @@ describe('DomainObject', () => {
     expect(p.props.foo).toBe('bar')
   })
 
-  it('should not be able to set a prop', () => {
-    const set = () => (p.props.foo = 'baz')
-    expect(set).toThrow()
-  })
-
   it('should be able to compare props type', () => {
     expect(p.isSameClass(p1)).toBeTruthy()
     expect(p.isSameClass(p2)).toBeTruthy()

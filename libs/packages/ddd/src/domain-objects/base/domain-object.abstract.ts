@@ -22,7 +22,7 @@ export abstract class DomainObject<P extends IDomainObjectProps> {
   public readonly validator = DomainObject.validator
 
   protected constructor(public readonly props: P) {
-    this.props = Object.freeze({ ...props })
+    this.props = { ...props }
   }
 
   /**

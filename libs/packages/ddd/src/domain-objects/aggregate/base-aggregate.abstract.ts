@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DomainObjectType } from '../base/domain-object.type'
 import { BaseEntity, IEntityProps } from '../entity/base-entity.abstract'
+import { IEvent } from '../event/event.interface'
 import { UniqueID } from '../uid/unique-id.vo'
 
 /* eslint-disable-next-line @typescript-eslint/no-empty-interface */
@@ -28,8 +30,34 @@ export abstract class BaseAggregate<
   I extends UniqueID = UniqueID
 > extends BaseEntity<P, I> {
   public override readonly domainObjectType: DomainObjectType = 'Aggregate'
+  private _version = -1
+  private readonly _changes: IEvent[] = []
 
   constructor(props: P, id?: I) {
     super(props, id)
+  }
+
+  get version(): number {
+    return this._version
+  }
+
+  protected applyChange(event: IEvent) {
+    this.apply(event, true)
+  }
+
+  private apply(event: IEvent, isNew = false): void {
+    const self = this as any
+    self[`apply${event.name}`](event)
+    if (isNew) this._changes.push(event)
+  }
+
+  commit(): IEvent[] {
+    const commited = this._changes
+    this._changes.splice(0, this._changes.length)
+    return commited
+  }
+
+  get changes(): IEvent[] {
+    return this._changes
   }
 }

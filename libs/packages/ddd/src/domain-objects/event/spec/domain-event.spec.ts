@@ -15,9 +15,9 @@ class TestAggregate extends BaseAggregate<TestProps> {
 }
 
 @eventFrom(TestAggregate)
-class TestEvent extends DomainEvent<TestProps> {
-  constructor(id: string, payload: TestProps) {
-    super(id, payload)
+class TestEvent extends DomainEvent {
+  constructor(id: string, public readonly payload: TestProps) {
+    super(id)
   }
 }
 
@@ -35,7 +35,7 @@ describe('Event', () => {
   })
 
   it('should have an event name set to the class name and aggregate name', () => {
-    expect(event.eventName).toEqual('TestAggregate.TestEvent')
+    expect(event.name).toEqual('TestEvent')
   })
 
   it('should have an aggregate name', () => {

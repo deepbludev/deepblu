@@ -68,4 +68,9 @@ describe('ValueObject', () => {
     const vo1 = vo.clone()
     expect(vo.equals(vo1)).toBeTruthy()
   })
+
+  it('should not be able to set a prop', () => {
+    const set = () => (vo.props.foo = 'baz')
+    expect(set).toThrow()
+  })
 })

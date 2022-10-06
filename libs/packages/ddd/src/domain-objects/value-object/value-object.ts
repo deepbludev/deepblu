@@ -26,8 +26,9 @@ export interface VOProps extends IDomainObjectProps {}
 export class ValueObject<P extends VOProps> extends DomainObject<P> {
   public override readonly domainObjectType: DomainObjectType = 'ValueObject'
 
-  protected constructor(props: P) {
+  protected constructor(public override readonly props: P) {
     super(props)
+    this.props = Object.freeze(this.props)
   }
 
   /**
