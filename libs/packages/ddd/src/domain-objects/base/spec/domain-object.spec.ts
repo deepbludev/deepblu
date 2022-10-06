@@ -5,7 +5,7 @@ describe('DomainObject', () => {
 
   class TestDO extends DomainObject<DummyProps> {
     constructor(props: DummyProps) {
-      super(props, 'Entity')
+      super(props)
     }
 
     equals(p: DomainObject<DummyProps>): boolean {
@@ -25,7 +25,7 @@ describe('DomainObject', () => {
   })
 
   it('should know what type of domain object it is', () => {
-    expect(p.domainObjectType).toEqual('Entity')
+    expect(p.domainObjectType).toEqual('DomainObject')
   })
 
   it('should be able to create a new instance', () => {

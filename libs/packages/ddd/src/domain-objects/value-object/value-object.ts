@@ -2,6 +2,7 @@ import {
   DomainObject,
   IDomainObjectProps,
 } from '../base/domain-object.abstract'
+import { DomainObjectType } from '../base/domain-object.type'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface VOProps extends IDomainObjectProps {}
@@ -23,8 +24,10 @@ export interface VOProps extends IDomainObjectProps {}
  * @see https://martinfowler.com/bliki/ValueObject.html
  */
 export class ValueObject<P extends VOProps> extends DomainObject<P> {
+  public override readonly domainObjectType: DomainObjectType = 'ValueObject'
+
   protected constructor(props: P) {
-    super(props, 'ValueObject')
+    super(props)
   }
 
   /**

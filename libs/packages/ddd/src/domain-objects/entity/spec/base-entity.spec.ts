@@ -22,7 +22,7 @@ class TestEntity2 extends BaseEntity<Props, UUID> {
   }
 }
 
-describe('Entity', () => {
+describe('BaseEntity', () => {
   it('should be defined and have the correct class name', () => {
     expect(BaseEntity).toBeDefined()
     expect(TestEntity).toBeDefined()
@@ -52,7 +52,7 @@ describe('Entity', () => {
     expect(entity.equals(entity)).toBeTruthy()
   })
 
-  it('should be able to compare of different class', () => {
+  it('should fail when comparing entities of different classes', () => {
     const entity2 = new TestEntity2({ foo: 'bar', is: true }, entity.id)
     expect(entity.equals(entity2)).toBeFalsy()
   })
@@ -63,7 +63,6 @@ describe('Entity', () => {
   })
 
   it('should have a hashcode based on its id, class name and domain object type', () => {
-    const entity = new TestEntity({ foo: 'bar', is: true })
     const expectedHashCode = UniqueID.from(
       `[Entity@TestEntity]:${entity.id.value}`
     ).data

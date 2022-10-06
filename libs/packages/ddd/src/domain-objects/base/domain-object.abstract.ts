@@ -17,13 +17,11 @@ export interface IDomainObjectProps {
  * @see https://martinfowler.com/bliki/EvansClassification.html
  */
 export abstract class DomainObject<P extends IDomainObjectProps> {
+  public readonly domainObjectType: DomainObjectType = 'DomainObject'
   protected static readonly validator = v
   public readonly validator = DomainObject.validator
 
-  protected constructor(
-    public readonly props: P,
-    public readonly domainObjectType: DomainObjectType = 'DomainObject'
-  ) {
+  protected constructor(public readonly props: P) {
     this.props = Object.freeze({ ...props })
   }
 

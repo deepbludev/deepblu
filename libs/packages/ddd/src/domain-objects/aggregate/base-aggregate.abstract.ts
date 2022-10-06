@@ -1,3 +1,10 @@
+import { DomainObjectType } from '../base/domain-object.type'
+import { BaseEntity, IEntityProps } from '../entity/base-entity.abstract'
+import { UniqueID } from '../uid/unique-id.vo'
+
+/* eslint-disable-next-line @typescript-eslint/no-empty-interface */
+export interface IAggregateProps extends IEntityProps {}
+
 /**
  * @class Aggregate
  * @classdesc Aggregate is a base class for all domain aggregate roots.
@@ -16,4 +23,13 @@
  * @see https://martinfowler.com/bliki/AggregateRoot.html
  */
 
-export abstract class BaseAggregate {}
+export abstract class BaseAggregate<
+  P extends IAggregateProps,
+  I extends UniqueID = UniqueID
+> extends BaseEntity<P, I> {
+  public override readonly domainObjectType: DomainObjectType = 'Aggregate'
+
+  protected constructor(props: P, id?: I) {
+    super(props, id)
+  }
+}
