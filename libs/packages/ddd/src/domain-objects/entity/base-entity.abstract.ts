@@ -55,7 +55,7 @@ export abstract class BaseEntity<
   clone<E extends BaseEntity<P, I>>(): E {
     const constructor = Reflect.getPrototypeOf(this)?.constructor
     if (!constructor)
-      throw new Error('Cannot clone Domain Object: undefined constructor.')
+      throw new Error('Cannot clone Entity: undefined constructor.')
     return Reflect.construct(constructor, [this.props, this.id])
   }
 

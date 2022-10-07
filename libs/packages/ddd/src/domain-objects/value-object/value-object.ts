@@ -45,7 +45,8 @@ export class ValueObject<P extends VOProps> extends DomainObject<P> {
    */
   clone<V extends ValueObject<P>>(): V {
     const constructor = Reflect.getPrototypeOf(this)?.constructor
-    if (!constructor) throw new Error('Cannot clone value object')
+    if (!constructor)
+      throw new Error('Cannot clone Value Object: undefined constructor.')
     return Reflect.construct(constructor, [this.props])
   }
 }

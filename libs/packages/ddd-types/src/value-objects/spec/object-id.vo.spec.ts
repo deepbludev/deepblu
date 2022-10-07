@@ -33,6 +33,6 @@ describe('ObjectID', () => {
   it('should be able to clone ObjectIDs', () => {
     const id = ObjectID.create()
     const clone: ObjectID = id.clone()
-    expect(clone.equal(id)).toBeTruthy()
+    expect(clone.equals(id)).toBeTruthy()
   })
 })
