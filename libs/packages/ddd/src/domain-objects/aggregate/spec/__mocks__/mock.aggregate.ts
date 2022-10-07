@@ -7,29 +7,40 @@ import { createEvent } from '../../../event/create-event-from-as.util'
 
 export interface MockAggregateProps extends IAggregateProps {
   foo: string
-  is: boolean
+  is?: boolean
 }
 
 export class MockAggregate extends BaseAggregate<MockAggregateProps> {
-  protected constructor(id?: UniqueID) {
-    super({}, id)
+  protected constructor(props: MockAggregateProps, id?: UniqueID) {
+    super(props, id)
   }
 
-  // factory method
+  /**
+   * @command CreateMockAggregate - create a new mock aggregate
+   * @param aggregateId - the id of the aggregate
+   * @param payload - the payload of the command
+   */
+
+  // factory
   static create(
-    props: MockAggregateProps,
+    payload: MockAggregateProps,
     id?: UniqueID
   ): Result<MockAggregate> {
-    const aggregate = new MockAggregate(id)
-    aggregate.applyChange(new MockAggregateCreated(aggregate.id.value, props))
+    const aggregate = new MockAggregate(payload, id)
+    aggregate.applyChange(new MockAggregateCreated(aggregate.id.value, payload))
     return Result.ok(aggregate)
   }
 
   protected _onMockAggregateCreated(event: MockPropsUpdated): void {
     this.id = UniqueID.from(event.aggregateId).data as UniqueID
-    this.props.foo = event.payload.foo
+    this.props.foo = event.payload.foo || ''
     this.props.is = !!event.payload.is
   }
+
+  /**
+   * @command UpdateMockProps - update the aggregate props
+   * @param payload - the props to update
+   */
 
   updateProps(payload: Partial<MockAggregateProps>): void {
     this.applyChange(new MockPropsUpdated(this.id.value, payload))
@@ -42,6 +53,10 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
       : this.props.is
   }
 
+  /**
+   * @command Toggle - toggle 'is' prop
+   */
+
   toggle(): void {
     this.applyChange(new MockToggled(this.id.value))
   }
@@ -49,6 +64,8 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
   protected _onMockToggled(): void {
     this.props.is = !this.props.is
   }
+
+  /** getters */
 
   get foo(): string {
     return this.props.foo || ''

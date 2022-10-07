@@ -28,23 +28,13 @@ export interface IAggregateProps extends IEntityProps {}
 export abstract class BaseAggregate<
   P extends IAggregateProps,
   I extends UniqueID = UniqueID
-> extends BaseEntity<Partial<P>, I> {
+> extends BaseEntity<P, I> {
   public override readonly domainObjectType: DomainObjectType = 'Aggregate'
   private _version = -1
   private _changes: IEvent[] = []
 
-  protected constructor(props: Partial<P>, id?: I) {
+  protected constructor(props: P, id?: I) {
     super(props, id)
-  }
-
-  /**
-   * @description Aggregates are compared by their id, class and version.
-   * Subclasses should override this method if they have additional properties.
-   * @param other - the other aggregate to compare.
-   * @returns true if the aggregate are equal in props and id.
-   */
-  override equals(other: BaseAggregate<P, I>): boolean {
-    return super.equals(other) && this.version === other.version
   }
 
   protected applyChange(event: IEvent): void {
@@ -61,13 +51,6 @@ export abstract class BaseAggregate<
     const commited: IEvent[] = [...this._changes]
     this._changes = []
     return commited
-  }
-
-  override clone<A extends BaseEntity<Partial<P>, I>>(): A {
-    const clone = super.clone<A>()
-    clone.id = this.id
-    Reflect.set(clone, 'props', { ...this.props })
-    return clone
   }
 
   snapshot<A extends BaseAggregate<P, I>>(version?: number): A {
@@ -87,7 +70,12 @@ export abstract class BaseAggregate<
       aggregate.apply(event)
       aggregate._version++
     })
+    aggregate.commit()
     return aggregate
+  }
+
+  get hasChanges(): boolean {
+    return this._changes.length > 0
   }
 
   get changes(): IEvent[] {
