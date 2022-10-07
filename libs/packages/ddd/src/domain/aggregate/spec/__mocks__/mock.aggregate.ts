@@ -31,7 +31,7 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
     return Result.ok(aggregate)
   }
 
-  protected _onMockAggregateCreated(event: MockPropsUpdated): void {
+  protected _onMockAggregateCreated(event: MockAggregateCreated): void {
     this.id = UniqueID.from(event.aggregateId).data as UniqueID
     this.props.foo = event.payload.foo || ''
     this.props.is = !!event.payload.is
@@ -80,9 +80,16 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
  * @event MockAggregateCreated
  * @description Event fired after a new MockAggregate is created.
  */
-export const MockAggregateCreated = createEvent()
-  .as<MockAggregateProps>('MockAggregateCreated')
-  .from(MockAggregate.name)
+// export const MockAggregateCreated = createEvent()
+//   .as<MockAggregateProps>('MockAggregateCreated')
+//   .from(MockAggregate.name)
+
+@domainEvent(MockAggregate.name)
+export class MockAggregateCreated extends DomainEvent {
+  constructor(id: string, public readonly payload: MockAggregateProps) {
+    super(id)
+  }
+}
 
 /**
  * @event MockPropsUpdated
