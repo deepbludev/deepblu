@@ -1,7 +1,7 @@
 import { DomainEvent } from '../../../event/domain-event'
 import { domainEvent } from '../../../event/utils/domain-event.decorator'
 import { createDomainEvent } from '../../../event/utils/create-domain-event-as-from.util'
-import { IMessage, Payload } from '../../../types'
+import { Payload } from '../../../types'
 
 /**
  * @event MockAggregateCreated
