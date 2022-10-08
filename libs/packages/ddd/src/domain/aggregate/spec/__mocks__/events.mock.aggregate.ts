@@ -1,7 +1,7 @@
 import { DomainEvent } from '../../../event/domain-event'
 import { domainEvent } from '../../../event/utils/domain-event.decorator'
 import { createDomainEvent } from '../../../event/utils/create-domain-event-as-from.util'
-import { Payload } from '../../../types'
+import { IMessage, Payload } from '../../../types'
 
 /**
  * @event MockAggregateCreated
@@ -21,10 +21,10 @@ export const MockAggregateCreated = createDomainEvent<{
 @domainEvent('MockAggregate')
 export class MockPropsUpdated extends DomainEvent {
   constructor(
-    id: string,
-    payload: Partial<Payload<typeof MockAggregateCreated>>
+    payload: Partial<Payload<typeof MockAggregateCreated>>,
+    id: string
   ) {
-    super(id, payload)
+    super(payload, id)
   }
 }
 export type MockPropsUpdatedPayload = Payload<typeof MockPropsUpdated>

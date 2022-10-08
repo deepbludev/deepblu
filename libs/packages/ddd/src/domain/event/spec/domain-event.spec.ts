@@ -15,22 +15,22 @@ class TestAggregate extends BaseAggregate<Props> {
   }
 
   create(payload: Partial<Props>): TestAggregate {
-    this.applyChange(new Created(this.id.value, payload as Props))
+    this.applyChange(new Created(payload as Props, this.id.value))
     return this
   }
 }
 
 @domainEvent(TestAggregate.name)
 class Created extends DomainEvent {
-  constructor(id: string, payload: Props) {
-    super(id, payload)
+  constructor(payload: Props, id: string) {
+    super(payload, id)
   }
 }
 
 class TestEvent extends DomainEvent {
   static override aggregate = TestAggregate.name
-  constructor(id: string, payload: Props) {
-    super(id, payload)
+  constructor(payload: Props, id: string) {
+    super(payload, id)
   }
 }
 
@@ -45,9 +45,9 @@ const EventWithoutPayload = createDomainEvent()
 describe('Event', () => {
   const payload = { foo: 'bar', is: true }
   const aggregate = new TestAggregate(payload)
-  const event = new TestEvent(aggregate.id.value, payload)
-  const otherEvent = new OtherTestEvent(aggregate.id.value, payload)
-  const eventWithoutPayload = new EventWithoutPayload(aggregate.id.value, {})
+  const event = new TestEvent(payload, aggregate.id.value)
+  const otherEvent = new OtherTestEvent(payload, aggregate.id.value)
+  const eventWithoutPayload = new EventWithoutPayload({}, aggregate.id.value)
 
   it('should have a timestamp', () => {
     expect(event.timestamp).toBeGreaterThan(0)

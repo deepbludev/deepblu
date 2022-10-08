@@ -1,17 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { Constructor, Payload } from '../types'
+import { Constructor, IMessage, Payload } from '../types'
 import { IEvent } from './event.interface'
 
-export abstract class DomainEvent<P = any> implements IEvent<P> {
+export abstract class DomainEvent<P = any>
+  extends IMessage<P>
+  implements IEvent<P>
+{
   static aggregate = 'Aggregate'
   public readonly timestamp: number
 
   constructor(
+    public override readonly payload: P,
     public readonly aggregateId: string,
-    public readonly payload: P,
     timestamp?: number
   ) {
+    super(payload)
     this.timestamp = timestamp || Date.now()
   }
 

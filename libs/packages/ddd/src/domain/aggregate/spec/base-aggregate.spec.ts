@@ -86,10 +86,10 @@ describe('AggregateBase', () => {
 
     const snapshot: MockAggregate = original.snapshot(10)
     const changes = [
-      new MockPropsUpdated(snapshot.id.value, { foo: 'bar3' }),
-      new MockPropsUpdated(snapshot.id.value, { foo: 'bar4' }),
-      new MockToggled(snapshot.id.value, {}),
-      new MockToggled(snapshot.id.value, {}),
+      new MockPropsUpdated({ foo: 'bar3' }, snapshot.id.value),
+      new MockPropsUpdated({ foo: 'bar4' }, snapshot.id.value),
+      new MockToggled({}, snapshot.id.value),
+      new MockToggled({}, snapshot.id.value),
     ]
 
     const rehydrated = MockAggregate.rehydrate<MockAggregate>(
