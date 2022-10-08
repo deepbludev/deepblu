@@ -3,10 +3,7 @@
 import { Constructor, IMessage, Payload } from '../types'
 import { IEvent } from './event.interface'
 
-export abstract class DomainEvent<P = any>
-  extends IMessage<P>
-  implements IEvent<P>
-{
+export class DomainEvent<P = any> extends IMessage<P> implements IEvent<P> {
   static aggregate = 'Aggregate'
   public readonly timestamp: number
 
@@ -19,6 +16,10 @@ export abstract class DomainEvent<P = any>
     this.timestamp = timestamp || Date.now()
   }
 
+  static with<P = any>(payload: P, id: string) {
+    return new this(payload, id)
+  }
+
   get aggregateName(): string {
     return (this.constructor as typeof DomainEvent).aggregate
   }
@@ -28,6 +29,6 @@ export abstract class DomainEvent<P = any>
   }
 }
 
-export type DomainEventFrom<E extends Constructor<IEvent>> = DomainEvent<
+export type DomainEventAs<E extends Constructor<IEvent>> = DomainEvent<
   Payload<E>
 >

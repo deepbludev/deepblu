@@ -1,5 +1,5 @@
 import { Result } from '../../../core/result'
-import { DomainEventFrom } from '../../../event/domain-event'
+import { DomainEventAs } from '../../../event/domain-event'
 import { Payload } from '../../../types'
 import { UniqueID } from '../../../uid/unique-id.vo'
 import { BaseAggregate, IAggregateProps } from '../../base-aggregate.abstract'
@@ -38,7 +38,7 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
   }
 
   protected _onMockAggregateCreated(
-    event: DomainEventFrom<typeof MockAggregateCreated>
+    event: DomainEventAs<typeof MockAggregateCreated>
   ): void {
     this.id = UniqueID.from(event.aggregateId).data
     this.props.foo = event.payload.foo || ''
@@ -53,10 +53,12 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
    */
 
   updateProps(payload: Payload<typeof MockPropsUpdated>): void {
-    this.applyChange(new MockPropsUpdated(payload, this.id.value))
+    this.applyChange(MockPropsUpdated.with(payload, this.id.value))
   }
 
-  protected _onMockPropsUpdated(event: MockPropsUpdated): void {
+  protected _onMockPropsUpdated(
+    event: DomainEventAs<typeof MockPropsUpdated>
+  ): void {
     this.props.foo = event.payload.foo || this.props.foo
     this.props.is = Reflect.has(event.payload, 'is')
       ? !!event.payload.is

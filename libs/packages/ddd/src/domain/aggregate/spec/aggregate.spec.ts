@@ -22,7 +22,7 @@ class MockAggregate extends Aggregate<MockAggregateProps> {
 
   static create(props: MockAggregateProps, id?: UUID) {
     const aggregate = new MockAggregate(props, id)
-    aggregate.applyChange(new MockAggregateCreated(props, aggregate.id.value))
+    aggregate.applyChange(MockAggregateCreated.with(props, aggregate.id.value))
     return aggregate
   }
 
