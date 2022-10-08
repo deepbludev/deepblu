@@ -80,14 +80,15 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
  * @event MockAggregateCreated
  * @description Event fired after a new MockAggregate is created.
  */
+// export type MockAggregateCreatedPayload = ConstructorParameters<typeof MockAggregateCreated>
 // export const MockAggregateCreated = createEvent()
 //   .as<MockAggregateProps>('MockAggregateCreated')
 //   .from(MockAggregate.name)
 
 @domainEvent(MockAggregate.name)
 export class MockAggregateCreated extends DomainEvent {
-  constructor(id: string, public readonly payload: MockAggregateProps) {
-    super(id)
+  constructor(id: string, payload: MockAggregateProps) {
+    super(id, payload)
   }
 }
 
@@ -97,11 +98,8 @@ export class MockAggregateCreated extends DomainEvent {
  */
 @domainEvent(MockAggregate.name)
 export class MockPropsUpdated extends DomainEvent {
-  constructor(
-    id: string,
-    public readonly payload: Partial<MockAggregateProps>
-  ) {
-    super(id)
+  constructor(id: string, payload: Partial<MockAggregateProps>) {
+    super(id, payload)
   }
 }
 

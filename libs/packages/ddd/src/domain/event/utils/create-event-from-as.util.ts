@@ -6,8 +6,8 @@ export const createEvent = () => ({
     from: (aggregate: string): Constructor<DomainEvent> => {
       const EventClass = class extends DomainEvent {
         static override aggregate = aggregate
-        constructor(id: string, public readonly payload: P) {
-          super(id)
+        constructor(id: string, payload: P) {
+          super(id, payload)
         }
       }
       Reflect.defineProperty(EventClass, 'name', { value: event })

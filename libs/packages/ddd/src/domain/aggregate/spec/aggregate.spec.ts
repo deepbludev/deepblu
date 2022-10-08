@@ -10,8 +10,8 @@ interface MockAggregateProps {
 
 @domainEvent('MockAggregate')
 export class MockAggregateCreated extends DomainEvent {
-  constructor(id: string, public readonly payload: MockAggregateProps) {
-    super(id)
+  constructor(id: string, payload: MockAggregateProps) {
+    super(id, payload)
   }
 }
 

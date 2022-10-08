@@ -21,15 +21,15 @@ class TestAggregate extends BaseAggregate<Props> {
 
 @domainEvent(TestAggregate.name)
 class Created extends DomainEvent {
-  constructor(id: string, public readonly payload: Props) {
-    super(id)
+  constructor(id: string, payload: Props) {
+    super(id, payload)
   }
 }
 
 class TestEvent extends DomainEvent {
-  static override aggregate = 'TestAggregate'
-  constructor(id: string, public readonly payload: Props) {
-    super(id)
+  static override aggregate = TestAggregate.name
+  constructor(id: string, payload: Props) {
+    super(id, payload)
   }
 }
 
