@@ -6,7 +6,7 @@ import { BaseAggregate, IAggregateProps } from '../../base-aggregate.abstract'
 import {
   MockAggregateCreated,
   MockPropsUpdated,
-  MockToggled,
+  MockAggregateToggled,
 } from './events.mock.aggregate'
 
 export type MockAggregateProps = IAggregateProps &
@@ -21,6 +21,7 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
    * Creates a new mock aggregate from initial props
    * @factory
    * @command CreateMockAggregate
+   * @event MockAggregateCreated
    * @param aggregateId - the id of the aggregate
    * @param payload - the aggregate props on creation
    */
@@ -30,7 +31,9 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
     id?: UniqueID
   ): Result<MockAggregate> {
     const aggregate = new MockAggregate(payload, id)
-    aggregate.applyChange(new MockAggregateCreated(payload, aggregate.id.value))
+    aggregate.applyChange(
+      MockAggregateCreated.with(payload, aggregate.id.value)
+    )
     return Result.ok(aggregate)
   }
 
@@ -43,7 +46,9 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
   }
 
   /**
+   * Updates the mock aggregate props to the given values
    * @command UpdateMockProps - update the aggregate props
+   * @event MockPropsUpdated
    * @param payload - the props to update
    */
 
@@ -59,14 +64,16 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
   }
 
   /**
-   * @command Toggle - toggle 'is' prop
+   * Toggles the mock aggregate state
+   * @command ToggleMockAggregate
+   * @event MockAggregateToggled
    */
 
   toggle(): void {
-    this.applyChange(new MockToggled({}, this.id.value))
+    this.applyChange(MockAggregateToggled.with({}, this.id.value))
   }
 
-  protected _onMockToggled(): void {
+  protected _onMockAggregateToggled(): void {
     this.props.is = !this.props.is
   }
 

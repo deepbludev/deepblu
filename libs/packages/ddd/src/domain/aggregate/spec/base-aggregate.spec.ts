@@ -2,7 +2,7 @@ import { UniqueID } from '../../uid/unique-id.vo'
 import { MockAggregate } from './__mocks__/mock.aggregate'
 import {
   MockPropsUpdated,
-  MockToggled,
+  MockAggregateToggled,
 } from './__mocks__/events.mock.aggregate'
 
 describe('AggregateBase', () => {
@@ -88,8 +88,8 @@ describe('AggregateBase', () => {
     const changes = [
       new MockPropsUpdated({ foo: 'bar3' }, snapshot.id.value),
       new MockPropsUpdated({ foo: 'bar4' }, snapshot.id.value),
-      new MockToggled({}, snapshot.id.value),
-      new MockToggled({}, snapshot.id.value),
+      new MockAggregateToggled({}, snapshot.id.value),
+      new MockAggregateToggled({}, snapshot.id.value),
     ]
 
     const rehydrated = MockAggregate.rehydrate<MockAggregate>(

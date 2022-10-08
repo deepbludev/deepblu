@@ -8,6 +8,9 @@ export const createDomainEvent = <P = Record<string, never>>() => ({
         constructor(payload: P, id: string) {
           super(payload, id)
         }
+        static with(payload: P, id: string) {
+          return new this(payload, id)
+        }
       }
       Reflect.defineProperty(DomainEventClass, 'name', { value: event })
       return DomainEventClass

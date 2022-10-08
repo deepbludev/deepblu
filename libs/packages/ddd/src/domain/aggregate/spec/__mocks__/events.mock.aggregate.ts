@@ -34,6 +34,6 @@ export type MockPropsUpdatedPayload = Payload<typeof MockPropsUpdated>
  * @description Event fired after toggling the 'is' property of a MockAggregate.
  */
 
-export const MockToggled = createDomainEvent()
-  .as('MockToggled')
+export const MockAggregateToggled = createDomainEvent()
+  .as('MockAggregateToggled')
   .from('MockAggregate')
