@@ -14,8 +14,7 @@ export abstract class IMessage<P = any> {
  * Extracts the payload type from a message class.
  * @example
  * class MyMessage implements IMessage<{ foo: string }> {
- *   name = 'MyMessage'
- *   payload: { foo: string }
+ *   constructor(public readonly payload: { foo: string }) {}
  * }
  * type MyMessagePayload = Payload<typeof MyMessage> // { foo: string }
  *
