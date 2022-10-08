@@ -6,9 +6,7 @@ import { Constructor } from './constructor.interface'
  * Base interface for application messages.
  * Used to define domain events in DDD, and commands/queries in CQRS.
  */
-export interface IMessage<
-  P extends Record<string, unknown> = Record<string, unknown>
-> {
+export interface IMessage<P = any> {
   name: string
   payload: P
 }
