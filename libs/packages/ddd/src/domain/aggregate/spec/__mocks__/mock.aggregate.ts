@@ -1,14 +1,16 @@
 import { Result } from '../../../core/result'
+import { DomainEventFrom } from '../../../event/domain-event'
+import { Payload } from '../../../types'
 import { UniqueID } from '../../../uid/unique-id.vo'
-import { DomainEvent } from '../../../event/domain-event'
-import { domainEvent } from '../../../event/utils/domain-event.decorator'
 import { BaseAggregate, IAggregateProps } from '../../base-aggregate.abstract'
-import { createEvent } from '../../../event/utils/create-event-from-as.util'
+import {
+  MockAggregateCreated,
+  MockPropsUpdated,
+  MockToggled,
+} from './events.mock.aggregate'
 
-export interface MockAggregateProps extends IAggregateProps {
-  foo: string
-  is?: boolean
-}
+export type MockAggregateProps = IAggregateProps &
+  Payload<typeof MockAggregateCreated>
 
 export class MockAggregate extends BaseAggregate<MockAggregateProps> {
   protected constructor(props: MockAggregateProps, id?: UniqueID) {
@@ -16,14 +18,15 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
   }
 
   /**
-   * @command CreateMockAggregate - create a new mock aggregate
+   * Creates a new mock aggregate from initial props
+   * @factory
+   * @command CreateMockAggregate
    * @param aggregateId - the id of the aggregate
-   * @param payload - the payload of the command
+   * @param payload - the aggregate props on creation
    */
 
-  // factory
   static create(
-    payload: MockAggregateProps,
+    payload: Payload<typeof MockAggregateCreated>,
     id?: UniqueID
   ): Result<MockAggregate> {
     const aggregate = new MockAggregate(payload, id)
@@ -31,8 +34,10 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
     return Result.ok(aggregate)
   }
 
-  protected _onMockAggregateCreated(event: MockAggregateCreated): void {
-    this.id = UniqueID.from(event.aggregateId).data as UniqueID
+  protected _onMockAggregateCreated(
+    event: DomainEventFrom<typeof MockAggregateCreated>
+  ): void {
+    this.id = UniqueID.from(event.aggregateId).data
     this.props.foo = event.payload.foo || ''
     this.props.is = !!event.payload.is
   }
@@ -42,7 +47,7 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
    * @param payload - the props to update
    */
 
-  updateProps(payload: Partial<MockAggregateProps>): void {
+  updateProps(payload: Payload<typeof MockPropsUpdated>): void {
     this.applyChange(new MockPropsUpdated(this.id.value, payload))
   }
 
@@ -58,7 +63,7 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
    */
 
   toggle(): void {
-    this.applyChange(new MockToggled(this.id.value))
+    this.applyChange(new MockToggled(this.id.value, {}))
   }
 
   protected _onMockToggled(): void {
@@ -75,38 +80,3 @@ export class MockAggregate extends BaseAggregate<MockAggregateProps> {
     return !!this.props.is
   }
 }
-
-/**
- * @event MockAggregateCreated
- * @description Event fired after a new MockAggregate is created.
- */
-// export type MockAggregateCreatedPayload = ConstructorParameters<typeof MockAggregateCreated>
-// export const MockAggregateCreated = createEvent()
-//   .as<MockAggregateProps>('MockAggregateCreated')
-//   .from(MockAggregate.name)
-
-@domainEvent(MockAggregate.name)
-export class MockAggregateCreated extends DomainEvent {
-  constructor(id: string, payload: MockAggregateProps) {
-    super(id, payload)
-  }
-}
-
-/**
- * @event MockPropsUpdated
- * @description Event fired after updating the props of a MockAggregate.
- */
-@domainEvent(MockAggregate.name)
-export class MockPropsUpdated extends DomainEvent {
-  constructor(id: string, payload: Partial<MockAggregateProps>) {
-    super(id, payload)
-  }
-}
-
-/**
- * @event MockToggled
- * @description Event fired after toggling the 'is' property of a MockAggregate.
- */
-export const MockToggled = createEvent()
-  .as('MockToggled')
-  .from(MockAggregate.name)

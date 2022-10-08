@@ -14,7 +14,7 @@ export * from './entity/utils/unique.decorator'
 export * from './event/domain-event'
 export * from './event/event.interface'
 export * from './event/utils/domain-event.decorator'
-export * from './event/utils/create-event-from-as.util'
+export * from './event/utils/create-domain-event-as-from.util'
 
 export * from './uid/unique-id.vo'
 export * from './uid/unique-id.interface'

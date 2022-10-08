@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Constructor } from '../../../types'
+import { Constructor } from '../../types'
 import { UniqueID } from '../../uid/unique-id.vo'
 
 /**
@@ -30,6 +30,6 @@ export const unique = <I extends typeof UniqueID>(idType: I) =>
         this.id = id ?? idType.create()
       }
     }
-    Object.defineProperty(UniqueClass, 'name', { value: BaseClass.name })
+    Reflect.defineProperty(UniqueClass, 'name', { value: BaseClass.name })
     return UniqueClass
   }

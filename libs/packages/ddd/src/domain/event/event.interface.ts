@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IMessage } from '../../types/message.interface'
+import { IMessage } from '../types/message.types'
 
 export interface IEvent<P = any> extends IMessage<P> {
   aggregateName: string

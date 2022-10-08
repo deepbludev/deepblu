@@ -1,4 +1,4 @@
-import { IIdentifiable } from '../../types/identifiable.interface'
+import { IIdentifiable } from '../types/identifiable.interface'
 import {
   IDomainObjectProps,
   DomainObject,
