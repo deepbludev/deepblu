@@ -17,11 +17,10 @@ export interface IMessage<
  * Extracts the payload type from a message class.
  * @example
  * class MyMessage implements IMessage<{ foo: string }> {
- *  name = 'MyMessage'
- *  payload: { foo: string }
+ *   name = 'MyMessage'
+ *   payload: { foo: string }
  * }
  * type MyMessagePayload = Payload<typeof MyMessage> // { foo: string }
- * @example
  */
 export type Payload<E extends Constructor<IMessage>> =
   ConstructorParameters<E>[1]
