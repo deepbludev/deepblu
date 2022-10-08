@@ -1,4 +1,4 @@
-import { DomainObjectType } from './domain-object.type'
+import { DomainObjects, DomainObjectType } from './domain-object.type'
 import v from '../../utils/validator'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -17,7 +17,8 @@ export interface IDomainObjectProps {
  * @see https://martinfowler.com/bliki/EvansClassification.html
  */
 export abstract class DomainObject<P extends IDomainObjectProps> {
-  public readonly domainObjectType: DomainObjectType = 'DomainObject'
+  public readonly domainObjectType: DomainObjectType =
+    DomainObjects.DomainObject
   protected static readonly validator = v
   public readonly validator = DomainObject.validator
 

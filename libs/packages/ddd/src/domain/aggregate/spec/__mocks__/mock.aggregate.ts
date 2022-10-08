@@ -2,7 +2,10 @@ import { Result } from '../../../core/result'
 import { DomainEventAs } from '../../../event/domain-event'
 import { Payload } from '../../../types'
 import { UniqueID } from '../../../uid/unique-id.vo'
-import { BaseAggregate, IAggregateProps } from '../../base-aggregate.abstract'
+import {
+  BaseAggregateRoot,
+  IAggregateProps,
+} from '../../base-aggregate-root.abstract'
 import {
   MockAggregateCreated,
   MockPropsUpdated,
@@ -12,7 +15,7 @@ import {
 export type MockAggregateProps = IAggregateProps &
   Payload<typeof MockAggregateCreated>
 
-export class MockAggregate extends BaseAggregate<MockAggregateProps> {
+export class MockAggregate extends BaseAggregateRoot<MockAggregateProps> {
   protected constructor(props: MockAggregateProps, id?: UniqueID) {
     super(props, id)
   }

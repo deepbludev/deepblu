@@ -1,5 +1,5 @@
 // domain-objects
-export * from './aggregate/base-aggregate.abstract'
+export * from './aggregate/base-aggregate-root.abstract'
 
 export * from './core/domain-object.abstract'
 export * from './core/domain-object.type'

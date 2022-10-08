@@ -1,7 +1,7 @@
 import { DomainEvent } from '../../event/domain-event'
 import { domainEvent } from '../../event/utils/domain-event.decorator'
 import { UUID } from '../../uid/uuid.vo'
-import { Aggregate } from '../aggregate'
+import { AggregateRoot } from '../aggregate-root'
 
 interface MockAggregateProps {
   foo: string
@@ -15,7 +15,7 @@ export class MockAggregateCreated extends DomainEvent {
   }
 }
 
-class MockAggregate extends Aggregate<MockAggregateProps> {
+class MockAggregate extends AggregateRoot<MockAggregateProps> {
   constructor(props: MockAggregateProps, id?: UUID) {
     super(props, id)
   }
@@ -43,7 +43,7 @@ class MockAggregate extends Aggregate<MockAggregateProps> {
 
 describe('Aggregate', () => {
   it('should be defined', () => {
-    expect(Aggregate).toBeDefined()
+    expect(AggregateRoot).toBeDefined()
     expect(MockAggregate).toBeDefined()
   })
 

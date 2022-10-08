@@ -4,7 +4,7 @@ import {
   DomainObject,
 } from '../core/domain-object.abstract'
 import { UniqueID } from '../uid/unique-id.vo'
-import { DomainObjectType } from '../core/domain-object.type'
+import { DomainObjects, DomainObjectType } from '../core/domain-object.type'
 
 /* eslint-disable-next-line @typescript-eslint/no-empty-interface */
 export interface IEntityProps extends IDomainObjectProps {}
@@ -30,7 +30,8 @@ export abstract class BaseEntity<
   extends DomainObject<P>
   implements IIdentifiable<I>
 {
-  public override readonly domainObjectType: DomainObjectType = 'Entity'
+  public override readonly domainObjectType: DomainObjectType =
+    DomainObjects.Entity
   public id: I
 
   protected constructor(props: P, id?: I) {

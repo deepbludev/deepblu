@@ -1,13 +1,16 @@
 import { UUID } from '../uid/uuid.vo'
 import { unique } from '../entity/utils/unique.decorator'
-import { BaseAggregate, IAggregateProps } from './base-aggregate.abstract'
+import {
+  BaseAggregateRoot,
+  IAggregateProps,
+} from './base-aggregate-root.abstract'
 
 /**
  * @class Aggregate
  * Aggregate class using UUID as ID.
  */
 @unique(UUID)
-export class Aggregate<P extends IAggregateProps> extends BaseAggregate<
+export class AggregateRoot<P extends IAggregateProps> extends BaseAggregateRoot<
   P,
   UUID
 > {

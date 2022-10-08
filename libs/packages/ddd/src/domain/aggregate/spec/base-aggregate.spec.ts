@@ -13,12 +13,12 @@ describe('AggregateBase', () => {
   )
 
   it('should be a Aggregate domain object type', () => {
-    expect(aggregate.domainObjectType).toEqual('Aggregate')
+    expect(aggregate.domainObjectType).toEqual('AggregateRoot')
   })
 
   it('should have a hashcode based on its id, class name and domain object type', () => {
     const expectedHashCode = UniqueID.from(
-      `[Aggregate@MockAggregate]:${aggregate.id.value}`
+      `[AggregateRoot@MockAggregate]:${aggregate.id.value}`
     ).data
     expect(aggregate.hashcode.equals(expectedHashCode)).toBeTruthy()
   })
