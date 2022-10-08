@@ -46,7 +46,7 @@ describe('Event', () => {
   const payload = { foo: 'bar', is: true }
   const aggregate = new TestAggregate(payload)
   const event = new TestEvent(payload, aggregate.id.value)
-  const otherEvent = new OtherTestEvent(payload, aggregate.id.value)
+  const otherEvent = OtherTestEvent.with(payload, aggregate.id.value)
   const eventWithoutPayload = new EventWithoutPayload({}, aggregate.id.value)
 
   it('should have a timestamp', () => {
