@@ -22,11 +22,11 @@ class MockAggregate extends AggregateRoot<MockAggregateProps> {
 
   static create(props: MockAggregateProps, id?: UUID) {
     const aggregate = new MockAggregate(props, id)
-    aggregate.applyChange(MockAggregateCreated.with(props, aggregate.id.value))
+    aggregate.apply(MockAggregateCreated.with(props, aggregate.id.value))
     return aggregate
   }
 
-  protected _onMockAggregateCreated(event: MockAggregateCreated) {
+  protected onMockAggregateCreated(event: MockAggregateCreated) {
     this.id = UUID.from(event.aggregateId).data as UUID
     this.props.foo = event.payload.foo || ''
     this.props.is = !!event.payload.is

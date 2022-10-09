@@ -38,14 +38,11 @@ export abstract class BaseAggregateRoot<
     super(props, id)
   }
 
-  protected applyChange(event: IEvent): void {
-    this.apply(event, true)
-  }
-
-  private apply(event: IEvent, isNew = false): void {
+  protected apply(event: IEvent, isFromHistory = false): void {
     const self = this as any
-    self[`_on${event.name}`](event)
-    if (isNew) this._changes.push(event)
+    const handler = `on${event.name}`
+    self[handler] && self[handler](event)
+    if (!isFromHistory) this._changes.push(event)
   }
 
   commit(): IEvent[] {
@@ -68,7 +65,7 @@ export abstract class BaseAggregateRoot<
   ): A {
     const aggregate: A = snapshot || (Reflect.construct(this, [{}, id]) as A)
     events.forEach(event => {
-      aggregate.apply(event)
+      aggregate.apply(event, true)
       aggregate._version++
     })
     aggregate.commit()

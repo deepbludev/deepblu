@@ -15,7 +15,7 @@ class TestAggregate extends BaseAggregateRoot<Props> {
   }
 
   create(payload: Partial<Props>): TestAggregate {
-    this.applyChange(new Created(payload as Props, this.id.value))
+    this.apply(new Created(payload as Props, this.id.value))
     return this
   }
 }
