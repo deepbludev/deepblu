@@ -36,6 +36,7 @@
     "@nrwl/cli": "14.7.5",
     "@nrwl/cypress": "14.7.5",
     "@nrwl/eslint-plugin-nx": "14.7.5",
+    "@nrwl/express": "^14.8.3",
     "@nrwl/jest": "14.7.5",
     "@nrwl/linter": "14.7.5",
     "@nrwl/react": "14.7.5",
