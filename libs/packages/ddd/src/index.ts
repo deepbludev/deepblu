@@ -1,4 +1,4 @@
-export * from './domain-objects'
+export * from './domain'
 // export * from './messaging'
-export * from './interfaces'
+export * from './domain/types'
 export * from './utils'
