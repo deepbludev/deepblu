@@ -2,19 +2,22 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Constructor, IMessage, Payload } from '../types'
 import { UniqueID } from '../uid/unique-id.vo'
+import { EventID } from './event-id.vo'
 import { IEvent } from './event.interface'
 
-export class DomainEvent<P = any> extends IMessage<P> implements IEvent<P> {
+export class DomainEvent<P = any, I extends EventID = EventID>
+  extends IMessage<P>
+  implements IEvent<P>
+{
   static aggregate = 'Aggregate'
-  public readonly timestamp: number
 
   constructor(
     public override readonly payload: P,
     public readonly aggregateId: UniqueID,
-    timestamp?: number
+    public readonly id: I = EventID.create() as I,
+    public readonly timestamp: number = Date.now()
   ) {
     super(payload)
-    this.timestamp = timestamp || Date.now()
   }
 
   static with<P = any>(payload: P, id: UniqueID) {

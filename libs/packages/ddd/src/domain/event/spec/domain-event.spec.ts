@@ -1,6 +1,7 @@
 import { BaseAggregateRoot } from '../../aggregate/base-aggregate-root.abstract'
 import { UniqueID } from '../../uid/unique-id.vo'
 import { DomainEvent } from '../domain-event'
+import { EventID } from '../event-id.vo'
 import { createDomainEvent } from '../utils/create-domain-event-as-from.util'
 import { domainEvent } from '../utils/domain-event.decorator'
 
@@ -22,15 +23,15 @@ class TestAggregate extends BaseAggregateRoot<Props> {
 
 @domainEvent(TestAggregate.name)
 class Created extends DomainEvent {
-  constructor(payload: Props, id: UniqueID) {
-    super(payload, id)
+  constructor(payload: Props, aggId: UniqueID, id?: EventID) {
+    super(payload, aggId, id)
   }
 }
 
 class TestEvent extends DomainEvent {
   static override aggregate = TestAggregate.name
-  constructor(payload: Props, id: UniqueID) {
-    super(payload, id)
+  constructor(payload: Props, aggId: UniqueID, id?: EventID) {
+    super(payload, aggId, id)
   }
 }
 
@@ -48,6 +49,21 @@ describe('Event', () => {
   const event = new TestEvent(payload, aggregate.id)
   const otherEvent = OtherTestEvent.with(payload, aggregate.id)
   const eventWithoutPayload = new EventWithoutPayload({}, aggregate.id)
+
+  it('should have an id', () => {
+    expect(event.id).toBeDefined()
+  })
+
+  it('should be able to receive an id on creation', () => {
+    const id = EventID.create()
+    const event = new TestEvent(payload, aggregate.id, id)
+    expect(event.id.equals(id)).toBeTruthy()
+  })
+
+  it("should generate it's own id if none is provided", () => {
+    const event = new TestEvent(payload, aggregate.id)
+    expect(EventID.validate(event.id.value)).toBeTruthy()
+  })
 
   it('should have a timestamp', () => {
     expect(event.timestamp).toBeGreaterThan(0)

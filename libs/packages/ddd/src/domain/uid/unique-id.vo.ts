@@ -48,7 +48,7 @@ export class UniqueID extends ValueObject<UniqueIDProps> implements IUniqueID {
       : Result.fail(new InvalidPropError('id', error))
   }
 
-  static create(): UniqueID {
-    return new this({ value: this.generate() })
+  static create<I extends UniqueID = UniqueID>(): I {
+    return new this({ value: this.generate() }) as I
   }
 }
