@@ -1,4 +1,3 @@
-// domain-objects
 export * from './aggregate/base-aggregate-root.abstract'
 
 export * from './core/domain-object.abstract'
@@ -20,5 +19,7 @@ export * from './uid/unique-id.vo'
 export * from './uid/unique-id.interface'
 export * from './uid/uuid.vo'
 export * from './uid/utils/custom-uid.decorator'
+
+export * from './types'
 
 export * from './value-object/value-object'

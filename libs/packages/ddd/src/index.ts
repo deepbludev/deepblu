@@ -1,4 +1,3 @@
 export * from './domain'
-// export * from './messaging'
-export * from './domain/types'
+export * from './application'
 export * from './utils'
