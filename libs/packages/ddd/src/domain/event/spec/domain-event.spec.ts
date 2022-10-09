@@ -15,21 +15,21 @@ class TestAggregate extends BaseAggregateRoot<Props> {
   }
 
   create(payload: Partial<Props>): TestAggregate {
-    this.apply(new Created(payload as Props, this.id.value))
+    this.apply(new Created(payload as Props, this.id))
     return this
   }
 }
 
 @domainEvent(TestAggregate.name)
 class Created extends DomainEvent {
-  constructor(payload: Props, id: string) {
+  constructor(payload: Props, id: UniqueID) {
     super(payload, id)
   }
 }
 
 class TestEvent extends DomainEvent {
   static override aggregate = TestAggregate.name
-  constructor(payload: Props, id: string) {
+  constructor(payload: Props, id: UniqueID) {
     super(payload, id)
   }
 }
@@ -45,9 +45,9 @@ const EventWithoutPayload = createDomainEvent()
 describe('Event', () => {
   const payload = { foo: 'bar', is: true }
   const aggregate = new TestAggregate(payload)
-  const event = new TestEvent(payload, aggregate.id.value)
-  const otherEvent = OtherTestEvent.with(payload, aggregate.id.value)
-  const eventWithoutPayload = new EventWithoutPayload({}, aggregate.id.value)
+  const event = new TestEvent(payload, aggregate.id)
+  const otherEvent = OtherTestEvent.with(payload, aggregate.id)
+  const eventWithoutPayload = new EventWithoutPayload({}, aggregate.id)
 
   it('should have a timestamp', () => {
     expect(event.timestamp).toBeGreaterThan(0)
@@ -74,8 +74,8 @@ describe('Event', () => {
   })
 
   it('should have an aggregate id', () => {
-    expect(event.aggregateId).toEqual(aggregate.id.value)
-    expect(otherEvent.aggregateId).toEqual(aggregate.id.value)
-    expect(eventWithoutPayload.aggregateId).toEqual(aggregate.id.value)
+    expect(event.aggregateId.equals(aggregate.id)).toBeTruthy()
+    expect(otherEvent.aggregateId.equals(aggregate.id)).toBeTruthy()
+    expect(eventWithoutPayload.aggregateId.equals(aggregate.id)).toBeTruthy()
   })
 })

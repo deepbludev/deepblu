@@ -34,14 +34,14 @@ export class MockAggregate extends BaseAggregateRoot<MockAggregateProps> {
     id?: UniqueID
   ): Result<MockAggregate> {
     const aggregate = new MockAggregate(payload, id)
-    aggregate.apply(MockAggregateCreated.with(payload, aggregate.id.value))
+    aggregate.apply(MockAggregateCreated.with(payload, aggregate.id))
     return Result.ok(aggregate)
   }
 
   protected onMockAggregateCreated(
     event: DomainEventAs<typeof MockAggregateCreated>
   ): void {
-    this.id = UniqueID.from(event.aggregateId).data
+    this.id = UniqueID.from(event.aggregateId.value).data
     this.props.foo = event.payload.foo || ''
     this.props.is = !!event.payload.is
   }
@@ -54,7 +54,7 @@ export class MockAggregate extends BaseAggregateRoot<MockAggregateProps> {
    */
 
   updateProps(payload: Payload<typeof MockPropsUpdated>): void {
-    this.apply(MockPropsUpdated.with(payload, this.id.value))
+    this.apply(MockPropsUpdated.with(payload, this.id))
   }
 
   protected onMockPropsUpdated(
@@ -73,7 +73,7 @@ export class MockAggregate extends BaseAggregateRoot<MockAggregateProps> {
    */
 
   toggle(): void {
-    this.apply(MockAggregateToggled.with({}, this.id.value))
+    this.apply(MockAggregateToggled.with({}, this.id))
   }
 
   protected onMockAggregateToggled(): void {

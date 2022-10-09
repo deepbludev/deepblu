@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import { Constructor, IMessage, Payload } from '../types'
+import { UniqueID } from '../uid/unique-id.vo'
 import { IEvent } from './event.interface'
 
 export class DomainEvent<P = any> extends IMessage<P> implements IEvent<P> {
@@ -9,14 +10,14 @@ export class DomainEvent<P = any> extends IMessage<P> implements IEvent<P> {
 
   constructor(
     public override readonly payload: P,
-    public readonly aggregateId: string,
+    public readonly aggregateId: UniqueID,
     timestamp?: number
   ) {
     super(payload)
     this.timestamp = timestamp || Date.now()
   }
 
-  static with<P = any>(payload: P, id: string) {
+  static with<P = any>(payload: P, id: UniqueID) {
     return new this(payload, id)
   }
 
