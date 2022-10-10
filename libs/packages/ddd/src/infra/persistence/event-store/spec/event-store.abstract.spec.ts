@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { MockAggregate } from '../../../../domain/__mocks__/mock.aggregate'
 import { MockEventBus } from '../../../../domain/__mocks__/mock.event-bus'
 import { MockEventStore } from '../../../__mocks__/mock.event-store'
 import { MockEventStream } from '../../../__mocks__/mock.event-stream'
-import { IEvent } from '../../../../domain'
+import { IEvent, UUID } from '../../../../domain'
 import { IEventStore } from '../event-store.abstract'
 
 describe(IEventStore, () => {
@@ -21,12 +20,21 @@ describe(IEventStore, () => {
     eventbus = new MockEventBus()
     eventstore = new MockEventStore(eventstream, eventbus)
     aggregate = MockAggregate.create({ foo: 'bar', is: true }).data
+    aggregate.toggle()
+    aggregate.updateProps({ foo: 'baz' })
+    aggregate.toggle()
+    aggregate.toggle()
+
     changes = [...aggregate.changes]
 
     appendSpy = jest.spyOn(eventstream, 'append')
     publishSpy = jest.spyOn(eventbus, 'publish')
 
     await eventstore.save(aggregate)
+  })
+
+  it('should have a name', () => {
+    expect(eventstore.name).toEqual(MockAggregate.name)
   })
 
   it('should delegate persistence to the event stream', () => {
@@ -41,5 +49,18 @@ describe(IEventStore, () => {
   it('should publish events', () => {
     expect(publishSpy).toHaveBeenCalledTimes(1)
     expect(publishSpy).toHaveBeenCalledWith(changes)
+  })
+
+  it('should be able to get an aggregate', async () => {
+    const result = await eventstore.get(aggregate.id)
+    expect(result?.equals(aggregate)).toBe(true)
+
+    const nullResult = await eventstore.get(UUID.create())
+    expect(nullResult).toBeNull()
+  })
+
+  it('should be able to check if an aggregate exists', async () => {
+    expect(await eventstore.exists(aggregate.id)).toBe(true)
+    expect(await eventstore.exists(UUID.create())).toBe(false)
   })
 })
