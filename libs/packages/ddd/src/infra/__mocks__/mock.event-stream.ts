@@ -4,11 +4,17 @@ import { IEventStream } from '../persistence/event-store/event-stream.interface'
 
 export class MockEventStream extends IEventStream {
   name = MockAggregate.name
-  readonly events: IEvent[] = []
-  protected version = 0
+  readonly db: Map<string, { events: IEvent[]; version: number }> = new Map()
 
   async append(aggId: string, events: IEvent[], version: number) {
-    this.events.push(...events)
-    this.version = version
+    const prev = this.db.get(aggId)?.events || []
+    this.db.set(aggId, { events: prev.concat(events), version })
+  }
+
+  async get(aggId: string): Promise<IEvent[]> {
+    return (
+      this.db.get(aggId)?.events.filter(e => e.aggregateId.value === aggId) ||
+      []
+    )
   }
 }
