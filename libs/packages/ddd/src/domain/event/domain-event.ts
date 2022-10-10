@@ -3,12 +3,9 @@
 import { Constructor, IMessage, IPayload, Payload } from '../types'
 import { UniqueID } from '../uid/unique-id.vo'
 import { EventID } from './event-id.vo'
-import { IEvent } from './event.interface'
+import { IDomainEvent, IEvent } from './event.interface'
 
-export abstract class DomainEvent<
-    P extends IPayload = IPayload,
-    I extends EventID = EventID
-  >
+export abstract class DomainEvent<P extends IPayload = IPayload>
   extends IMessage<P>
   implements IEvent<P>
 {
@@ -17,17 +14,52 @@ export abstract class DomainEvent<
   constructor(
     public override readonly payload: P,
     public readonly aggregateId: UniqueID,
-    public readonly id: I = EventID.create<I>(),
+    public readonly id: EventID = EventID.create(),
     public readonly timestamp: number = Date.now()
   ) {
     super(payload)
   }
 
+  /**
+   * Creates a new DomainEvent from payload and aggregateId
+   * @factory
+   */
   static with<P extends IPayload = IPayload>(
     payload: P,
     id: UniqueID
   ): DomainEvent<P> {
     return Reflect.construct(this, [payload, id])
+  }
+
+  /**
+   * Creates a new DomainEvent from a serialized event
+   * @factory
+   * @param serialized - the serialized event usually coming from a message queue or persistance layer
+   */
+  static from<P extends IPayload>(serialized: IDomainEvent<P>): DomainEvent<P> {
+    const deserialized = Reflect.construct(this, [
+      serialized.payload,
+      UniqueID.from(serialized.aggregateId).data,
+    ])
+    Reflect.set(deserialized, 'timestamp', serialized.timestamp)
+    Reflect.set(deserialized, 'id', EventID.from(serialized.id).data)
+    return deserialized
+  }
+
+  /**
+   * Serializes the event to a plain object.
+   * Useful for persistance or sending over the wire.
+   * @returns serialized version of the event.
+   */
+  serialize(): IDomainEvent<P> {
+    return {
+      id: this.id.value,
+      name: this.name,
+      timestamp: this.timestamp,
+      aggregateId: this.aggregateId.value,
+      aggregateName: this.aggregateName,
+      payload: this.payload,
+    }
   }
 
   get aggregateName(): string {
@@ -40,11 +72,8 @@ export abstract class DomainEvent<
 }
 
 /**
- * @description
  * Utility type to cast an event constructor created with createDomainEvent() to a DomainEvent
  */
 export type DomainEventAs<E extends Constructor<IEvent>> = DomainEvent<
   Payload<E>
 >
-
-export type DomainEventClass = Constructor<DomainEvent>

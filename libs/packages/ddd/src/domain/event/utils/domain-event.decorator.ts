@@ -7,6 +7,7 @@ export function domainEvent(aggregateClass: string) {
     target: Constructor & {
       aggregate: string
       with: (payload: any, id: UniqueID) => any
+      from: (event: any) => any
     }
   ) {
     target.aggregate = aggregateClass

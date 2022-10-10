@@ -8,3 +8,9 @@ export interface IEvent<P extends IPayload = IPayload> extends IMessage<P> {
   aggregateId: UniqueID
   timestamp: number // in milliseconds
 }
+
+export interface IDomainEvent<P extends IPayload = IPayload>
+  extends Omit<IEvent<P>, 'aggregateId'> {
+  id: string
+  aggregateId: string
+}

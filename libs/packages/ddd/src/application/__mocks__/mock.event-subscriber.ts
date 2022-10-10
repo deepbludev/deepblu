@@ -2,7 +2,7 @@ import { DomainEventAs } from '../../domain'
 import {
   MockAggregateCreated,
   MockAggregateToggled,
-  MockAggregateToggledType,
+  type MockAggregateToggledType,
 } from '../../domain/__mocks__/mock.events'
 import { IEventSubscriber } from '../event/event-subscriber.interface'
 
@@ -18,5 +18,7 @@ export class MockEventSubscriber
     return Promise.resolve()
   }
 
-  subscriptions = [MockAggregateCreated, MockAggregateToggled]
+  get subscriptions() {
+    return [MockAggregateCreated, MockAggregateToggled]
+  }
 }

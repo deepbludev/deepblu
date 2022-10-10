@@ -28,7 +28,7 @@ class Created extends DomainEvent {
   }
 }
 
-class TestEvent extends DomainEvent {
+class TestEvent extends DomainEvent<Props> {
   static override aggregate = TestAggregate.name
   constructor(payload: Props, aggId: UniqueID, id?: EventID) {
     super(payload, aggId, id)
@@ -93,5 +93,28 @@ describe(DomainEvent, () => {
     expect(event.aggregateId.equals(aggregate.id)).toBeTruthy()
     expect(otherEvent.aggregateId.equals(aggregate.id)).toBeTruthy()
     expect(eventWithoutPayload.aggregateId.equals(aggregate.id)).toBeTruthy()
+  })
+
+  it('should be able to be serialized', () => {
+    const serialized = event.serialize()
+    expect(serialized).toEqual({
+      id: event.id.value,
+      timestamp: event.timestamp,
+      name: event.name,
+      aggregateName: event.aggregateName,
+      aggregateId: event.aggregateId.value,
+      payload: event.payload,
+    })
+  })
+
+  it('should be able to be deserialized', () => {
+    const serialized = event.serialize()
+    const deserialized = TestEvent.from<Props>(serialized)
+    expect(deserialized.id.equals(event.id)).toBeTruthy()
+    expect(serialized.timestamp).toEqual(event.timestamp)
+    expect(deserialized.name).toEqual(event.name)
+    expect(deserialized.aggregateName).toEqual(event.aggregateName)
+    expect(deserialized.aggregateId.value).toEqual(event.aggregateId.value)
+    expect(deserialized.payload).toEqual(event.payload)
   })
 })
