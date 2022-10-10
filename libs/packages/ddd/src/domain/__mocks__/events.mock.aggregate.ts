@@ -1,5 +1,5 @@
-import { createDomainEvent } from '../../../event/utils/create-domain-event-as-from.util'
-import { Payload } from '../../../types'
+import { createDomainEvent } from '../event/utils/create-domain-event-as-from.util'
+import { Payload } from '../types'
 
 /**
  * @event MockAggregateCreated

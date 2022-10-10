@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { MockAggregate } from '../../aggregate-root/spec/__mocks__/mock.aggregate'
 import { IEvent } from '../../event/event.interface'
 import { IEventBus } from '../../event/eventbus.interface'
 import { UniqueID } from '../../uid/unique-id.vo'
+import { MockAggregate } from '../../__mocks__/mock.aggregate'
 import { IRepo } from '../repo.abstract'
 
 class MockEventBus implements IEventBus {

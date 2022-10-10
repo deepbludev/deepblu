@@ -1,8 +1,11 @@
-import { Result } from '../../../core/result'
-import { DomainEventAs } from '../../../event/domain-event'
-import { Payload } from '../../../types'
-import { UniqueID } from '../../../uid/unique-id.vo'
-import { IAggregateRoot, IAggregateProps } from '../../aggregate-root.abstract'
+import {
+  IAggregateProps,
+  IAggregateRoot,
+} from '../aggregate-root/aggregate-root.abstract'
+import { Result } from '../core/result'
+import { DomainEventAs } from '../event/domain-event'
+import { Payload } from '../types'
+import { UniqueID } from '../uid/unique-id.vo'
 import {
   MockAggregateCreated,
   MockPropsUpdated,
