@@ -3,9 +3,9 @@ import { MockEventBus } from '../../../../domain/__mocks__/mock.event-bus'
 import { MockEventStore } from '../../../__mocks__/mock.event-store'
 import { MockEventStream } from '../../../__mocks__/mock.event-stream'
 import { IEvent, UUID } from '../../../../domain'
-import { IEventStore } from '../event-store.abstract'
+import { EventStore } from '../event-store'
 
-describe(IEventStore, () => {
+describe(EventStore, () => {
   let eventstream: MockEventStream
   let eventbus: MockEventBus
   let eventstore: MockEventStore

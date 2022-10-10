@@ -12,7 +12,12 @@ export interface AggregateType<A extends IAggregateRoot> {
   rehydrate: (id: UniqueID, events: IEvent[]) => A
 }
 
-export abstract class IEventStore<A extends IAggregateRoot> extends IRepo<A> {
+/**
+ * Base abstract class for event stores.
+ * It can be either extended or implemented as an interface.
+ * It should be used to persist events in a stream
+ */
+export class EventStore<A extends IAggregateRoot> extends IRepo<A> {
   protected aggregateClass: AggregateType<A> = IAggregateRoot
 
   constructor(protected readonly stream: IEventStream, eventbus: IEventBus) {
