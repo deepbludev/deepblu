@@ -14,7 +14,7 @@ export class DomainEvent<P = any, I extends EventID = EventID>
   constructor(
     public override readonly payload: P,
     public readonly aggregateId: UniqueID,
-    public readonly id: I = EventID.create() as I,
+    public readonly id: I = EventID.create<I>(),
     public readonly timestamp: number = Date.now()
   ) {
     super(payload)
@@ -33,6 +33,10 @@ export class DomainEvent<P = any, I extends EventID = EventID>
   }
 }
 
+/**
+ * @description
+ * Utility type to cast an event constructor created with createDomainEvent() to a DomainEvent
+ */
 export type DomainEventAs<E extends Constructor<IEvent>> = DomainEvent<
   Payload<E>
 >

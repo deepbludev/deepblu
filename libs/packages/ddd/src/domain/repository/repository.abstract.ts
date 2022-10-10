@@ -1,15 +1,25 @@
-import { BaseEntity, IEntityProps } from '../entity/base-entity.abstract'
+import {
+  BaseAggregateRoot,
+  IAggregateProps,
+} from '../aggregate/base-aggregate-root.abstract'
+import { IEventBus } from '../event/eventbus.interface'
+import { IEntityRepository } from './entity-repository.abstract'
 
 /**
- * Base abstract class for all repositories.
+ * Base abstract class for aggregate repositories.
  * It can be either extended or implemented as an interface.
+ * It should be used to persist aggregate roots, using entity repositories to persist entities, if needed.
  * @abstract
  */
-export abstract class IRepository<E extends BaseEntity<IEntityProps>> {
-  abstract save(entity: E): Promise<void>
-  abstract get(id: string): Promise<E | null>
+export abstract class IRepository<
+  A extends BaseAggregateRoot<IAggregateProps>
+> extends IEntityRepository<A> {
+  constructor(private readonly eventbus: IEventBus) {
+    super()
+  }
 
-  async exists(id: string): Promise<boolean> {
-    return !!(await this.get(id))
+  override async save(aggregate: A): Promise<void> {
+    await this.persist(aggregate)
+    await this.eventbus.publish(aggregate.commit())
   }
 }
