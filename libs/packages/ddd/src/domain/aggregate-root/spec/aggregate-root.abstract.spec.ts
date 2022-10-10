@@ -5,7 +5,7 @@ import {
   MockAggregateToggled,
 } from './__mocks__/events.mock.aggregate'
 
-describe('AggregateBase', () => {
+describe('IAggregateRoot', () => {
   let aggregate: MockAggregate
 
   beforeEach(
