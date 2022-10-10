@@ -1,27 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { IEvent } from '../../event/event.interface'
-import { IEventBus } from '../../event/eventbus.interface'
-import { UniqueID } from '../../uid/unique-id.vo'
+import { MockEventBus } from '../../__mocks__/mock.event-bus'
 import { MockAggregate } from '../../__mocks__/mock.aggregate'
+import { MockAggregateRepo } from '../../__mocks__/mock.repo'
 import { IRepo } from '../repo.abstract'
-
-class MockEventBus implements IEventBus {
-  async publish(events: IEvent[]) {
-    return Promise.resolve()
-  }
-}
-
-class MockAggregateRepo extends IRepo<MockAggregate> {
-  readonly aggregates: Map<string, MockAggregate> = new Map()
-
-  protected async persist(entity: MockAggregate): Promise<void> {
-    this.aggregates.set(entity.id.value, entity)
-  }
-
-  async get(id: UniqueID): Promise<MockAggregate | null> {
-    return this.aggregates.get(id.value) ?? null
-  }
-}
 
 describe(IRepo, () => {
   let repo: MockAggregateRepo

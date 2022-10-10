@@ -10,7 +10,7 @@ import {
   MockAggregateCreated,
   MockPropsUpdated,
   MockAggregateToggled,
-} from './events.mock.aggregate'
+} from './mock.events'
 
 export type MockAggregateProps = IAggregateProps &
   Payload<typeof MockAggregateCreated>
