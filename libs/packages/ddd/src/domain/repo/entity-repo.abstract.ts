@@ -1,4 +1,4 @@
-import { IEntity, IEntityProps } from '../entity/base-entity.abstract'
+import { IEntity } from '../entity/base-entity.abstract'
 
 /**
  * Base abstract class for entity repositories. It can be either extended or implemented as an interface.
@@ -8,7 +8,7 @@ import { IEntity, IEntityProps } from '../entity/base-entity.abstract'
  *
  * @abstract
  */
-export abstract class IEntityRepository<E extends IEntity> {
+export abstract class IEntityRepo<E extends IEntity> {
   protected abstract persist(entity: E): Promise<void>
   abstract get(id: string): Promise<E | null>
 

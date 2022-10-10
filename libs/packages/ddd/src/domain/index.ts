@@ -17,8 +17,8 @@ export * from './event/eventbus.interface'
 export * from './event/utils/create-domain-event-as-from.util'
 export * from './event/utils/domain-event.decorator'
 
-export * from './repository/entity-repository.abstract'
-export * from './repository/repository.abstract'
+export * from './repo/entity-repo.abstract'
+export * from './repo/repo.abstract'
 
 export * from './types'
 
