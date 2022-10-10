@@ -110,11 +110,7 @@ describe(DomainEvent, () => {
   it('should be able to be deserialized', () => {
     const serialized = event.serialize()
     const deserialized = TestEvent.from<Props>(serialized)
-    expect(deserialized.id.equals(event.id)).toBeTruthy()
-    expect(serialized.timestamp).toEqual(event.timestamp)
-    expect(deserialized.name).toEqual(event.name)
-    expect(deserialized.aggregateName).toEqual(event.aggregateName)
-    expect(deserialized.aggregateId.value).toEqual(event.aggregateId.value)
-    expect(deserialized.payload).toEqual(event.payload)
+    expect(deserialized).toBeInstanceOf(TestEvent)
+    expect(deserialized).toEqual(event)
   })
 })
