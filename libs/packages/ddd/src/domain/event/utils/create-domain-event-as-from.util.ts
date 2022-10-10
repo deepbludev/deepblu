@@ -1,7 +1,10 @@
+import { IPayload } from '../../types'
 import { UniqueID } from '../../uid/unique-id.vo'
 import { DomainEvent } from '../domain-event'
 
-export const createDomainEvent = <P = Record<string, never>>() => ({
+export const createDomainEvent = <
+  P extends IPayload = Record<string, never>
+>() => ({
   as: (event: string) => ({
     from: (aggregate: string) => {
       const DomainEventClass = class extends DomainEvent<P> {

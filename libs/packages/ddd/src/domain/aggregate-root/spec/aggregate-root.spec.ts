@@ -9,7 +9,7 @@ interface MockAggregateProps {
 }
 
 @domainEvent('MockAggregate')
-export class MockAggregateCreated extends DomainEvent {
+export class MockAggregateCreated extends DomainEvent<MockAggregateProps> {
   constructor(payload: MockAggregateProps, id: UUID) {
     super(payload, id)
   }
@@ -28,7 +28,7 @@ class MockAggregate extends AggregateRoot<MockAggregateProps> {
 
   protected onMockAggregateCreated(event: MockAggregateCreated) {
     this.id = UUID.from(event.aggregateId.value).data as UUID
-    this.props.foo = event.payload.foo || ''
+    this.props.foo = event.payload.foo
     this.props.is = !!event.payload.is
   }
 

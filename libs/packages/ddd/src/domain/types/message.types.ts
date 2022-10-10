@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Constructor } from './constructor.interface'
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IPayload {}
 
 /**
  * Base interface for application messages.
  * Used to define domain events in DDD, and commands/queries in CQRS.
  */
-export abstract class IMessage<P = any> {
+export abstract class IMessage<P extends IPayload = IPayload> {
   constructor(public readonly payload: P) {}
 }
 
