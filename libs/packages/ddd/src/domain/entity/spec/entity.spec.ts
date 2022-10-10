@@ -27,7 +27,7 @@ class TestEntity2 extends Entity<Props> {
   }
 }
 
-describe('Entity', () => {
+describe(Entity, () => {
   it('should be defined', () => {
     expect(Entity).toBeDefined()
   })

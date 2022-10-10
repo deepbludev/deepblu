@@ -43,7 +43,7 @@ const EventWithoutPayload = createDomainEvent()
   .as('EventWithoutPayload')
   .from(TestAggregate.name)
 
-describe('Event', () => {
+describe(DomainEvent, () => {
   const payload = { foo: 'bar', is: true }
   const aggregate = new TestAggregate(payload)
   const event = new TestEvent(payload, aggregate.id)

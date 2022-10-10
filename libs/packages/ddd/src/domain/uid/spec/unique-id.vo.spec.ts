@@ -12,7 +12,7 @@ class MockUniqueID extends UniqueID {
   }
 }
 
-describe('UniqueID', () => {
+describe(UniqueID, () => {
   const id = MockUniqueID.from('valid')
   const id2 = MockUniqueID.from('valid')
   const id3 = MockUniqueID.from('valid2')

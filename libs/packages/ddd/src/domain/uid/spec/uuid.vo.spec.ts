@@ -1,7 +1,7 @@
 import { uuid } from '../../../utils/id.utils'
 import { UUID } from '../uuid.vo'
 
-describe('UUID', () => {
+describe(UUID, () => {
   it('should be defined', () => {
     expect(UUID).toBeDefined()
   })

@@ -13,7 +13,7 @@ class MockUniqueID extends UniqueID {
   }
 }
 
-describe('@uid', () => {
+describe('@customUID', () => {
   it('should be defined', () => {
     expect(customUID).toBeDefined()
   })

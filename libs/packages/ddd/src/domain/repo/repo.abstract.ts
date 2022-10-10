@@ -9,7 +9,7 @@ import { IEntityRepo } from './entity-repo.abstract'
  * @abstract
  */
 export abstract class IRepo<A extends IAggregateRoot> extends IEntityRepo<A> {
-  constructor(private readonly eventbus: IEventBus) {
+  constructor(protected readonly eventbus: IEventBus) {
     super()
   }
 

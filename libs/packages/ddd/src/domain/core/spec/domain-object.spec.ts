@@ -1,6 +1,6 @@
 import { DomainObject } from '../domain-object.abstract'
 
-describe('DomainObject', () => {
+describe(DomainObject, () => {
   type DummyProps = { foo: string; bar: string }
 
   class TestDO extends DomainObject<DummyProps> {

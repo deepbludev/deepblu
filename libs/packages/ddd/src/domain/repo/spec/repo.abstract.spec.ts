@@ -3,7 +3,6 @@ import { MockAggregate } from '../../aggregate-root/spec/__mocks__/mock.aggregat
 import { IEvent } from '../../event/event.interface'
 import { IEventBus } from '../../event/eventbus.interface'
 import { UniqueID } from '../../uid/unique-id.vo'
-import { UUID } from '../../uid/uuid.vo'
 import { IRepo } from '../repo.abstract'
 
 class MockEventBus implements IEventBus {
@@ -24,7 +23,7 @@ class MockAggregateRepo extends IRepo<MockAggregate> {
   }
 }
 
-describe('IEntityRepo', () => {
+describe(IRepo, () => {
   let repo: MockAggregateRepo
   let eventbus: MockEventBus
   let aggregage: MockAggregate

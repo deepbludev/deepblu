@@ -22,7 +22,7 @@ class TestEntity2 extends IEntity<Props, UUID> {
   }
 }
 
-describe('IEntity', () => {
+describe(IEntity, () => {
   it('should be defined and have the correct class name', () => {
     expect(IEntity).toBeDefined()
     expect(TestEntity).toBeDefined()

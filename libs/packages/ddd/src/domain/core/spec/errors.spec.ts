@@ -1,6 +1,6 @@
 import { InvalidPropError } from '../errors'
 
-describe('InvalidPropError', () => {
+describe(InvalidPropError, () => {
   it('should be defined', () => {
     expect(InvalidPropError).toBeDefined()
   })

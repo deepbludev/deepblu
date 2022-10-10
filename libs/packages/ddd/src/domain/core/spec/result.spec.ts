@@ -2,7 +2,7 @@ import { Result } from '../result'
 
 type DummyPayload = { foo: string }
 
-describe('Result', () => {
+describe(Result, () => {
   it('should be defined', () => {
     expect(Result).toBeDefined()
   })

@@ -21,7 +21,7 @@ class MockEntityRepo extends IEntityRepo<MockEntity> {
   }
 }
 
-describe('IEntityRepo', () => {
+describe(IEntityRepo, () => {
   let repo: MockEntityRepo
   let entity: MockEntity
   let otherEntity: MockEntity

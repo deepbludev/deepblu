@@ -1,10 +1,10 @@
 import { IUniqueID } from './unique-id.interface'
 import { idUtils } from '../../utils/id.utils'
-import { ValueObject, VOProps } from '../value-object/value-object'
+import { ValueObject, IValueObjectProps } from '../value-object/value-object'
 import { Result } from '../core/result'
 import { InvalidPropError } from '../core/errors'
 
-export interface UniqueIDProps extends VOProps {
+export interface UniqueIDProps extends IValueObjectProps {
   value: string
 }
 

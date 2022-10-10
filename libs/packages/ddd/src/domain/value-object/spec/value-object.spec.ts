@@ -1,6 +1,6 @@
-import { ValueObject, VOProps } from './value-object'
+import { ValueObject, IValueObjectProps } from '../value-object'
 
-interface PropType extends VOProps {
+interface PropType extends IValueObjectProps {
   foo: string
   is: boolean
 }
@@ -30,7 +30,7 @@ class TestValueObject3 extends ValueObject<{
   }
 }
 
-describe('ValueObject', () => {
+describe(ValueObject, () => {
   it('should be defined', () => {
     expect(ValueObject).toBeDefined()
   })

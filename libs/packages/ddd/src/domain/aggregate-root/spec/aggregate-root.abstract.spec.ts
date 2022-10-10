@@ -1,11 +1,12 @@
 import { UniqueID } from '../../uid/unique-id.vo'
 import { MockAggregate } from './__mocks__/mock.aggregate'
+import { IAggregateRoot } from '../aggregate-root.abstract'
 import {
   MockPropsUpdated,
   MockAggregateToggled,
 } from './__mocks__/events.mock.aggregate'
 
-describe('IAggregateRoot', () => {
+describe(IAggregateRoot, () => {
   let aggregate: MockAggregate
 
   beforeEach(

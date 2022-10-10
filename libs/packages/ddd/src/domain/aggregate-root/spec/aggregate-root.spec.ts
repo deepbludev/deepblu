@@ -41,7 +41,7 @@ class MockAggregate extends AggregateRoot<MockAggregateProps> {
   }
 }
 
-describe('AggregateRoot', () => {
+describe(AggregateRoot, () => {
   it('should be defined', () => {
     expect(AggregateRoot).toBeDefined()
     expect(MockAggregate).toBeDefined()
