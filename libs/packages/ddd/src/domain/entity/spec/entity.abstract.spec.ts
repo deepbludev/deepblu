@@ -1,6 +1,6 @@
 import { UniqueID } from '../../uid/unique-id.vo'
 import { UUID } from '../../uid/uuid.vo'
-import { IEntity, IEntityProps } from '../base-entity.abstract'
+import { IEntity, IEntityProps } from '../entity.abstract'
 import { unique } from '../utils/unique.decorator'
 
 interface Props extends IEntityProps {

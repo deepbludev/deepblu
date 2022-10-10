@@ -1,4 +1,4 @@
-import { IAggregateRoot } from '../../aggregate/base-aggregate-root.abstract'
+import { IAggregateRoot } from '../../aggregate-root/aggregate-root.abstract'
 import { UniqueID } from '../../uid/unique-id.vo'
 import { DomainEvent } from '../domain-event'
 import { EventID } from '../event-id.vo'

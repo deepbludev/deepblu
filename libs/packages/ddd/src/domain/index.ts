@@ -1,4 +1,4 @@
-export * from './aggregate/base-aggregate-root.abstract'
+export * from './aggregate-root/aggregate-root.abstract'
 
 export * from './core/domain-object.abstract'
 export * from './core/domain-object.type'
@@ -7,7 +7,7 @@ export * from './core/result'
 export * from './core/result.interface'
 
 export * from './entity/entity'
-export * from './entity/base-entity.abstract'
+export * from './entity/entity.abstract'
 export * from './entity/utils/unique.decorator'
 
 export * from './event/domain-event'

@@ -1,6 +1,6 @@
 import { UUID } from '../uid/uuid.vo'
 import { unique } from '../entity/utils/unique.decorator'
-import { IAggregateRoot, IAggregateProps } from './base-aggregate-root.abstract'
+import { IAggregateRoot, IAggregateProps } from './aggregate-root.abstract'
 
 /**
  * @class Aggregate

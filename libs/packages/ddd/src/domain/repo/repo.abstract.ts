@@ -1,4 +1,4 @@
-import { IAggregateRoot } from '../aggregate/base-aggregate-root.abstract'
+import { IAggregateRoot } from '../aggregate-root/aggregate-root.abstract'
 import { IEventBus } from '../event/eventbus.interface'
 import { IEntityRepo } from './entity-repo.abstract'
 

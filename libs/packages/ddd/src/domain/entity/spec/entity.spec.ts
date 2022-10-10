@@ -1,7 +1,7 @@
 import { InvalidPropError } from '../../core/errors'
 import { Result } from '../../core/result'
 import { UUID } from '../../uid/uuid.vo'
-import { IEntityProps } from '../base-entity.abstract'
+import { IEntityProps } from '../entity.abstract'
 import { Entity } from '../entity'
 
 interface Props extends IEntityProps {
