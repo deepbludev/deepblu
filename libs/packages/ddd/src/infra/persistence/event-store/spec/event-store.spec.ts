@@ -54,7 +54,10 @@ describe(EventStore, () => {
   it('should be able to get an aggregate', async () => {
     const result = await eventstore.get(aggregate.id)
     expect(result?.equals(aggregate)).toBe(true)
+    expect(result?.version).toEqual(4)
+  })
 
+  it('should return null when trying to get an aggregate that does not exist', async () => {
     const nullResult = await eventstore.get(UUID.create())
     expect(nullResult).toBeNull()
   })
