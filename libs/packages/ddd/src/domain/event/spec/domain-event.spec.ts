@@ -1,4 +1,4 @@
-import { BaseAggregateRoot } from '../../aggregate/base-aggregate-root.abstract'
+import { IAggregateRoot } from '../../aggregate/base-aggregate-root.abstract'
 import { UniqueID } from '../../uid/unique-id.vo'
 import { DomainEvent } from '../domain-event'
 import { EventID } from '../event-id.vo'
@@ -10,7 +10,7 @@ interface Props {
   is: boolean
 }
 
-class TestAggregate extends BaseAggregateRoot<Props> {
+class TestAggregate extends IAggregateRoot<Props> {
   constructor(props: Props, id?: UniqueID) {
     super(props, id)
   }

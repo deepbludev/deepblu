@@ -23,8 +23,8 @@ export interface IEntityProps extends IDomainObjectProps {}
  * @see https://martinfowler.com/bliki/EvansClassification.html
  */
 
-export abstract class BaseEntity<
-    P extends IEntityProps,
+export abstract class IEntity<
+    P extends IEntityProps = IEntityProps,
     I extends UniqueID = UniqueID
   >
   extends DomainObject<P>
@@ -45,7 +45,7 @@ export abstract class BaseEntity<
    * @param other - the other entity to compare.
    * @returns true if the entities are equal in props and id.
    */
-  equals(other: BaseEntity<P, I>): boolean {
+  equals(other: IEntity<P, I>): boolean {
     return this.isSameClass(other) && this.id.equals(other.id)
   }
 
@@ -53,7 +53,7 @@ export abstract class BaseEntity<
    * @description Get an instance copy.
    * @returns a copy of the entity.
    */
-  clone<E extends BaseEntity<P, I>>(): E {
+  clone<E extends IEntity<P, I>>(): E {
     const constructor = Reflect.getPrototypeOf(this)?.constructor
     if (!constructor)
       throw new Error('Cannot clone Entity: undefined constructor.')

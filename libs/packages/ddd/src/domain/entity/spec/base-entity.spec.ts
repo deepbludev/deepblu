@@ -1,6 +1,6 @@
 import { UniqueID } from '../../uid/unique-id.vo'
 import { UUID } from '../../uid/uuid.vo'
-import { BaseEntity, IEntityProps } from '../base-entity.abstract'
+import { IEntity, IEntityProps } from '../base-entity.abstract'
 import { unique } from '../utils/unique.decorator'
 
 interface Props extends IEntityProps {
@@ -9,14 +9,14 @@ interface Props extends IEntityProps {
 }
 
 @unique(UUID)
-class TestEntity extends BaseEntity<Props, UUID> {
+class TestEntity extends IEntity<Props, UUID> {
   constructor(props: Props, id?: UUID) {
     super(props, id)
   }
 }
 
 @unique(UUID)
-class TestEntity2 extends BaseEntity<Props, UUID> {
+class TestEntity2 extends IEntity<Props, UUID> {
   constructor(props: Props, id?: UUID) {
     super(props, id)
   }
@@ -24,7 +24,7 @@ class TestEntity2 extends BaseEntity<Props, UUID> {
 
 describe('BaseEntity', () => {
   it('should be defined and have the correct class name', () => {
-    expect(BaseEntity).toBeDefined()
+    expect(IEntity).toBeDefined()
     expect(TestEntity).toBeDefined()
   })
 

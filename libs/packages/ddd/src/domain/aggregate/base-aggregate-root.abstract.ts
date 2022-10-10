@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DomainObjects, DomainObjectType } from '../core/domain-object.type'
-import { BaseEntity, IEntityProps } from '../entity/base-entity.abstract'
+import { IEntity, IEntityProps } from '../entity/base-entity.abstract'
 import { IEvent } from '../event/event.interface'
 import { UniqueID } from '../uid/unique-id.vo'
 
@@ -25,10 +25,10 @@ export interface IAggregateProps extends IEntityProps {}
  * @see https://martinfowler.com/bliki/AggregateRoot.html
  */
 
-export abstract class BaseAggregateRoot<
-  P extends IAggregateProps,
+export abstract class IAggregateRoot<
+  P extends IAggregateProps = IAggregateProps,
   I extends UniqueID = UniqueID
-> extends BaseEntity<P, I> {
+> extends IEntity<P, I> {
   public override readonly domainObjectType: DomainObjectType =
     DomainObjects.AggregateRoot
   private _version = -1
@@ -51,14 +51,14 @@ export abstract class BaseAggregateRoot<
     return commited
   }
 
-  snapshot<A extends BaseAggregateRoot<P, I>>(version?: number): A {
+  snapshot<A extends IAggregateRoot<P, I>>(version?: number): A {
     const snapshot = this.clone<A>()
     snapshot._version = version ?? this._version
     snapshot.commit()
     return snapshot
   }
 
-  static rehydrate<A extends BaseAggregateRoot<IAggregateProps>>(
+  static rehydrate<A extends IAggregateRoot<IAggregateProps>>(
     id: UniqueID,
     events: IEvent[],
     snapshot?: A

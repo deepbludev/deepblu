@@ -1,5 +1,5 @@
 import {
-  BaseAggregateRoot,
+  IAggregateRoot,
   IAggregateProps,
 } from '../aggregate/base-aggregate-root.abstract'
 import { IEventBus } from '../event/eventbus.interface'
@@ -12,7 +12,7 @@ import { IEntityRepository } from './entity-repository.abstract'
  * @abstract
  */
 export abstract class IRepository<
-  A extends BaseAggregateRoot<IAggregateProps>
+  A extends IAggregateRoot
 > extends IEntityRepository<A> {
   constructor(private readonly eventbus: IEventBus) {
     super()
