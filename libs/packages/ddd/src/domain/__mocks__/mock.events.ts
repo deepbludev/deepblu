@@ -1,3 +1,4 @@
+import { DomainEventAs } from '../event/domain-event'
 import { createDomainEvent } from '../event/utils/create-domain-event-as-from.util'
 import { Payload } from '../types'
 
@@ -11,6 +12,9 @@ export const MockAggregateCreated = createDomainEvent<{
 }>()
   .as('MockAggregateCreated')
   .from('MockAggregate')
+export type MockAggregateCreatedType = DomainEventAs<
+  typeof MockAggregateCreated
+>
 
 /**
  * @event MockPropsUpdated
@@ -30,3 +34,6 @@ export const MockPropsUpdated = createDomainEvent<
 export const MockAggregateToggled = createDomainEvent()
   .as('MockAggregateToggled')
   .from('MockAggregate')
+export type MockAggregateToggledType = DomainEventAs<
+  typeof MockAggregateToggled
+>

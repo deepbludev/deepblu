@@ -40,3 +40,5 @@ export abstract class DomainEvent<P = any, I extends EventID = EventID>
 export type DomainEventAs<E extends Constructor<IEvent>> = DomainEvent<
   Payload<E>
 >
+
+export type DomainEventClass = Constructor<DomainEvent>

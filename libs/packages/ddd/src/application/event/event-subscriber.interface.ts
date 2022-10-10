@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Constructor, DomainEvent } from '../../domain'
 
-import { IEvent } from '../../domain/event/event.interface'
-
-export interface IEventSubscriber<T extends IEvent = IEvent> {
-  handle(event: T): void
+export interface IEventSubscriber<E extends DomainEvent> {
+  on(event: E): Promise<void>
+  subscriptions: Constructor<DomainEvent>[]
 }
