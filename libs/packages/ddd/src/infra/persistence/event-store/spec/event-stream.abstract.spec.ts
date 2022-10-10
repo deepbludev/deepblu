@@ -18,6 +18,7 @@ describe(IEventStream, () => {
     stream = new MockEventStream()
     aggregate = MockAggregate.create({ foo: 'bar', is: true }).data
     aggregate.toggle()
+    aggregate.updateProps({ foo: 'baz' })
 
     aggId = aggregate.id.value
     events = [...aggregate.changes]
@@ -43,9 +44,10 @@ describe(IEventStream, () => {
   it('should be able to append events to multiple aggregates', async () => {
     await stream.append(aggId, events, version)
     await stream.append(otherAggId, otherEvents, otherVersion)
-    const result = await stream.get(aggId)
-    const otherResult = await stream.get(otherAggId)
-    expect(result).toEqual(events)
-    expect(otherResult).toEqual(otherEvents)
+    const fetched = await stream.get(aggId)
+    const otherFetched = await stream.get(otherAggId)
+
+    expect(fetched).toEqual(events)
+    expect(otherFetched).toEqual(otherEvents)
   })
 })
