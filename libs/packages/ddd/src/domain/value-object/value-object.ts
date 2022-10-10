@@ -23,7 +23,9 @@ export interface IValueObjectProps extends IDomainObjectProps {}
  * @see https://martinfowler.com/bliki/EvansClassification.html
  * @see https://martinfowler.com/bliki/ValueObject.html
  */
-export class ValueObject<P extends IValueObjectProps> extends DomainObject<P> {
+export abstract class ValueObject<
+  P extends IValueObjectProps
+> extends DomainObject<P> {
   public override readonly domainObjectType: DomainObjectType =
     DomainObjects.ValueObject
 

@@ -5,7 +5,7 @@ import { UniqueID } from '../uid/unique-id.vo'
 import { EventID } from './event-id.vo'
 import { IEvent } from './event.interface'
 
-export class DomainEvent<P = any, I extends EventID = EventID>
+export abstract class DomainEvent<P = any, I extends EventID = EventID>
   extends IMessage<P>
   implements IEvent<P>
 {
@@ -20,8 +20,8 @@ export class DomainEvent<P = any, I extends EventID = EventID>
     super(payload)
   }
 
-  static with<P = any>(payload: P, id: UniqueID) {
-    return new this(payload, id)
+  static with<P = any>(payload: P, id: UniqueID): DomainEvent<P> {
+    return Reflect.construct(this, [payload, id])
   }
 
   get aggregateName(): string {
