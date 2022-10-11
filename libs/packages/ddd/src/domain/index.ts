@@ -12,6 +12,7 @@ export * from './entity/utils/unique.decorator'
 
 export * from './event/domain-event'
 export * from './event/event-id.vo'
+export * from './event/event-subscriber.interface'
 export * from './event/event.interface'
 export * from './event/eventbus.interface'
 export * from './event/utils/create-domain-event-as-from.util'

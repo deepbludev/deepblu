@@ -1,6 +1,6 @@
-import { IRepo } from '../repo/repo.abstract'
-import { UniqueID } from '../uid/unique-id.vo'
-import { MockAggregate } from './mock.aggregate'
+import { IRepo } from '../../domain/repo/repo.abstract'
+import { UniqueID } from '../../domain/uid/unique-id.vo'
+import { MockAggregate } from '../../domain/__mocks__/mock.aggregate'
 
 export class MockAggregateRepo extends IRepo<MockAggregate> {
   readonly aggregates: Map<string, MockAggregate> = new Map()

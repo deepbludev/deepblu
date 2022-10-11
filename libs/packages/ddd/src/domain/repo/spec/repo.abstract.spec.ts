@@ -1,6 +1,5 @@
-import { MockEventBus } from '../../__mocks__/mock.event-bus'
-import { MockAggregate } from '../../__mocks__/mock.aggregate'
-import { MockAggregateRepo } from '../../__mocks__/mock.repo'
+import { MockEventBus, MockAggregateRepo } from '../../../infra/__mocks__'
+import { MockAggregate } from '../../__mocks__'
 import { IRepo } from '../repo.abstract'
 
 describe(IRepo, () => {

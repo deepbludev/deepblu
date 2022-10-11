@@ -1,8 +1,8 @@
-import { MockAggregate } from '../../__mocks__/mock.aggregate'
 import {
+  MockAggregate,
   MockPropsUpdated,
   MockAggregateToggled,
-} from '../../__mocks__/mock.events'
+} from '../../__mocks__'
 import { UniqueID } from '../../uid/unique-id.vo'
 import { IAggregateRoot } from '../aggregate-root.abstract'
 

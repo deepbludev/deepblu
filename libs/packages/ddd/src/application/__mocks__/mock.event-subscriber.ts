@@ -4,7 +4,7 @@ import {
   MockAggregateToggled,
   type MockAggregateToggledType,
 } from '../../domain/__mocks__/mock.events'
-import { IEventSubscriber } from '../event/event-subscriber.interface'
+import { IEventSubscriber } from '../../domain/event/event-subscriber.interface'
 
 type MockEventSubscriberEvent =
   | DomainEventAs<typeof MockAggregateCreated>

@@ -1,5 +1,5 @@
 import { MockAggregate } from '../../../../domain/__mocks__/mock.aggregate'
-import { MockEventBus } from '../../../../domain/__mocks__/mock.event-bus'
+import { MockEventBus } from '../../../__mocks__/mock.event-bus'
 import { MockEventStore } from '../../../__mocks__/mock.event-store'
 import { MockEventStream } from '../../../__mocks__/mock.event-stream'
 import { IEvent, UUID } from '../../../../domain'
