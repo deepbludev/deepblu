@@ -63,7 +63,16 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
   }
 
   get aggregateName(): string {
-    return (this.constructor as typeof DomainEvent).aggregate
+    let name = Reflect.get(this.constructor, 'aggregate')
+    if (!name?.length) name = 'Aggregate'
+    if (name === 'Aggregate')
+      console.error(
+        `[WARNING] DomainEvent "${this.name}" does not have an aggregate name. ` +
+          'Using default name "Aggregate". ' +
+          'Please set an aggregate name by using the @domainEvent decorator ' +
+          'or by setting the static string property "aggregate" on the class.'
+      )
+    return name
   }
 
   get name(): string {
