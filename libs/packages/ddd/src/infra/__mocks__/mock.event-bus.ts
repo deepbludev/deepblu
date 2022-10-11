@@ -1,9 +1,17 @@
 import { IEvent } from '../../domain/event/event.interface'
-import { IEventBus } from '../../domain/event/eventbus.interface'
+import { IEventBus } from '../../domain/event/event-bus.interface'
+import { IEventSubscriber } from '../../domain'
 
 export class MockEventBus implements IEventBus {
+  private _registerMock: jest.Mock = jest.fn()
+  private _publishMock: jest.Mock = jest.fn()
+
+  register(subscribers: IEventSubscriber[]): void {
+    this._registerMock(subscribers)
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async publish(events: IEvent[]) {
-    return Promise.resolve()
+  async publish(events: IEvent[]): Promise<void> {
+    return this._publishMock(events)
   }
 }
