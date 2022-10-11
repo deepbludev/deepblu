@@ -9,9 +9,3 @@ export interface IDomainEvent<P extends IPayload = IPayload>
   aggregateId: string
   timestamp: number // in milliseconds
 }
-
-// export interface IDomainEvent<P extends IPayload = IPayload>
-//   extends Omit<IEvent<P>, 'aggregateId'> {
-//   id: string
-//   aggregateId: string
-// }
