@@ -1,68 +1,59 @@
 import { IAggregateRoot } from '../../aggregate-root/aggregate-root.abstract'
+import { Props } from '../../types'
 import { UniqueID } from '../../uid/unique-id.vo'
 import { DomainEvent } from '../domain-event'
 import { EventID } from '../event-id.vo'
-import { createDomainEvent } from '../utils/create-domain-event-as-from.util'
 import { domainEvent } from '../utils/domain-event.decorator'
 
-interface Props {
+interface TestProps {
   foo: string
   is: boolean
 }
 
-class TestAggregate extends IAggregateRoot<Props> {
-  constructor(props: Props, id?: UniqueID) {
+class TestAggregate extends IAggregateRoot<TestProps> {
+  constructor(props: TestProps, id?: UniqueID) {
     super(props, id)
   }
 
-  create(payload: Partial<Props>): TestAggregate {
-    this.apply(new Created(payload as Props, this.id))
+  create(payload: TestProps): TestAggregate {
+    this.apply(new Created(payload, this.id.value))
     return this
   }
 }
 
 @domainEvent(TestAggregate.name)
-class Created extends DomainEvent {
-  constructor(payload: Props, aggId: UniqueID, id?: EventID) {
-    super(payload, aggId, id)
-  }
-}
+class Created extends DomainEvent<Props<TestAggregate>> {}
 
-class TestEvent extends DomainEvent<Props> {
+class TestEvent extends DomainEvent<TestProps> {
   static override aggregate = TestAggregate.name
-  constructor(payload: Props, aggId: UniqueID, id?: EventID) {
-    super(payload, aggId, id)
-  }
 }
 
-const OtherTestEvent = createDomainEvent<{ foo: string; is: boolean }>()
-  .as('OtherTestEvent')
-  .from(TestAggregate.name)
+@domainEvent(TestAggregate.name)
+class OtherTestEvent extends DomainEvent<{ foo: string; is: boolean }> {}
 
-const EventWithoutPayload = createDomainEvent()
-  .as('EventWithoutPayload')
-  .from(TestAggregate.name)
+@domainEvent(TestAggregate.name)
+class EventWithoutPayload extends DomainEvent {}
 
 describe(DomainEvent, () => {
   const payload = { foo: 'bar', is: true }
   const aggregate = new TestAggregate(payload)
-  const event = new TestEvent(payload, aggregate.id)
+  const event = new TestEvent(payload, aggregate.id.value)
   const otherEvent = OtherTestEvent.with(payload, aggregate.id)
-  const eventWithoutPayload = new EventWithoutPayload({}, aggregate.id)
+  const eventWithoutPayload = EventWithoutPayload.with({}, aggregate.id)
 
   it('should have an id', () => {
     expect(event.id).toBeDefined()
   })
 
   it('should be able to receive an id on creation', () => {
-    const id = EventID.create()
-    const event = new TestEvent(payload, aggregate.id, id)
-    expect(event.id.equals(id)).toBeTruthy()
+    const id = EventID.create().value
+    const event = new TestEvent(payload, aggregate.id.value, id)
+    expect(event.id).toEqual(id)
   })
 
   it("should generate it's own id if none is provided", () => {
-    const event = new TestEvent(payload, aggregate.id)
-    expect(EventID.validate(event.id.value)).toBeTruthy()
+    const event = new TestEvent(payload, aggregate.id.value)
+    expect(EventID.validate(event.id)).toBeTruthy()
   })
 
   it('should have a timestamp', () => {
@@ -90,26 +81,26 @@ describe(DomainEvent, () => {
   })
 
   it('should have an aggregate id', () => {
-    expect(event.aggregateId.equals(aggregate.id)).toBeTruthy()
-    expect(otherEvent.aggregateId.equals(aggregate.id)).toBeTruthy()
-    expect(eventWithoutPayload.aggregateId.equals(aggregate.id)).toBeTruthy()
+    expect(event.aggregateId).toEqual(aggregate.id.value)
+    expect(otherEvent.aggregateId).toEqual(aggregate.id.value)
+    expect(eventWithoutPayload.aggregateId).toEqual(aggregate.id.value)
   })
 
   it('should be able to be serialized', () => {
     const serialized = event.serialize()
     expect(serialized).toEqual({
-      id: event.id.value,
+      id: event.id,
       timestamp: event.timestamp,
       name: event.name,
       aggregateName: event.aggregateName,
-      aggregateId: event.aggregateId.value,
+      aggregateId: event.aggregateId,
       payload: event.payload,
     })
   })
 
   it('should be able to be deserialized', () => {
     const serialized = event.serialize()
-    const deserialized = TestEvent.from<Props>(serialized)
+    const deserialized = TestEvent.from<TestProps>(serialized)
     expect(deserialized).toBeInstanceOf(TestEvent)
     expect(deserialized).toEqual(event)
   })

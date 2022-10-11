@@ -1,8 +1,10 @@
-import { MockAggregate } from '../../../../domain/__mocks__/mock.aggregate'
-import { MockEventBus } from '../../../__mocks__/mock.event-bus'
-import { MockEventStore } from '../../../__mocks__/mock.event-store'
-import { MockEventStream } from '../../../__mocks__/mock.event-stream'
-import { IEvent, UUID } from '../../../../domain'
+import { MockAggregate } from '../../../../domain/__mocks__'
+import { IDomainEvent, UUID } from '../../../../domain'
+import {
+  MockEventBus,
+  MockEventStore,
+  MockEventStream,
+} from '../../../__mocks__'
 import { EventStore } from '../event-store'
 
 describe(EventStore, () => {
@@ -10,7 +12,7 @@ describe(EventStore, () => {
   let eventbus: MockEventBus
   let eventstore: MockEventStore
   let aggregate: MockAggregate
-  let changes: IEvent[]
+  let changes: IDomainEvent[]
 
   let appendSpy: jest.SpyInstance
   let publishSpy: jest.SpyInstance

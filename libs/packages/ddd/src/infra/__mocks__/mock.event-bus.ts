@@ -1,4 +1,4 @@
-import { IEvent } from '../../domain/event/event.interface'
+import { IDomainEvent } from '../../domain/event/event.interface'
 import { IEventBus } from '../../domain/event/event-bus.interface'
 import { IEventSubscriber } from '../../domain'
 
@@ -11,7 +11,7 @@ export class MockEventBus implements IEventBus {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async publish(events: IEvent[]): Promise<void> {
+  async publish(events: IDomainEvent[]): Promise<void> {
     return this._publishMock(events)
   }
 }

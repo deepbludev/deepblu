@@ -1,4 +1,4 @@
-import { IEvent, IEventBus, IEventSubscriber } from '../../../domain'
+import { IDomainEvent, IEventBus, IEventSubscriber } from '../../../domain'
 
 export class InMemoryAsyncEventBus implements IEventBus {
   private _subscribers: Set<IEventSubscriber> = new Set()
@@ -8,7 +8,7 @@ export class InMemoryAsyncEventBus implements IEventBus {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async publish(events: IEvent[]): Promise<void> {
+  async publish(events: IDomainEvent[]): Promise<void> {
     return Promise.resolve()
   }
 }

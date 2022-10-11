@@ -1,4 +1,4 @@
-import { IEvent } from '../../../../domain'
+import { IDomainEvent } from '../../../../domain'
 import { MockAggregate } from '../../../../domain/__mocks__/mock.aggregate'
 import { MockEventStream } from '../../../__mocks__/mock.event-stream'
 import { IEventStream } from '../event-stream.interface'
@@ -6,12 +6,12 @@ import { IEventStream } from '../event-stream.interface'
 describe(IEventStream, () => {
   let stream: MockEventStream
   let aggregate: MockAggregate
-  let events: IEvent[]
+  let events: IDomainEvent[]
   let aggId: string
   let version: number
   let otherAggregate: MockAggregate
   let otherAggId: string
-  let otherEvents: IEvent[]
+  let otherEvents: IDomainEvent[]
   let otherVersion: number
 
   beforeEach(() => {

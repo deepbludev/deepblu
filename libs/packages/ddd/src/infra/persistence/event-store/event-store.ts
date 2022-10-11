@@ -1,6 +1,6 @@
 import {
   IAggregateRoot,
-  IEvent,
+  IDomainEvent,
   IEventBus,
   IRepo,
   UniqueID,
@@ -9,7 +9,7 @@ import { IEventStream } from './event-stream.interface'
 
 export interface AggregateType<A extends IAggregateRoot> {
   name: string
-  rehydrate: (id: UniqueID, events: IEvent[]) => A
+  rehydrate: (id: UniqueID, events: IDomainEvent[]) => A
 }
 
 /**

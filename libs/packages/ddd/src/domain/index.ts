@@ -14,7 +14,6 @@ export * from './event/event-id.vo'
 export * from './event/event-subscriber.interface'
 export * from './event/event.interface'
 export * from './event/event-bus.interface'
-export * from './event/utils/create-domain-event-as-from.util'
 export * from './event/utils/domain-event.decorator'
 
 export * from './repo/entity-repo.abstract'

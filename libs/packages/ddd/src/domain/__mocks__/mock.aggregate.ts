@@ -32,7 +32,7 @@ export class MockAggregate extends IAggregateRoot<{
   }
 
   protected onMockAggregateCreated(event: MockAggregateCreated): void {
-    this.id = UniqueID.from(event.aggregateId.value).data
+    this.id = UniqueID.from(event.aggregateId).data
     this.props.foo = event.payload.foo || ''
     this.props.is = !!event.payload.is
   }

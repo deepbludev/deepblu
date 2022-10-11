@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IEntity, IEntityProps } from '../entity/entity.abstract'
-import { IEvent } from '../event/event.interface'
+import { IDomainEvent } from '../event/event.interface'
 import { DomainObjects, DomainObjectType } from '../types/domain-object.types'
 import { UniqueID } from '../uid/unique-id.vo'
 
@@ -32,21 +32,21 @@ export abstract class IAggregateRoot<
   public override readonly domType: DomainObjectType =
     DomainObjects.AGGREGATE_ROOT
   private _version = -1
-  private _changes: IEvent[] = []
+  private _changes: IDomainEvent[] = []
 
   protected constructor(props: P, id?: I) {
     super(props, id)
   }
 
-  protected apply(event: IEvent, isFromHistory = false): void {
+  protected apply(event: IDomainEvent, isFromHistory = false): void {
     const self = this as any
     const handler = `on${event.name}`
     self[handler] && self[handler](event)
     if (!isFromHistory) this._changes.push(event)
   }
 
-  commit(): IEvent[] {
-    const commited: IEvent[] = [...this._changes]
+  commit(): IDomainEvent[] {
+    const commited: IDomainEvent[] = [...this._changes]
     this._changes = []
     return commited
   }
@@ -60,7 +60,7 @@ export abstract class IAggregateRoot<
 
   static rehydrate<A extends IAggregateRoot<IAggregateProps>>(
     id: UniqueID,
-    events: IEvent[],
+    events: IDomainEvent[],
     snapshot?: A
   ): A {
     const aggregate: A = snapshot || (Reflect.construct(this, [{}, id]) as A)
@@ -76,7 +76,7 @@ export abstract class IAggregateRoot<
     return this._changes.length > 0
   }
 
-  get changes(): IEvent[] {
+  get changes(): IDomainEvent[] {
     return this._changes
   }
 

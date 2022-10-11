@@ -1,7 +1,7 @@
 import { IEventSubscriber } from './event-subscriber.interface'
-import { IEvent } from './event.interface'
+import { IDomainEvent } from './event.interface'
 
 export interface IEventBus {
-  publish(events: IEvent[]): Promise<void>
+  publish(events: IDomainEvent[]): Promise<void>
   register(subscribers: IEventSubscriber[]): void
 }

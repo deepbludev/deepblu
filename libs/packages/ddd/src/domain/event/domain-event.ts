@@ -3,18 +3,18 @@
 import { IMessage, IPayload } from '../types'
 import { UniqueID } from '../uid/unique-id.vo'
 import { EventID } from './event-id.vo'
-import { IDomainEvent, IEvent } from './event.interface'
+import { IDomainEvent } from './event.interface'
 
 export abstract class DomainEvent<P extends IPayload = IPayload>
   extends IMessage<P>
-  implements IEvent<P>
+  implements IDomainEvent<P>
 {
   static aggregate = 'Aggregate'
 
   constructor(
     public override readonly payload: P,
-    public readonly aggregateId: UniqueID,
-    public readonly id: EventID = EventID.create(),
+    public readonly aggregateId: string,
+    public readonly id: string = EventID.create().value,
     public readonly timestamp: number = Date.now()
   ) {
     super(payload)
@@ -28,7 +28,7 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
     payload: P,
     id: UniqueID
   ): DomainEvent<P> {
-    return Reflect.construct(this, [payload, id])
+    return Reflect.construct(this, [payload, id.value])
   }
 
   /**
@@ -39,10 +39,10 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
   static from<P extends IPayload>(serialized: IDomainEvent<P>): DomainEvent<P> {
     const deserialized = Reflect.construct(this, [
       serialized.payload,
-      UniqueID.from(serialized.aggregateId).data,
+      serialized.aggregateId,
     ])
     Reflect.set(deserialized, 'timestamp', serialized.timestamp)
-    Reflect.set(deserialized, 'id', EventID.from(serialized.id).data)
+    Reflect.set(deserialized, 'id', serialized.id)
     return deserialized
   }
 
@@ -53,10 +53,10 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
    */
   serialize(): IDomainEvent<P> {
     return {
-      id: this.id.value,
+      id: this.id,
       name: this.name,
       timestamp: this.timestamp,
-      aggregateId: this.aggregateId.value,
+      aggregateId: this.aggregateId,
       aggregateName: this.aggregateName,
       payload: this.payload,
     }
