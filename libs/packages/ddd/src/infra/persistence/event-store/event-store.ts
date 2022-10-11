@@ -3,13 +3,13 @@ import {
   IDomainEvent,
   IEventBus,
   IRepo,
-  UniqueID,
+  IUniqueID,
 } from '../../../domain'
 import { IEventStream } from './event-stream.interface'
 
 export interface AggregateType<A extends IAggregateRoot> {
   name: string
-  rehydrate: (id: UniqueID, events: IDomainEvent[]) => A
+  rehydrate: (id: IUniqueID, events: IDomainEvent[]) => A
 }
 
 /**
@@ -32,7 +32,7 @@ export class EventStore<A extends IAggregateRoot> extends IRepo<A> {
     )
   }
 
-  async get(id: UniqueID): Promise<A | null> {
+  async get(id: IUniqueID): Promise<A | null> {
     const events = await this.stream.get(id.value)
     if (!events.length) return null
 

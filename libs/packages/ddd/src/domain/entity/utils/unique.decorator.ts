@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Constructor } from '../../types'
-import { UniqueID } from '../../uid/unique-id.vo'
+import { IUniqueID } from '../../uid/unique-id.vo'
 
 /**
  * Decorator used to set the id generator for an entity in the case
@@ -21,7 +21,7 @@ import { UniqueID } from '../../uid/unique-id.vo'
  * @param idType A class that extends UniqueID.
  * @returns class decorator
  */
-export const unique = <I extends typeof UniqueID>(idType: I) =>
+export const unique = <I extends typeof IUniqueID>(idType: I) =>
   function <T extends Constructor>(BaseClass: T) {
     const UniqueClass = class extends BaseClass {
       readonly id: I

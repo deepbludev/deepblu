@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import { IMessage, IPayload } from '../types'
-import { UniqueID } from '../uid/unique-id.vo'
+import { IUniqueID } from '../uid/unique-id.vo'
 import { EventID } from './event-id.vo'
 import { IDomainEvent } from './event.interface'
 
@@ -26,7 +26,7 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
    */
   static with<P extends IPayload = IPayload>(
     payload: P,
-    id: UniqueID
+    id: IUniqueID
   ): DomainEvent<P> {
     return Reflect.construct(this, [payload, id.value])
   }

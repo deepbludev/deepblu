@@ -1,6 +1,6 @@
 import { IIdentifiable } from '../types/identifiable.interface'
 import { DomainObject } from '../core/domain-object.abstract'
-import { UniqueID } from '../uid/unique-id.vo'
+import { IUniqueID } from '../uid/unique-id.vo'
 import {
   DomainObjects,
   DomainObjectType,
@@ -26,7 +26,7 @@ export interface IEntityProps extends IProps {}
 
 export abstract class IEntity<
     P extends IEntityProps = IEntityProps,
-    I extends UniqueID = UniqueID
+    I extends IUniqueID = IUniqueID
   >
   extends DomainObject<P>
   implements IIdentifiable<I>
@@ -36,7 +36,7 @@ export abstract class IEntity<
 
   protected constructor(props: P, id?: I) {
     super(props)
-    this.id = id ?? (UniqueID.create() as I)
+    this.id = id ?? (IUniqueID.create() as I)
   }
 
   /**
@@ -60,9 +60,9 @@ export abstract class IEntity<
     return Reflect.construct(constructor, [this.props, this.id])
   }
 
-  get hashcode(): UniqueID {
+  get hashcode(): IUniqueID {
     const constructor = Reflect.getPrototypeOf(this)?.constructor.name
-    return UniqueID.from(`[${this.domType}@${constructor}]:${this.id.value}`)
+    return IUniqueID.from(`[${this.domType}@${constructor}]:${this.id.value}`)
       .data
   }
 }

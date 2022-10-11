@@ -2,7 +2,7 @@
 import { IEntity, IEntityProps } from '../entity/entity.abstract'
 import { IDomainEvent } from '../event/event.interface'
 import { DomainObjects, DomainObjectType } from '../types/domain-object.types'
-import { UniqueID } from '../uid/unique-id.vo'
+import { IUniqueID } from '../uid/unique-id.vo'
 
 /* eslint-disable-next-line @typescript-eslint/no-empty-interface */
 export interface IAggregateProps extends IEntityProps {}
@@ -27,7 +27,7 @@ export interface IAggregateProps extends IEntityProps {}
 
 export abstract class IAggregateRoot<
   P extends IAggregateProps = IAggregateProps,
-  I extends UniqueID = UniqueID
+  I extends IUniqueID = IUniqueID
 > extends IEntity<P, I> {
   public override readonly domType: DomainObjectType =
     DomainObjects.AGGREGATE_ROOT
@@ -59,7 +59,7 @@ export abstract class IAggregateRoot<
   }
 
   static rehydrate<A extends IAggregateRoot<IAggregateProps>>(
-    id: UniqueID,
+    id: IUniqueID,
     events: IDomainEvent[],
     snapshot?: A
   ): A {

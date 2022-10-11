@@ -1,5 +1,5 @@
 import { IEntity } from '../entity/entity.abstract'
-import { UniqueID } from '../uid/unique-id.vo'
+import { IUniqueID } from '../uid/unique-id.vo'
 
 /**
  * Base abstract class for entity repositories. It can be either extended or implemented as an interface.
@@ -11,9 +11,9 @@ import { UniqueID } from '../uid/unique-id.vo'
  */
 export abstract class IEntityRepo<E extends IEntity> {
   protected abstract persist(entity: E): Promise<void>
-  abstract get(id: UniqueID): Promise<E | null>
+  abstract get(id: IUniqueID): Promise<E | null>
 
-  async exists(id: UniqueID): Promise<boolean> {
+  async exists(id: IUniqueID): Promise<boolean> {
     return !!(await this.get(id))
   }
 

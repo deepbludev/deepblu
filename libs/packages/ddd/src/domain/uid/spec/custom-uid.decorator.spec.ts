@@ -1,13 +1,13 @@
 import 'reflect-metadata'
 import { InvalidPropError } from '../../core/errors'
-import { UniqueID, UniqueIDProps } from '../unique-id.vo'
+import { IUniqueID, UniqueIDProps } from '../unique-id.vo'
 import { customUID } from '../utils/custom-uid.decorator'
 
 @customUID({
   generator: () => 'valid' + Date.now(),
   validator: (id: string) => id.startsWith('valid'),
 })
-class MockUniqueID extends UniqueID {
+class MockUniqueID extends IUniqueID {
   constructor(props: UniqueIDProps, private readonly date: Date) {
     super(props)
   }

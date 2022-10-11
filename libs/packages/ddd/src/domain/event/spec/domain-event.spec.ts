@@ -1,6 +1,6 @@
 import { IAggregateRoot } from '../../aggregate-root/aggregate-root.abstract'
 import { Props } from '../../types'
-import { UniqueID } from '../../uid/unique-id.vo'
+import { IUniqueID } from '../../uid/unique-id.vo'
 import { DomainEvent } from '../domain-event'
 import { EventID } from '../event-id.vo'
 import { domainEvent } from '../utils/domain-event.decorator'
@@ -11,7 +11,7 @@ interface TestProps {
 }
 
 class TestAggregate extends IAggregateRoot<TestProps> {
-  constructor(props: TestProps, id?: UniqueID) {
+  constructor(props: TestProps, id?: IUniqueID) {
     super(props, id)
   }
 

@@ -1,5 +1,5 @@
-import { UniqueID } from '../uid/unique-id.vo'
+import { IUniqueID } from '../uid/unique-id.vo'
 
-export interface IIdentifiable<T extends UniqueID = UniqueID> {
+export interface IIdentifiable<T extends IUniqueID = IUniqueID> {
   id: T
 }

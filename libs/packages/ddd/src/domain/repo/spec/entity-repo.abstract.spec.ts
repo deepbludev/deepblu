@@ -1,5 +1,5 @@
 import { Entity } from '../../entity/entity'
-import { UniqueID } from '../../uid/unique-id.vo'
+import { IUniqueID } from '../../uid/unique-id.vo'
 import { UUID } from '../../uid/uuid.vo'
 import { IEntityRepo } from '../entity-repo.abstract'
 
@@ -16,7 +16,7 @@ class MockEntityRepo extends IEntityRepo<MockEntity> {
     this.entities.set(entity.id.value, entity)
   }
 
-  async get(id: UniqueID): Promise<MockEntity | null> {
+  async get(id: IUniqueID): Promise<MockEntity | null> {
     return this.entities.get(id.value) ?? null
   }
 }

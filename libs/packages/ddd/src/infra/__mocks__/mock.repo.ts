@@ -1,5 +1,5 @@
 import { IRepo } from '../../domain/repo/repo.abstract'
-import { UniqueID } from '../../domain/uid/unique-id.vo'
+import { IUniqueID } from '../../domain/uid/unique-id.vo'
 import { MockAggregate } from '../../domain/__mocks__/mock.aggregate'
 
 export class MockAggregateRepo extends IRepo<MockAggregate> {
@@ -9,7 +9,7 @@ export class MockAggregateRepo extends IRepo<MockAggregate> {
     this.aggregates.set(entity.id.value, entity)
   }
 
-  async get(id: UniqueID): Promise<MockAggregate | null> {
+  async get(id: IUniqueID): Promise<MockAggregate | null> {
     return this.aggregates.get(id.value) ?? null
   }
 }

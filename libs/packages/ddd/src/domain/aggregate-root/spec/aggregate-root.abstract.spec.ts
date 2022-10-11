@@ -3,7 +3,7 @@ import {
   MockPropsUpdated,
   MockAggregateToggled,
 } from '../../__mocks__'
-import { UniqueID } from '../../uid/unique-id.vo'
+import { IUniqueID } from '../../uid/unique-id.vo'
 import { IAggregateRoot } from '../aggregate-root.abstract'
 
 describe(IAggregateRoot, () => {
@@ -18,7 +18,7 @@ describe(IAggregateRoot, () => {
   })
 
   it('should have a hashcode based on its id, class name and domain object type', () => {
-    const expectedHashCode = UniqueID.from(
+    const expectedHashCode = IUniqueID.from(
       `[AggregateRoot@MockAggregate]:${aggregate.id.value}`
     ).data
     expect(aggregate.hashcode.equals(expectedHashCode)).toBeTruthy()

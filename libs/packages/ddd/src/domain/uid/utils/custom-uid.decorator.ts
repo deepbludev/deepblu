@@ -1,5 +1,5 @@
 import { Constructor } from '../../types'
-import { UniqueID } from '../unique-id.vo'
+import { IUniqueID } from '../unique-id.vo'
 
 /**
  * Decorator to create a unique ID class with a static create method
@@ -25,7 +25,7 @@ export const customUID = (opts: {
   validator: (id: string) => boolean
 }) =>
   function <
-    T extends Constructor<UniqueID> & {
+    T extends Constructor<IUniqueID> & {
       generate: () => string
       validate: (id: string) => boolean
     }

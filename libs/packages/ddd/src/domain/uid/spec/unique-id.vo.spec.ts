@@ -1,25 +1,25 @@
 import { InvalidPropError } from '../../core/errors'
 import { customUID } from '../utils/custom-uid.decorator'
-import { UniqueID, UniqueIDProps } from '../unique-id.vo'
+import { IUniqueID, UniqueIDProps } from '../unique-id.vo'
 
 @customUID({
-  generator: () => 'valid' + UniqueID.generate(),
+  generator: () => 'valid' + IUniqueID.generate(),
   validator: (id: string) => id.startsWith('valid'),
 })
-class MockUniqueID extends UniqueID {
+class MockUniqueID extends IUniqueID {
   constructor(props: UniqueIDProps) {
     super(props)
   }
 }
 
-describe(UniqueID, () => {
+describe(IUniqueID, () => {
   const id = MockUniqueID.from('valid')
   const id2 = MockUniqueID.from('valid')
   const id3 = MockUniqueID.from('valid2')
   const id4 = MockUniqueID.from('invalid')
 
   it('should be defined', () => {
-    expect(UniqueID).toBeDefined()
+    expect(IUniqueID).toBeDefined()
     expect(MockUniqueID).toBeDefined()
   })
   it('should be able to create a new instance from a value', () => {

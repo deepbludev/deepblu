@@ -1,4 +1,4 @@
-import { UniqueID } from '../../uid/unique-id.vo'
+import { IUniqueID } from '../../uid/unique-id.vo'
 import { UUID } from '../../uid/uuid.vo'
 import { IEntity, IEntityProps } from '../entity.abstract'
 import { unique } from '../utils/unique.decorator'
@@ -63,7 +63,7 @@ describe(IEntity, () => {
   })
 
   it('should have a hashcode based on its id, class name and domain object type', () => {
-    const expectedHashCode = UniqueID.from(
+    const expectedHashCode = IUniqueID.from(
       `[Entity@TestEntity]:${entity.id.value}`
     ).data
     expect(entity.hashcode.equals(expectedHashCode)).toBeTruthy()

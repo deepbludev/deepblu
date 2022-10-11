@@ -22,7 +22,6 @@ export * from './repo/repo.abstract'
 export * from './types'
 
 export * from './uid/unique-id.vo'
-export * from './uid/unique-id.interface'
 export * from './uid/uuid.vo'
 export * from './uid/utils/custom-uid.decorator'
 

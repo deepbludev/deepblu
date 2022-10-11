@@ -1,7 +1,7 @@
 import { IAggregateRoot } from '../aggregate-root/aggregate-root.abstract'
 import { Result } from '../core/result'
 import { Payload } from '../types'
-import { UniqueID } from '../uid/unique-id.vo'
+import { IUniqueID } from '../uid/unique-id.vo'
 import {
   MockAggregateCreated,
   MockPropsUpdated,
@@ -24,7 +24,7 @@ export class MockAggregate extends IAggregateRoot<{
 
   static create(
     payload: Payload<MockAggregateCreated>,
-    id?: UniqueID
+    id?: IUniqueID
   ): Result<MockAggregate> {
     const aggregate = new MockAggregate(payload, id)
     aggregate.apply(MockAggregateCreated.with(payload, aggregate.id))
@@ -32,7 +32,7 @@ export class MockAggregate extends IAggregateRoot<{
   }
 
   protected onMockAggregateCreated(event: MockAggregateCreated): void {
-    this.id = UniqueID.from(event.aggregateId).data
+    this.id = IUniqueID.from(event.aggregateId).data
     this.props.foo = event.payload.foo || ''
     this.props.is = !!event.payload.is
   }
