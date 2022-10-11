@@ -2,14 +2,16 @@ import { idUtils } from '../id.utils'
 
 describe('uid()', () => {
   it('should generate a default id', () => {
-    const id = idUtils.uid()
-    expect(id.length).toBe(21)
-    expect(id).toMatch(/^[A-Za-z0-9_-]+$/)
+    const id = idUtils.uid.create()
+    expect(id.length).toBeGreaterThan(0)
+    expect(typeof id === 'string').toBe(true)
   })
 
-  it('should generate a default id with a custom length', () => {
-    const id = idUtils.uid(10)
-    expect(id.length).toBe(10)
-    expect(id).toMatch(/^[A-Za-z0-9_-]+$/)
+  it('should validate a default id', () => {
+    const id = idUtils.uid.create()
+    const invalid = ''
+
+    expect(idUtils.uid.isValid(id)).toBe(true)
+    expect(idUtils.uid.isValid(invalid)).toBe(false)
   })
 })

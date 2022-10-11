@@ -50,6 +50,6 @@ describe(UniqueID, () => {
   it('should be able to create a new instance from a value', () => {
     const newId = MockUniqueID.create()
     expect(MockUniqueID.isValid(newId.value)).toBeTruthy()
-    expect(newId.value.length).toEqual(21 + 'valid'.length)
+    expect(newId.value.length).toBeGreaterThan('valid'.length)
   })
 })

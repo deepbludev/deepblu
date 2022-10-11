@@ -8,11 +8,10 @@ export interface UniqueIDProps extends IValueObjectProps {
   value: string
 }
 
-export class UniqueID extends ValueObject<UniqueIDProps> implements IUniqueID {
-  protected constructor(props: UniqueIDProps) {
-    super(props)
-  }
-
+export abstract class UniqueID
+  extends ValueObject<UniqueIDProps>
+  implements IUniqueID
+{
   override clone<UniqueID>(): UniqueID {
     return super.clone() as UniqueID
   }
@@ -26,11 +25,11 @@ export class UniqueID extends ValueObject<UniqueIDProps> implements IUniqueID {
   }
 
   public static generate(): string {
-    return idUtils.uid()
+    return idUtils.uid.create()
   }
 
   public static validate(id: string): boolean {
-    return this.validator.string(id) && id.length > 0
+    return idUtils.uid.isValid(id)
   }
 
   static isValid(id: string): boolean {
@@ -49,6 +48,6 @@ export class UniqueID extends ValueObject<UniqueIDProps> implements IUniqueID {
   }
 
   static create<I extends UniqueID = UniqueID>(): I {
-    return new this({ value: this.generate() }) as I
+    return Reflect.construct(this, [{ value: this.generate() }]) as I
   }
 }
