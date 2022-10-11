@@ -37,8 +37,12 @@ describe(IEventStream, () => {
     expect(IEventStream).toBeDefined()
   })
 
+  it('should have a aggregate name', () => {
+    expect(stream.aggregateName).toEqual('MockAggregate')
+  })
+
   it('should have a stream name', () => {
-    expect(stream.name).toEqual(MockAggregate.name)
+    expect(stream.name).toEqual('MockAggregate.eventstream')
   })
 
   it('should be able to append events to multiple aggregates', async () => {
