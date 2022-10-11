@@ -1,7 +1,6 @@
 export * from './aggregate-root/aggregate-root.abstract'
 
 export * from './core/domain-object.abstract'
-export * from './core/domain-object.type'
 export * from './core/errors'
 export * from './core/result'
 export * from './core/result.interface'

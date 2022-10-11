@@ -14,7 +14,7 @@ describe(IAggregateRoot, () => {
   )
 
   it('should be a Aggregate domain object type', () => {
-    expect(aggregate.domainObjectType).toEqual('AggregateRoot')
+    expect(aggregate.domType).toEqual('AggregateRoot')
   })
 
   it('should have a hashcode based on its id, class name and domain object type', () => {

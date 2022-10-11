@@ -1,5 +1,3 @@
-import { Constructor } from './constructor.interface'
-
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IPayload {}
 
@@ -22,5 +20,4 @@ export abstract class IMessage<P extends IPayload = IPayload> {
  * @example
  */
 
-export type Payload<E extends Constructor<IMessage>> =
-  ConstructorParameters<E>[0]
+export type Payload<E extends IMessage> = E['payload']

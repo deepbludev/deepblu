@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DomainObjects, DomainObjectType } from '../core/domain-object.type'
 import { IEntity, IEntityProps } from '../entity/entity.abstract'
 import { IEvent } from '../event/event.interface'
+import { DomainObjects, DomainObjectType } from '../types/domain-object.types'
 import { UniqueID } from '../uid/unique-id.vo'
 
 /* eslint-disable-next-line @typescript-eslint/no-empty-interface */
@@ -29,8 +29,8 @@ export abstract class IAggregateRoot<
   P extends IAggregateProps = IAggregateProps,
   I extends UniqueID = UniqueID
 > extends IEntity<P, I> {
-  public override readonly domainObjectType: DomainObjectType =
-    DomainObjects.AggregateRoot
+  public override readonly domType: DomainObjectType =
+    DomainObjects.AGGREGATE_ROOT
   private _version = -1
   private _changes: IEvent[] = []
 

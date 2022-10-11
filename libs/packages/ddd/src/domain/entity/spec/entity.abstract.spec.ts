@@ -41,7 +41,7 @@ describe(IEntity, () => {
   })
 
   it('should be a Entity domain object type', () => {
-    expect(entity.domainObjectType).toEqual('Entity')
+    expect(entity.domType).toEqual('Entity')
   })
 
   it('should be able to compare entities', () => {

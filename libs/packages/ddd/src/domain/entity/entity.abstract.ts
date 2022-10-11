@@ -1,13 +1,14 @@
 import { IIdentifiable } from '../types/identifiable.interface'
-import {
-  IDomainObjectProps,
-  DomainObject,
-} from '../core/domain-object.abstract'
+import { DomainObject } from '../core/domain-object.abstract'
 import { UniqueID } from '../uid/unique-id.vo'
-import { DomainObjects, DomainObjectType } from '../core/domain-object.type'
+import {
+  DomainObjects,
+  DomainObjectType,
+  IProps,
+} from '../types/domain-object.types'
 
 /* eslint-disable-next-line @typescript-eslint/no-empty-interface */
-export interface IEntityProps extends IDomainObjectProps {}
+export interface IEntityProps extends IProps {}
 
 /**
  * @class Entity
@@ -30,8 +31,7 @@ export abstract class IEntity<
   extends DomainObject<P>
   implements IIdentifiable<I>
 {
-  public override readonly domainObjectType: DomainObjectType =
-    DomainObjects.Entity
+  public override readonly domType: DomainObjectType = DomainObjects.ENTITY
   public id: I
 
   protected constructor(props: P, id?: I) {
@@ -62,8 +62,7 @@ export abstract class IEntity<
 
   get hashcode(): UniqueID {
     const constructor = Reflect.getPrototypeOf(this)?.constructor.name
-    return UniqueID.from(
-      `[${this.domainObjectType}@${constructor}]:${this.id.value}`
-    ).data
+    return UniqueID.from(`[${this.domType}@${constructor}]:${this.id.value}`)
+      .data
   }
 }

@@ -25,7 +25,7 @@ describe(DomainObject, () => {
   })
 
   it('should know what type of domain object it is', () => {
-    expect(p.domainObjectType).toEqual('DomainObject')
+    expect(p.domType).toEqual('DomainObject')
   })
 
   it('should be able to create a new instance', () => {

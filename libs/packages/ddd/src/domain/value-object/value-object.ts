@@ -1,11 +1,12 @@
+import { DomainObject } from '../core/domain-object.abstract'
 import {
-  DomainObject,
-  IDomainObjectProps,
-} from '../core/domain-object.abstract'
-import { DomainObjects, DomainObjectType } from '../core/domain-object.type'
+  DomainObjects,
+  DomainObjectType,
+  IProps,
+} from '../types/domain-object.types'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IValueObjectProps extends IDomainObjectProps {}
+export interface IValueObjectProps extends IProps {}
 
 /**
  * @class ValueObject
@@ -26,8 +27,8 @@ export interface IValueObjectProps extends IDomainObjectProps {}
 export abstract class ValueObject<
   P extends IValueObjectProps
 > extends DomainObject<P> {
-  public override readonly domainObjectType: DomainObjectType =
-    DomainObjects.ValueObject
+  public override readonly domType: DomainObjectType =
+    DomainObjects.VALUE_OBJECT
 
   protected constructor(public override readonly props: P) {
     super(props)

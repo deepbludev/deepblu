@@ -1,9 +1,5 @@
-import {
-  IAggregateProps,
-  IAggregateRoot,
-} from '../aggregate-root/aggregate-root.abstract'
+import { IAggregateRoot } from '../aggregate-root/aggregate-root.abstract'
 import { Result } from '../core/result'
-import { DomainEventAs } from '../event/domain-event'
 import { Payload } from '../types'
 import { UniqueID } from '../uid/unique-id.vo'
 import {
@@ -12,14 +8,11 @@ import {
   MockAggregateToggled,
 } from './mock.events'
 
-export type MockAggregateProps = IAggregateProps &
-  Payload<typeof MockAggregateCreated>
-
-export class MockAggregate extends IAggregateRoot<MockAggregateProps> {
-  protected constructor(props: MockAggregateProps, id?: UniqueID) {
-    super(props, id)
-  }
-
+export class MockAggregate extends IAggregateRoot<{
+  foo: string
+  bar?: number
+  is?: boolean
+}> {
   /**
    * Creates a new mock aggregate from initial props
    * @factory
@@ -30,7 +23,7 @@ export class MockAggregate extends IAggregateRoot<MockAggregateProps> {
    */
 
   static create(
-    payload: Payload<typeof MockAggregateCreated>,
+    payload: Payload<MockAggregateCreated>,
     id?: UniqueID
   ): Result<MockAggregate> {
     const aggregate = new MockAggregate(payload, id)
@@ -38,9 +31,7 @@ export class MockAggregate extends IAggregateRoot<MockAggregateProps> {
     return Result.ok(aggregate)
   }
 
-  protected onMockAggregateCreated(
-    event: DomainEventAs<typeof MockAggregateCreated>
-  ): void {
+  protected onMockAggregateCreated(event: MockAggregateCreated): void {
     this.id = UniqueID.from(event.aggregateId.value).data
     this.props.foo = event.payload.foo || ''
     this.props.is = !!event.payload.is
@@ -53,13 +44,11 @@ export class MockAggregate extends IAggregateRoot<MockAggregateProps> {
    * @param payload - the props to update
    */
 
-  updateProps(payload: Payload<typeof MockPropsUpdated>): void {
+  updateProps(payload: Payload<MockPropsUpdated>): void {
     this.apply(MockPropsUpdated.with(payload, this.id))
   }
 
-  protected onMockPropsUpdated(
-    event: DomainEventAs<typeof MockPropsUpdated>
-  ): void {
+  protected onMockPropsUpdated(event: MockPropsUpdated): void {
     this.props.foo = event.payload.foo || this.props.foo
     this.props.is = Reflect.has(event.payload, 'is')
       ? !!event.payload.is

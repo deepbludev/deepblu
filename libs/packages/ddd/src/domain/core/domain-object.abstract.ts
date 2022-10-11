@@ -1,10 +1,10 @@
-import { DomainObjects, DomainObjectType } from './domain-object.type'
 import v from '../../utils/validator'
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export interface IDomainObjectProps {
-  [index: string]: any
-}
+import {
+  DomainObjects,
+  DomainObjectType,
+  IProps,
+  IDomainObject,
+} from '../types/domain-object.types'
 
 /**
  * @class DomainObject
@@ -16,9 +16,10 @@ export interface IDomainObjectProps {
  * validity should be used instead.
  * @see https://martinfowler.com/bliki/EvansClassification.html
  */
-export abstract class DomainObject<P extends IDomainObjectProps> {
-  public readonly domainObjectType: DomainObjectType =
-    DomainObjects.DomainObject
+export abstract class DomainObject<P extends IProps>
+  implements IDomainObject<P>
+{
+  public readonly domType: DomainObjectType = DomainObjects.DOMAIN_OBJECT
   protected static readonly validator = v
   public readonly validator = DomainObject.validator
 
@@ -57,7 +58,7 @@ export abstract class DomainObject<P extends IDomainObjectProps> {
    * @description Method to validate prop value.
    * @param props to validate
    */
-  public static isValidProps(props: IDomainObjectProps): boolean {
+  public static isValidProps(props: IProps): boolean {
     return !this.validator.void(props)
   }
 }

@@ -1,14 +1,14 @@
-import { DomainEventAs } from '../../domain'
 import {
   MockAggregateCreated,
   MockAggregateToggled,
-  type MockAggregateToggledType,
+  MockPropsUpdated,
 } from '../../domain/__mocks__/mock.events'
 import { IEventSubscriber } from '../../domain/event/event-subscriber.interface'
 
 type MockEventSubscriberEvent =
-  | DomainEventAs<typeof MockAggregateCreated>
-  | MockAggregateToggledType
+  | MockAggregateCreated
+  | MockAggregateToggled
+  | MockPropsUpdated
 
 export class MockEventSubscriber
   implements IEventSubscriber<MockEventSubscriberEvent>
@@ -19,6 +19,6 @@ export class MockEventSubscriber
   }
 
   get subscriptions() {
-    return [MockAggregateCreated, MockAggregateToggled]
+    return [MockAggregateCreated, MockAggregateToggled, MockPropsUpdated]
   }
 }

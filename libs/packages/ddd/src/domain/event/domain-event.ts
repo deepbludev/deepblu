@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { Constructor, IMessage, IPayload, Payload } from '../types'
+import { IMessage, IPayload } from '../types'
 import { UniqueID } from '../uid/unique-id.vo'
 import { EventID } from './event-id.vo'
 import { IDomainEvent, IEvent } from './event.interface'
@@ -70,10 +70,3 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
     return this.constructor.name
   }
 }
-
-/**
- * Utility type to cast an event constructor created with createDomainEvent() to a DomainEvent
- */
-export type DomainEventAs<E extends Constructor<IEvent>> = DomainEvent<
-  Payload<E>
->

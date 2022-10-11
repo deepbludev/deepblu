@@ -43,7 +43,7 @@ describe(ValueObject, () => {
   })
 
   it('should be a Value Object domain object type', () => {
-    expect(vo.domainObjectType).toEqual('ValueObject')
+    expect(vo.domType).toEqual('ValueObject')
   })
 
   it('should be able to compare value objects', () => {
