@@ -2,7 +2,7 @@ import { IAggregateRoot } from '../../aggregate-root/aggregate-root.abstract'
 import { Props } from '../../types'
 import { IUniqueID } from '../../uid/unique-id.vo'
 import { DomainEvent } from '../domain-event'
-import { EventID } from '../event-id.vo'
+import { DomainEventID } from '../domain-event-id.vo'
 import { domainEvent } from '../utils/domain-event.decorator'
 
 interface TestProps {
@@ -46,14 +46,14 @@ describe(DomainEvent, () => {
   })
 
   it('should be able to receive an id on creation', () => {
-    const id = EventID.create().value
+    const id = DomainEventID.create().value
     const event = new TestEvent(payload, aggregate.id.value, id)
     expect(event.id).toEqual(id)
   })
 
   it("should generate it's own id if none is provided", () => {
     const event = new TestEvent(payload, aggregate.id.value)
-    expect(EventID.validate(event.id)).toBeTruthy()
+    expect(DomainEventID.validate(event.id)).toBeTruthy()
   })
 
   it('should have a timestamp', () => {

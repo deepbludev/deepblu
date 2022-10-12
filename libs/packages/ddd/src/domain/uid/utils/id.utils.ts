@@ -1,5 +1,5 @@
 import * as uuidv4 from 'uuid'
-import v from './validator'
+import v from '../../../utils/validator'
 
 export const uuid = {
   create: uuidv4.v4,

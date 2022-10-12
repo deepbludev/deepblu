@@ -1,4 +1,4 @@
-import v from '../../utils/validator'
+import valid from '../../utils/validator'
 import { IResult } from './result.interface'
 
 /**
@@ -16,19 +16,19 @@ export class Result<V = void, E extends Error = Error>
 {
   protected constructor(
     public readonly isOk: boolean,
-    private readonly _payload: V | null,
+    private readonly _data: V | null,
     private readonly _error: E | null
   ) {}
 
-  public static ok<V, E extends Error = Error>(payload?: V): Result<V, E> {
-    return new Result(true, payload, null) as unknown as Result<V, E>
+  public static ok<V, E extends Error = Error>(data?: V): Result<V, E> {
+    return new Result(true, data, null) as unknown as Result<V, E>
   }
 
   public static fail<V, E extends Error>(
     errorOrMessage?: E | string
   ): Result<V, E> {
     const error: E =
-      v.string(errorOrMessage) || errorOrMessage === undefined
+      valid.string(errorOrMessage) || errorOrMessage === undefined
         ? (new Error(errorOrMessage as string) as E)
         : errorOrMessage
     return new Result(false, null, error) as unknown as Result<V, E>
@@ -55,7 +55,7 @@ export class Result<V = void, E extends Error = Error>
   }
 
   get data() {
-    return this._payload as V
+    return this._data as V
   }
 
   get error() {

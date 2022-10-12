@@ -1,4 +1,4 @@
-import { uuid } from '../../utils/id.utils'
+import { uuid } from './utils/id.utils'
 import { customUID } from './utils/custom-uid.decorator'
 import { IUniqueID, UniqueIDProps } from './unique-id.vo'
 

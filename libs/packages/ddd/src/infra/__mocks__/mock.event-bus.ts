@@ -1,4 +1,4 @@
-import { IDomainEvent } from '../../domain/event/event.interface'
+import { IDomainEvent } from '../../domain/event/domain-event.interface'
 import { IEventBus } from '../../domain/event/event-bus.interface'
 import { IEventSubscriber } from '../../domain'
 

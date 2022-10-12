@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IEntity, IEntityProps } from '../entity/entity.abstract'
-import { IDomainEvent } from '../event/event.interface'
+import { IDomainEvent } from '../event/domain-event.interface'
 import { DomainObjects, DomainObjectType } from '../types/domain-object.types'
 import { IUniqueID } from '../uid/unique-id.vo'
 

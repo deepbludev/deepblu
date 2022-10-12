@@ -1,4 +1,4 @@
-import { idUtils } from '../../utils/id.utils'
+import { idUtils } from './utils/id.utils'
 import { ValueObject, IValueObjectProps } from '../value-object/value-object'
 import { Result } from '../core/result'
 import { InvalidPropError } from '../core/errors'

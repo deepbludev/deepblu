@@ -10,9 +10,9 @@ export * from './entity/entity.abstract'
 export * from './entity/utils/unique.decorator'
 
 export * from './event/domain-event'
-export * from './event/event-id.vo'
+export * from './event/domain-event-id.vo'
 export * from './event/event-subscriber.interface'
-export * from './event/event.interface'
+export * from './event/domain-event.interface'
 export * from './event/event-bus.interface'
 export * from './event/utils/domain-event.decorator'
 
@@ -24,5 +24,6 @@ export * from './types'
 export * from './uid/unique-id.vo'
 export * from './uid/uuid.vo'
 export * from './uid/utils/custom-uid.decorator'
+export * from './uid/utils/id.utils'
 
 export * from './value-object/value-object'

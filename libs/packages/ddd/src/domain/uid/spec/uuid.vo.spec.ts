@@ -1,4 +1,4 @@
-import { uuid } from '../../../utils/id.utils'
+import { uuid } from '../utils/id.utils'
 import { UUID } from '../uuid.vo'
 
 describe(UUID, () => {

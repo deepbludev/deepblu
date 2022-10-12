@@ -1,4 +1,4 @@
-import { idUtils } from '../id.utils'
+import { idUtils } from './id.utils'
 
 describe('uid()', () => {
   it('should generate a default id', () => {

@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/ban-types */
 import { IMessage, IPayload } from '../types'
 import { IUniqueID } from '../uid/unique-id.vo'
-import { EventID } from './event-id.vo'
-import { IDomainEvent } from './event.interface'
+import { DomainEventID } from './domain-event-id.vo'
+import { IDomainEvent } from './domain-event.interface'
 
 export abstract class DomainEvent<P extends IPayload = IPayload>
   extends IMessage<P>
@@ -14,7 +12,7 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
   constructor(
     public override readonly payload: P,
     public readonly aggregateId: string,
-    public readonly id: string = EventID.create().value,
+    public readonly id: string = DomainEventID.create().value,
     public readonly timestamp: number = Date.now()
   ) {
     super(payload)
