@@ -10,7 +10,7 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
   static aggregate = 'Aggregate'
 
   constructor(
-    public override readonly payload: P,
+    payload: P,
     public readonly aggregateId: string,
     public readonly id: string = DomainEventID.create().value,
     public readonly timestamp: number = Date.now()
