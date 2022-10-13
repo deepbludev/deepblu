@@ -80,6 +80,14 @@ describe(DomainEvent, () => {
     expect(eventWithoutPayload.aggregateName).toEqual('TestAggregate')
   })
 
+  it('should have a canonical name using aggregate and event name in snake_case', () => {
+    expect(event.canonical).toEqual('test_aggregate.test_event')
+    expect(otherEvent.canonical).toEqual('test_aggregate.other_test_event')
+    expect(eventWithoutPayload.canonical).toEqual(
+      'test_aggregate.event_without_payload'
+    )
+  })
+
   it('should have an aggregate id', () => {
     expect(event.aggregateId).toEqual(aggregate.id.value)
     expect(otherEvent.aggregateId).toEqual(aggregate.id.value)

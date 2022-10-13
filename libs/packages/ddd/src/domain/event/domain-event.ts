@@ -1,3 +1,4 @@
+import { camelToSnake } from '../../utils'
 import { IMessage, IPayload } from '../types'
 import { IUniqueID } from '../uid/unique-id.vo'
 import { DomainEventID } from './domain-event-id.vo'
@@ -79,6 +80,8 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
   }
 
   get canonical(): string {
-    return `${this.aggregateName}.${this.name}`
+    const aggregate = camelToSnake(this.aggregateName)
+    const name = camelToSnake(this.name)
+    return `${aggregate}.${name}`
   }
 }
