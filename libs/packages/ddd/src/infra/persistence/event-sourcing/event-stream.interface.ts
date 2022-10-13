@@ -5,7 +5,7 @@ export abstract class IEventStream<E extends IDomainEvent = IDomainEvent> {
 
   abstract append(aggId: string, events: E[], version: number): Promise<void>
   abstract get(aggId: string): Promise<E[]>
-  abstract currentVersion(aggId: string): Promise<number>
+  abstract version(aggId: string): Promise<number>
 
   get aggregateName(): string {
     return (this.constructor as typeof IEventStream).aggregate

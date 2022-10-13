@@ -57,8 +57,8 @@ describe(IEventStream, () => {
   })
 
   it("should keep track of the aggregate's current version", async () => {
-    const fetchedVersion = await stream.currentVersion(aggId)
-    const otherFetchedVersion = await stream.currentVersion(otherAggId)
+    const fetchedVersion = await stream.version(aggId)
+    const otherFetchedVersion = await stream.version(otherAggId)
 
     expect(fetchedVersion).toEqual(version)
     expect(otherFetchedVersion).toEqual(otherVersion)

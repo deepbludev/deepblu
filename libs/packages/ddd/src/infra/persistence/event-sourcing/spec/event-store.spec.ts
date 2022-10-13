@@ -78,10 +78,10 @@ describe(EventStore, () => {
       fetched.toggle()
       expect(fetched?.version).toEqual(4)
       expect(fetched.changes.length).toEqual(2)
-      expect(await eventstore.currentVersion(aggregate.id)).toBe(4)
+      expect(await eventstore.version(aggregate.id)).toBe(4)
 
       await eventstore.save(fetched)
-      expect(await eventstore.currentVersion(aggregate.id)).toBe(6)
+      expect(await eventstore.version(aggregate.id)).toBe(6)
     }
 
     const refetched = await eventstore.get(aggregate.id)
@@ -94,7 +94,7 @@ describe(EventStore, () => {
       expect(async () => {
         await eventstore.save(snapshot)
       }).rejects.toThrowError(ConcurrencyError)
-      expect(await eventstore.currentVersion(aggregate.id)).toBe(6)
+      expect(await eventstore.version(aggregate.id)).toBe(6)
     }
   })
 })

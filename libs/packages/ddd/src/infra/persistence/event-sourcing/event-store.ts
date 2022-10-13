@@ -26,16 +26,12 @@ export abstract class EventStore<A extends IAggregateRoot> extends IRepo<A> {
   }
 
   protected async persist(aggregate: A): Promise<void> {
-    const current = await this.currentVersion(aggregate.id)
+    const current = await this.version(aggregate.id)
     if (current !== aggregate.version)
       throw new ConcurrencyError(aggregate, current)
 
-    const updatedVersion = aggregate.version + aggregate.changes.length
-    await this.stream.append(
-      aggregate.id.value,
-      aggregate.changes,
-      updatedVersion
-    )
+    const { id, version, changes } = aggregate
+    await this.stream.append(id.value, changes, version + changes.length)
   }
 
   async get(id: IUniqueID): Promise<A | null> {
@@ -56,7 +52,7 @@ export abstract class EventStore<A extends IAggregateRoot> extends IRepo<A> {
     return this.stream.name
   }
 
-  async currentVersion(aggrId: IUniqueID): Promise<number> {
-    return await this.stream.currentVersion(aggrId.value)
+  async version(aggrId: IUniqueID): Promise<number> {
+    return await this.stream.version(aggrId.value)
   }
 }
