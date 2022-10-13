@@ -24,6 +24,7 @@ export class EventStore<A extends IAggregateRoot> extends IRepo<A> {
     super(eventbus)
   }
 
+  // TODO: implement Concurrency Safety
   protected async persist(aggregate: A): Promise<void> {
     await this.stream.append(
       aggregate.id.value,
@@ -41,5 +42,17 @@ export class EventStore<A extends IAggregateRoot> extends IRepo<A> {
 
   get name(): string {
     return this.aggregateClass.name
+  }
+
+  get aggregateName(): string {
+    return this.aggregateClass.name
+  }
+
+  get streamName(): string {
+    return this.stream.name
+  }
+
+  async version(aggrId: string): Promise<number> {
+    return await this.stream.version(aggrId)
   }
 }

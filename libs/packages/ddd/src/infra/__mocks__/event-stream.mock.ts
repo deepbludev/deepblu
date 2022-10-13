@@ -13,6 +13,10 @@ export class EventStreamMock extends IEventStream {
     this.db.set(aggId, { events: prev.concat(events), version })
   }
 
+  async version(aggId: string): Promise<number> {
+    return this.db.get(aggId)?.version || 0
+  }
+
   async get(aggId: string): Promise<IDomainEvent[]> {
     return this.db.get(aggId)?.events.filter(e => e.aggregateId === aggId) || []
   }

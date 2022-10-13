@@ -1,4 +1,4 @@
-import { camelToSnake } from '../../utils'
+import { textUtils as text } from '../../utils'
 import { IMessage, IPayload } from '../types'
 import { IUniqueID } from '../uid/unique-id.vo'
 import { DomainEventID } from './domain-event-id.vo'
@@ -10,8 +10,8 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
 {
   static aggregate = 'Aggregate'
   static get canonical(): string {
-    const aggregate = camelToSnake(this.aggregate)
-    const name = camelToSnake(this.name)
+    const aggregate = text.camelToSnake(this.aggregate)
+    const name = text.camelToSnake(this.name)
     return `${aggregate}.${name}`
   }
 

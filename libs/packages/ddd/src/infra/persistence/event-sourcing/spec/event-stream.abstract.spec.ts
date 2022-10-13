@@ -14,7 +14,7 @@ describe(IEventStream, () => {
   let otherEvents: IDomainEvent[]
   let otherVersion: number
 
-  beforeEach(() => {
+  beforeEach(async () => {
     stream = new EventStreamMock()
     aggregate = AggregateStub.create({ foo: 'bar', is: true }).data
     aggregate.toggle()
@@ -31,6 +31,9 @@ describe(IEventStream, () => {
     otherAggId = otherAggregate.id.value
     otherEvents = [...otherAggregate.changes]
     otherVersion = otherAggregate.version
+
+    await stream.append(aggId, events, version)
+    await stream.append(otherAggId, otherEvents, otherVersion)
   })
 
   it('should be defined', () => {
@@ -46,12 +49,18 @@ describe(IEventStream, () => {
   })
 
   it('should be able to append events to multiple aggregates', async () => {
-    await stream.append(aggId, events, version)
-    await stream.append(otherAggId, otherEvents, otherVersion)
     const fetched = await stream.get(aggId)
     const otherFetched = await stream.get(otherAggId)
 
     expect(fetched).toEqual(events)
     expect(otherFetched).toEqual(otherEvents)
+  })
+
+  it("should keep track of the aggregate's current version", async () => {
+    const fetchedVersion = await stream.version(aggId)
+    const otherFetchedVersion = await stream.version(otherAggId)
+
+    expect(fetchedVersion).toEqual(version)
+    expect(otherFetchedVersion).toEqual(otherVersion)
   })
 })
