@@ -70,7 +70,7 @@ describe(EventStore, () => {
     expect(await eventstore.exists(UUID.create())).toBe(false)
   })
 
-  it('should throw an error when trying to save an aggregate with an invalid version', async () => {
+  it('should throw a ConcurrencyError when trying to save an aggregate with a version that differs from the current stream version', async () => {
     const fetched = await eventstore.get(aggregate.id)
 
     if (fetched) {
