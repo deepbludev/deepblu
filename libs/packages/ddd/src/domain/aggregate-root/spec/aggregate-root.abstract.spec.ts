@@ -3,7 +3,6 @@ import {
   PropsUpdatedStub,
   AggregateToggledStub,
 } from '../../__mocks__'
-import { IUniqueID } from '../../uid/unique-id.vo'
 import { IAggregateRoot } from '../aggregate-root.abstract'
 
 describe(IAggregateRoot, () => {
@@ -18,10 +17,8 @@ describe(IAggregateRoot, () => {
   })
 
   it('should have a hashcode based on its id, class name and domain object type', () => {
-    const expectedHashCode = IUniqueID.from(
-      `[AggregateRoot@AggregateStub]:${aggregate.id.value}`
-    ).data
-    expect(aggregate.hashcode.equals(expectedHashCode)).toBeTruthy()
+    const expectedHashCode = `AggregateRoot@AggregateStub|${aggregate.id.value}`
+    expect(aggregate.hashcode).toEqual(expectedHashCode)
   })
 
   it('should have a new uncommited event after a new event is applied', () => {

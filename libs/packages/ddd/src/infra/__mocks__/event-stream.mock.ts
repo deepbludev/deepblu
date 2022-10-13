@@ -13,8 +13,8 @@ export class EventStreamMock extends IEventStream {
     this.db.set(aggId, { events: prev.concat(events), version })
   }
 
-  async version(aggId: string): Promise<number> {
-    return this.db.get(aggId)?.version || 0
+  async currentVersion(aggId: string): Promise<number> {
+    return this.db.get(aggId)?.version ?? -1
   }
 
   async get(aggId: string): Promise<IDomainEvent[]> {

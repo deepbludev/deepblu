@@ -5,6 +5,7 @@ import {
   IRepo,
   IUniqueID,
 } from '../../../domain'
+import { ConcurrencyError } from './errors/event-sourcing.errors'
 import { IEventStream } from './event-stream.interface'
 
 export interface AggregateType<A extends IAggregateRoot> {
@@ -17,26 +18,29 @@ export interface AggregateType<A extends IAggregateRoot> {
  * It can be either extended or implemented as an interface.
  * It should be used to persist events in a stream
  */
-export class EventStore<A extends IAggregateRoot> extends IRepo<A> {
+export abstract class EventStore<A extends IAggregateRoot> extends IRepo<A> {
   protected aggregateClass: AggregateType<A> = IAggregateRoot
 
   constructor(protected readonly stream: IEventStream, eventbus: IEventBus) {
     super(eventbus)
   }
 
-  // TODO: implement Concurrency Safety
   protected async persist(aggregate: A): Promise<void> {
+    const current = await this.currentVersion(aggregate.id)
+    if (current !== aggregate.version)
+      throw new ConcurrencyError(aggregate, current)
+
+    const updatedVersion = aggregate.version + aggregate.changes.length
     await this.stream.append(
       aggregate.id.value,
       aggregate.changes,
-      aggregate.version
+      updatedVersion
     )
   }
 
   async get(id: IUniqueID): Promise<A | null> {
     const events = await this.stream.get(id.value)
     if (!events.length) return null
-
     return this.aggregateClass.rehydrate(id, events)
   }
 
@@ -52,7 +56,7 @@ export class EventStore<A extends IAggregateRoot> extends IRepo<A> {
     return this.stream.name
   }
 
-  async version(aggrId: string): Promise<number> {
-    return await this.stream.version(aggrId)
+  async currentVersion(aggrId: IUniqueID): Promise<number> {
+    return await this.stream.currentVersion(aggrId.value)
   }
 }

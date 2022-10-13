@@ -60,9 +60,8 @@ export abstract class IEntity<
     return Reflect.construct(constructor, [this.props, this.id])
   }
 
-  get hashcode(): IUniqueID {
+  get hashcode(): string {
     const constructor = Reflect.getPrototypeOf(this)?.constructor.name
-    return IUniqueID.from(`[${this.domType}@${constructor}]:${this.id.value}`)
-      .data
+    return `${this.domType}@${constructor}|${this.id.value}`
   }
 }

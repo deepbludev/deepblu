@@ -6,6 +6,7 @@ import {
   EventStreamMock,
 } from '../../../__mocks__'
 import { EventStore } from '../event-store'
+import { ConcurrencyError } from '../errors/event-sourcing.errors'
 
 describe(EventStore, () => {
   let eventstream: EventStreamMock
@@ -44,7 +45,7 @@ describe(EventStore, () => {
     expect(appendSpy).toHaveBeenCalledWith(
       aggregate.id.value,
       changes,
-      aggregate.version
+      4 //aggregate.version
     )
   })
 
@@ -67,5 +68,33 @@ describe(EventStore, () => {
   it('should be able to check if an aggregate exists', async () => {
     expect(await eventstore.exists(aggregate.id)).toBe(true)
     expect(await eventstore.exists(UUID.create())).toBe(false)
+  })
+
+  it('should throw an error when trying to save an aggregate with an invalid version', async () => {
+    const fetched = await eventstore.get(aggregate.id)
+
+    if (fetched) {
+      fetched.updateProps({ foo: 'qux' })
+      fetched.toggle()
+      expect(fetched?.version).toEqual(4)
+      expect(fetched.changes.length).toEqual(2)
+      expect(await eventstore.currentVersion(aggregate.id)).toBe(4)
+
+      await eventstore.save(fetched)
+      expect(await eventstore.currentVersion(aggregate.id)).toBe(6)
+    }
+
+    const refetched = await eventstore.get(aggregate.id)
+    if (refetched) {
+      expect(refetched.version).toEqual(6)
+      expect(refetched.props.foo).toEqual('qux')
+      expect(refetched.changes.length).toBe(0)
+
+      const snapshot: AggregateStub = refetched.snapshot(15)
+      expect(async () => {
+        await eventstore.save(snapshot)
+      }).rejects.toThrowError(ConcurrencyError)
+      expect(await eventstore.currentVersion(aggregate.id)).toBe(6)
+    }
   })
 })
