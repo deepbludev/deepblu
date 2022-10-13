@@ -3,35 +3,35 @@ import { Result } from '../core/result'
 import { Payload } from '../types'
 import { IUniqueID } from '../uid/unique-id.vo'
 import {
-  MockAggregateCreated,
-  MockPropsUpdated,
-  MockAggregateToggled,
-} from './mock.events'
+  AggregateCreatedStub,
+  PropsUpdatedStub,
+  AggregateToggledStub,
+} from './events.stub'
 
-export class MockAggregate extends IAggregateRoot<{
+export class AggregateStub extends IAggregateRoot<{
   foo: string
   bar?: number
   is?: boolean
 }> {
   /**
-   * Creates a new mock aggregate from initial props
+   * Creates a new aggregate stub from initial props
    * @factory
-   * @command CreateMockAggregate
-   * @event MockAggregateCreated
+   * @command CreateAggregateStub
+   * @event AggregateCreatedStub
    * @param aggregateId - the id of the aggregate
    * @param payload - the aggregate props on creation
    */
 
   static create(
-    payload: Payload<MockAggregateCreated>,
+    payload: Payload<AggregateCreatedStub>,
     id?: IUniqueID
-  ): Result<MockAggregate> {
-    const aggregate = new MockAggregate(payload, id)
-    aggregate.apply(MockAggregateCreated.with(payload, aggregate.id))
+  ): Result<AggregateStub> {
+    const aggregate = new AggregateStub(payload, id)
+    aggregate.apply(AggregateCreatedStub.with(payload, aggregate.id))
     return Result.ok(aggregate)
   }
 
-  protected onMockAggregateCreated(event: MockAggregateCreated): void {
+  protected onAggregateCreatedStub(event: AggregateCreatedStub): void {
     this.id = IUniqueID.from(event.aggregateId).data
     this.props.foo = event.payload.foo || ''
     this.props.is = !!event.payload.is
@@ -39,16 +39,16 @@ export class MockAggregate extends IAggregateRoot<{
 
   /**
    * Updates the mock aggregate props to the given values
-   * @command UpdateMockProps - update the aggregate props
-   * @event MockPropsUpdated
+   * @command UpdatePropsStub - update the aggregate props
+   * @event PropsUpdatedStub
    * @param payload - the props to update
    */
 
-  updateProps(payload: Payload<MockPropsUpdated>): void {
-    this.apply(MockPropsUpdated.with(payload, this.id))
+  updateProps(payload: Payload<PropsUpdatedStub>): void {
+    this.apply(PropsUpdatedStub.with(payload, this.id))
   }
 
-  protected onMockPropsUpdated(event: MockPropsUpdated): void {
+  protected onPropsUpdatedStub(event: PropsUpdatedStub): void {
     this.props.foo = event.payload.foo || this.props.foo
     this.props.is = Reflect.has(event.payload, 'is')
       ? !!event.payload.is
@@ -57,15 +57,15 @@ export class MockAggregate extends IAggregateRoot<{
 
   /**
    * Toggles the mock aggregate state
-   * @command ToggleMockAggregate
-   * @event MockAggregateToggled
+   * @command ToggleStub
+   * @event AggregateToggledStub
    */
 
   toggle(): void {
-    this.apply(MockAggregateToggled.with({}, this.id))
+    this.apply(AggregateToggledStub.with({}, this.id))
   }
 
-  protected onMockAggregateToggled(): void {
+  protected onAggregateToggledStub(): void {
     this.props.is = !this.props.is
   }
 

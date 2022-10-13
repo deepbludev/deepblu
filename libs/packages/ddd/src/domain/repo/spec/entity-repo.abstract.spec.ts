@@ -3,38 +3,38 @@ import { IUniqueID } from '../../uid/unique-id.vo'
 import { UUID } from '../../uid/uuid.vo'
 import { IEntityRepo } from '../entity-repo.abstract'
 
-class MockEntity extends Entity<{ foo: string }> {
+class EntityStub extends Entity<{ foo: string }> {
   constructor(props: { foo: string }, id?: UUID) {
     super(props, id)
   }
 }
 
-class MockEntityRepo extends IEntityRepo<MockEntity> {
-  readonly entities: Map<string, MockEntity> = new Map()
+class EntityRepoMock extends IEntityRepo<EntityStub> {
+  readonly entities: Map<string, EntityStub> = new Map()
 
-  protected async persist(entity: MockEntity): Promise<void> {
+  protected async persist(entity: EntityStub): Promise<void> {
     this.entities.set(entity.id.value, entity)
   }
 
-  async get(id: IUniqueID): Promise<MockEntity | null> {
+  async get(id: IUniqueID): Promise<EntityStub | null> {
     return this.entities.get(id.value) ?? null
   }
 }
 
 describe(IEntityRepo, () => {
-  let repo: MockEntityRepo
-  let entity: MockEntity
-  let otherEntity: MockEntity
+  let repo: EntityRepoMock
+  let entity: EntityStub
+  let otherEntity: EntityStub
 
   beforeEach(() => {
-    repo = new MockEntityRepo()
-    entity = new MockEntity({ foo: 'bar' })
-    otherEntity = new MockEntity({ foo: 'baz' })
+    repo = new EntityRepoMock()
+    entity = new EntityStub({ foo: 'bar' })
+    otherEntity = new EntityStub({ foo: 'baz' })
   })
 
   it('should be defined', () => {
     expect(IEntityRepo).toBeDefined()
-    expect(MockEntityRepo).toBeDefined()
+    expect(EntityRepoMock).toBeDefined()
   })
 
   it('should be able to save an entity', async () => {

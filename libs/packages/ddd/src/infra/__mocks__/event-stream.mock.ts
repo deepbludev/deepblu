@@ -1,10 +1,10 @@
 import { IDomainEvent } from '../../domain'
-import { MockAggregate } from '../../domain/__mocks__/mock.aggregate'
+import { AggregateStub } from '../../domain/__mocks__/aggregate.stub'
 import { IEventStream } from '../persistence/event-store/event-stream.interface'
 import { eventstream } from '../persistence/event-store/utils/event-stream.decorator'
 
-@eventstream(MockAggregate.name)
-export class MockEventStream extends IEventStream {
+@eventstream(AggregateStub.name)
+export class EventStreamMock extends IEventStream {
   readonly db: Map<string, { events: IDomainEvent[]; version: number }> =
     new Map()
 

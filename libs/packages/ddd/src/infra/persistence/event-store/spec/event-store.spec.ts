@@ -1,27 +1,27 @@
-import { MockAggregate } from '../../../../domain/__mocks__'
+import { AggregateStub } from '../../../../domain/__mocks__'
 import { IDomainEvent, UUID } from '../../../../domain'
 import {
-  MockEventBus,
-  MockEventStore,
-  MockEventStream,
+  EventBusMock,
+  EventStoreMock,
+  EventStreamMock,
 } from '../../../__mocks__'
 import { EventStore } from '../event-store'
 
 describe(EventStore, () => {
-  let eventstream: MockEventStream
-  let eventbus: MockEventBus
-  let eventstore: MockEventStore
-  let aggregate: MockAggregate
+  let eventstream: EventStreamMock
+  let eventbus: EventBusMock
+  let eventstore: EventStoreMock
+  let aggregate: AggregateStub
   let changes: IDomainEvent[]
 
   let appendSpy: jest.SpyInstance
   let publishSpy: jest.SpyInstance
 
   beforeAll(async () => {
-    eventstream = new MockEventStream()
-    eventbus = new MockEventBus()
-    eventstore = new MockEventStore(eventstream, eventbus)
-    aggregate = MockAggregate.create({ foo: 'bar', is: true }).data
+    eventstream = new EventStreamMock()
+    eventbus = new EventBusMock()
+    eventstore = new EventStoreMock(eventstream, eventbus)
+    aggregate = AggregateStub.create({ foo: 'bar', is: true }).data
     aggregate.toggle()
     aggregate.updateProps({ foo: 'baz' })
     aggregate.toggle()
@@ -36,7 +36,7 @@ describe(EventStore, () => {
   })
 
   it('should have a name', () => {
-    expect(eventstore.name).toEqual(MockAggregate.name)
+    expect(eventstore.name).toEqual(AggregateStub.name)
   })
 
   it('should delegate persistence to the event stream', () => {

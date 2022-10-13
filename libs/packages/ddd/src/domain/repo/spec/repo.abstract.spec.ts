@@ -1,23 +1,23 @@
-import { MockEventBus, MockAggregateRepo } from '../../../infra/__mocks__'
-import { MockAggregate } from '../../__mocks__'
+import { EventBusMock, AggregateRepoMock } from '../../../infra/__mocks__'
+import { AggregateStub } from '../../__mocks__'
 import { IRepo } from '../repo.abstract'
 
 describe(IRepo, () => {
-  let repo: MockAggregateRepo
-  let eventbus: MockEventBus
-  let aggregage: MockAggregate
-  let otherAggregate: MockAggregate
+  let repo: AggregateRepoMock
+  let eventbus: EventBusMock
+  let aggregage: AggregateStub
+  let otherAggregate: AggregateStub
 
   beforeEach(() => {
-    eventbus = new MockEventBus()
-    repo = new MockAggregateRepo(eventbus)
-    aggregage = MockAggregate.create({ foo: 'bar', is: true }).data
-    otherAggregate = MockAggregate.create({ foo: 'baz', is: false }).data
+    eventbus = new EventBusMock()
+    repo = new AggregateRepoMock(eventbus)
+    aggregage = AggregateStub.create({ foo: 'bar', is: true }).data
+    otherAggregate = AggregateStub.create({ foo: 'baz', is: false }).data
   })
 
   it('should be defined', () => {
     expect(IRepo).toBeDefined()
-    expect(MockAggregateRepo).toBeDefined()
+    expect(AggregateRepoMock).toBeDefined()
   })
 
   it('should be able to save an entity', async () => {

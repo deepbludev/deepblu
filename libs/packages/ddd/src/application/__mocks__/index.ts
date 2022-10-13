@@ -1,1 +1,1 @@
-export * from './mock.event-subscriber'
+export * from './event-subscriber.mock'

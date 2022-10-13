@@ -1,2 +1,2 @@
-export * from './mock.aggregate'
-export * from './mock.events'
+export * from './aggregate.stub'
+export * from './events.stub'

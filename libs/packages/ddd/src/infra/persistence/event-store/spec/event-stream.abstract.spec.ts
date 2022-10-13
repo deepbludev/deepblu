@@ -1,22 +1,22 @@
 import { IDomainEvent } from '../../../../domain'
-import { MockAggregate } from '../../../../domain/__mocks__/mock.aggregate'
-import { MockEventStream } from '../../../__mocks__/mock.event-stream'
+import { AggregateStub } from '../../../../domain/__mocks__/aggregate.stub'
+import { EventStreamMock } from '../../../__mocks__/event-stream.mock'
 import { IEventStream } from '../event-stream.interface'
 
 describe(IEventStream, () => {
-  let stream: MockEventStream
-  let aggregate: MockAggregate
+  let stream: EventStreamMock
+  let aggregate: AggregateStub
   let events: IDomainEvent[]
   let aggId: string
   let version: number
-  let otherAggregate: MockAggregate
+  let otherAggregate: AggregateStub
   let otherAggId: string
   let otherEvents: IDomainEvent[]
   let otherVersion: number
 
   beforeEach(() => {
-    stream = new MockEventStream()
-    aggregate = MockAggregate.create({ foo: 'bar', is: true }).data
+    stream = new EventStreamMock()
+    aggregate = AggregateStub.create({ foo: 'bar', is: true }).data
     aggregate.toggle()
     aggregate.updateProps({ foo: 'baz' })
 
@@ -24,7 +24,7 @@ describe(IEventStream, () => {
     events = [...aggregate.changes]
     version = aggregate.version
 
-    otherAggregate = MockAggregate.create({ foo: 'bar', is: true }).data
+    otherAggregate = AggregateStub.create({ foo: 'bar', is: true }).data
     otherAggregate.toggle()
     otherAggregate.toggle()
 
@@ -38,11 +38,11 @@ describe(IEventStream, () => {
   })
 
   it('should have a aggregate name', () => {
-    expect(stream.aggregateName).toEqual('MockAggregate')
+    expect(stream.aggregateName).toEqual('AggregateStub')
   })
 
   it('should have a stream name', () => {
-    expect(stream.name).toEqual('MockAggregate.eventstream')
+    expect(stream.name).toEqual('AggregateStub.eventstream')
   })
 
   it('should be able to append events to multiple aggregates', async () => {

@@ -1,16 +1,16 @@
 import {
-  MockAggregate,
-  MockPropsUpdated,
-  MockAggregateToggled,
+  AggregateStub,
+  PropsUpdatedStub,
+  AggregateToggledStub,
 } from '../../__mocks__'
 import { IUniqueID } from '../../uid/unique-id.vo'
 import { IAggregateRoot } from '../aggregate-root.abstract'
 
 describe(IAggregateRoot, () => {
-  let aggregate: MockAggregate
+  let aggregate: AggregateStub
 
   beforeEach(
-    () => (aggregate = MockAggregate.create({ foo: 'bar', is: true }).data)
+    () => (aggregate = AggregateStub.create({ foo: 'bar', is: true }).data)
   )
 
   it('should be a Aggregate domain object type', () => {
@@ -19,7 +19,7 @@ describe(IAggregateRoot, () => {
 
   it('should have a hashcode based on its id, class name and domain object type', () => {
     const expectedHashCode = IUniqueID.from(
-      `[AggregateRoot@MockAggregate]:${aggregate.id.value}`
+      `[AggregateRoot@AggregateStub]:${aggregate.id.value}`
     ).data
     expect(aggregate.hashcode.equals(expectedHashCode)).toBeTruthy()
   })
@@ -49,12 +49,12 @@ describe(IAggregateRoot, () => {
   })
 
   it('should be able to be rehydrated from a list of events', () => {
-    const original = MockAggregate.create({ foo: 'bar', is: true }).data
+    const original = AggregateStub.create({ foo: 'bar', is: true }).data
     original.updateProps({ foo: 'bar2', is: false })
     original.toggle()
 
     const changes = [...original.changes]
-    const rehydrated = MockAggregate.rehydrate<MockAggregate>(
+    const rehydrated = AggregateStub.rehydrate<AggregateStub>(
       original.id,
       changes
     )
@@ -68,7 +68,7 @@ describe(IAggregateRoot, () => {
   })
 
   it('should be able to take a snapshot', () => {
-    const original = MockAggregate.create({ foo: 'bar', is: true }).data
+    const original = AggregateStub.create({ foo: 'bar', is: true }).data
     original.updateProps({ foo: 'bar2', is: false })
     original.toggle()
 
@@ -81,19 +81,19 @@ describe(IAggregateRoot, () => {
   })
 
   it('should be able to be rehydrated from a list of events and a snapshot', () => {
-    const original = MockAggregate.create({ foo: 'bar', is: true }).data
+    const original = AggregateStub.create({ foo: 'bar', is: true }).data
     original.updateProps({ foo: 'bar2', is: false })
     original.toggle()
 
-    const snapshot: MockAggregate = original.snapshot(10)
+    const snapshot: AggregateStub = original.snapshot(10)
     const changes = [
-      new MockPropsUpdated({ foo: 'bar3' }, snapshot.id.value),
-      new MockPropsUpdated({ foo: 'bar4' }, snapshot.id.value),
-      new MockAggregateToggled({}, snapshot.id.value),
-      new MockAggregateToggled({}, snapshot.id.value),
+      new PropsUpdatedStub({ foo: 'bar3' }, snapshot.id.value),
+      new PropsUpdatedStub({ foo: 'bar4' }, snapshot.id.value),
+      new AggregateToggledStub({}, snapshot.id.value),
+      new AggregateToggledStub({}, snapshot.id.value),
     ]
 
-    const rehydrated = MockAggregate.rehydrate<MockAggregate>(
+    const rehydrated = AggregateStub.rehydrate<AggregateStub>(
       snapshot.id,
       changes,
       snapshot
@@ -106,10 +106,10 @@ describe(IAggregateRoot, () => {
   })
 
   it('should be able to be cloned', () => {
-    const original = MockAggregate.create({ foo: 'bar', is: true }).data
+    const original = AggregateStub.create({ foo: 'bar', is: true }).data
     original.updateProps({ foo: 'bar2', is: false })
     original.toggle()
-    const clone = original.clone<MockAggregate>()
+    const clone = original.clone<AggregateStub>()
 
     expect(clone.equals(original)).toBeTruthy()
     expect(clone.id.equals(original.id)).toBeTruthy()
