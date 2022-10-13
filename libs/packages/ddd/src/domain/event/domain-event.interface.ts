@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IMessage, IPayload } from '../types/message.types'
+import { IMessage, IPayload, Constructor } from '../types'
+import { IUniqueID } from '../uid/unique-id.vo'
 
 export interface IDomainEvent<P extends IPayload = IPayload>
   extends IMessage<P> {
@@ -9,4 +10,11 @@ export interface IDomainEvent<P extends IPayload = IPayload>
   aggregateName: string
   aggregateId: string
   timestamp: number // in milliseconds
+}
+
+export type DomainEventClass = Constructor & {
+  aggregate: string
+  with: (payload: any, id: IUniqueID) => any
+  from: (event: any) => any
+  canonical: string
 }

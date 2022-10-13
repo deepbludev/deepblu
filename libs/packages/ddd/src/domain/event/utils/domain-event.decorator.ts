@@ -1,15 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Constructor } from '../../types'
-import { IUniqueID } from '../../uid/unique-id.vo'
+import { DomainEventClass } from '../domain-event.interface'
 
 export function domainEvent(aggregateClass: string) {
-  return function (
-    target: Constructor & {
-      aggregate: string
-      with: (payload: any, id: IUniqueID) => any
-      from: (event: any) => any
-    }
-  ) {
+  return function (target: DomainEventClass) {
     target.aggregate = aggregateClass
     return target
   }

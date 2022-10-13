@@ -42,15 +42,15 @@ describe(InMemoryAsyncEventBus, () => {
   })
 
   it('should be able to register subscribers', () => {
-    expect(eventbus.listenerCount(AggregateCreatedStub.name)).toBe(1)
-    expect(eventbus.listenerCount(PropsUpdatedStub.name)).toBe(2)
-    expect(eventbus.listenerCount(AggregateToggledStub.name)).toBe(1)
+    expect(eventbus.listenerCount(AggregateCreatedStub.canonical)).toBe(1)
+    expect(eventbus.listenerCount(PropsUpdatedStub.canonical)).toBe(2)
+    expect(eventbus.listenerCount(AggregateToggledStub.canonical)).toBe(1)
   })
 
   it('should be able to publish events', () => {
     expect(emitSpy).toHaveBeenCalledTimes(3)
-    expect(emitSpy).toHaveBeenCalledWith(createEvent.name, createEvent)
-    expect(emitSpy).toHaveBeenCalledWith(updateEvent.name, updateEvent)
-    expect(emitSpy).toHaveBeenCalledWith(toggleEvent.name, toggleEvent)
+    expect(emitSpy).toHaveBeenCalledWith(createEvent.canonical, createEvent)
+    expect(emitSpy).toHaveBeenCalledWith(updateEvent.canonical, updateEvent)
+    expect(emitSpy).toHaveBeenCalledWith(toggleEvent.canonical, toggleEvent)
   })
 })

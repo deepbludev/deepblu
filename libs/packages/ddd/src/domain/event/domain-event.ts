@@ -79,9 +79,13 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
     return this.constructor.name
   }
 
-  get canonical(): string {
-    const aggregate = camelToSnake(this.aggregateName)
+  static get canonical(): string {
+    const aggregate = camelToSnake(this.aggregate)
     const name = camelToSnake(this.name)
     return `${aggregate}.${name}`
+  }
+
+  get canonical(): string {
+    return (this.constructor as typeof DomainEvent).canonical
   }
 }

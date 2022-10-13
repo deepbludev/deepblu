@@ -1,6 +1,6 @@
-import { Constructor, IDomainEvent } from '..'
+import { DomainEventClass, IDomainEvent } from '..'
 
 export interface IEventSubscriber<E extends IDomainEvent = IDomainEvent> {
-  subscriptions: Constructor<IDomainEvent>[]
+  subscriptions: DomainEventClass[]
   on(event: E): Promise<void>
 }
