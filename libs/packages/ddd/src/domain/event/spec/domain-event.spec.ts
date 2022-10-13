@@ -92,6 +92,7 @@ describe(DomainEvent, () => {
       id: event.id,
       timestamp: event.timestamp,
       name: event.name,
+      canonical: event.canonical,
       aggregateName: event.aggregateName,
       aggregateId: event.aggregateId,
       payload: event.payload,

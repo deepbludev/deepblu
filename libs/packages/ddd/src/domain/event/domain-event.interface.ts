@@ -5,6 +5,7 @@ export interface IDomainEvent<P extends IPayload = IPayload>
   extends IMessage<P> {
   id: string
   name: string
+  canonical: string
   aggregateName: string
   aggregateId: string
   timestamp: number // in milliseconds

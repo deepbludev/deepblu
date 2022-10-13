@@ -53,6 +53,7 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
     return {
       id: this.id,
       name: this.name,
+      canonical: this.canonical,
       timestamp: this.timestamp,
       aggregateId: this.aggregateId,
       aggregateName: this.aggregateName,
@@ -75,5 +76,9 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
 
   get name(): string {
     return this.constructor.name
+  }
+
+  get canonical(): string {
+    return `${this.aggregateName}.${this.name}`
   }
 }
