@@ -9,6 +9,11 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
   implements IDomainEvent<P>
 {
   static aggregate = 'Aggregate'
+  static get canonical(): string {
+    const aggregate = camelToSnake(this.aggregate)
+    const name = camelToSnake(this.name)
+    return `${aggregate}.${name}`
+  }
 
   constructor(
     payload: P,
@@ -77,12 +82,6 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
 
   get name(): string {
     return this.constructor.name
-  }
-
-  static get canonical(): string {
-    const aggregate = camelToSnake(this.aggregate)
-    const name = camelToSnake(this.name)
-    return `${aggregate}.${name}`
   }
 
   get canonical(): string {
