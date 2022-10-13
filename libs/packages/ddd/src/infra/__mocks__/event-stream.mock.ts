@@ -1,7 +1,7 @@
 import { IDomainEvent } from '../../domain'
 import { AggregateStub } from '../../domain/__mocks__/aggregate.stub'
-import { IEventStream } from '../persistence/event-store/event-stream.interface'
-import { eventstream } from '../persistence/event-store/utils/event-stream.decorator'
+import { IEventStream } from '../persistence/event-sourcing/event-stream.interface'
+import { eventstream } from '../persistence/event-sourcing/utils/event-stream.decorator'
 
 @eventstream(AggregateStub.name)
 export class EventStreamMock extends IEventStream {
