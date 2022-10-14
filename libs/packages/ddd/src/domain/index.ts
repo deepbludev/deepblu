@@ -17,7 +17,7 @@ export * from './event/event-bus.interface'
 export * from './event/utils/domain-event.decorator'
 
 export * from './repo/entity-repo.abstract'
-export * from './repo/repo.abstract'
+export * from './repo/event-publiser-repo.abstract'
 
 export * from './types'
 

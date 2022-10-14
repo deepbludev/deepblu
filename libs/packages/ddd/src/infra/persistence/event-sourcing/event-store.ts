@@ -2,7 +2,7 @@ import {
   IAggregateRoot,
   IDomainEvent,
   IEventBus,
-  IRepo,
+  IEventPublisherRepo,
   IUniqueID,
 } from '../../../domain'
 import { ConcurrencyError } from './errors/event-sourcing.errors'
@@ -18,7 +18,9 @@ export interface AggregateType<A extends IAggregateRoot> {
  * It can be either extended or implemented as an interface.
  * It should be used to persist events in a stream
  */
-export abstract class EventStore<A extends IAggregateRoot> extends IRepo<A> {
+export abstract class EventStore<
+  A extends IAggregateRoot
+> extends IEventPublisherRepo<A> {
   protected aggregateClass: AggregateType<A> = IAggregateRoot
 
   constructor(protected readonly stream: IEventStream, eventbus: IEventBus) {

@@ -8,7 +8,9 @@ import { IEntityRepo } from './entity-repo.abstract'
  * It should be used to persist aggregate roots, using entity repositories to persist entities, if needed.
  * @abstract
  */
-export abstract class IRepo<A extends IAggregateRoot> extends IEntityRepo<A> {
+export abstract class IEventPublisherRepo<
+  A extends IAggregateRoot
+> extends IEntityRepo<A> {
   constructor(protected readonly eventbus: IEventBus) {
     super()
   }
