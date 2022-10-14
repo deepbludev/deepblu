@@ -29,7 +29,6 @@ export abstract class EventStore<A extends IAggregateRoot> extends IRepo<A> {
     const current = await this.version(aggregate.id)
     if (current !== aggregate.version)
       throw new ConcurrencyError(aggregate, current)
-
     const { id, version, changes } = aggregate
     await this.stream.append(id.value, changes, version + changes.length)
   }
