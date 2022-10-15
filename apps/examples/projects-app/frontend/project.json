@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@nrwl/next:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "defaultConfiguration": "production",
       "options": {
         "root": "apps/examples/projects-app/frontend",
@@ -23,7 +25,8 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "examples-projects-app-frontend:build",
-        "dev": true
+        "dev": true,
+        "proxyConfig": "apps/examples/projects-app/frontend/proxy.conf.dev.json"
       },
       "configurations": {
         "development": {
@@ -32,7 +35,8 @@
         },
         "production": {
           "buildTarget": "examples-projects-app-frontend:build:production",
-          "dev": false
+          "dev": false,
+          "proxyConfig": "apps/examples/projects-app/frontend/proxy.conf.json"
         }
       }
     },
@@ -44,7 +48,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/examples/projects-app/frontend"],
+      "outputs": [
+        "coverage/apps/examples/projects-app/frontend"
+      ],
       "options": {
         "jestConfig": "apps/examples/projects-app/frontend/jest.config.ts",
         "passWithNoTests": true
@@ -52,7 +58,9 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
         "lintFilePatterns": [
           "apps/examples/projects-app/frontend/**/*.{ts,tsx,js,jsx}"
