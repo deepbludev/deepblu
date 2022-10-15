@@ -9,9 +9,8 @@
     ]
   },
   "include": [
-    "jest.config.ts",
-    "**/*.test.ts",
-    "**/*.spec.ts",
-    "**/*.d.ts",
+    "e2e/jest.e2e.config.tss",
+    "**/*.e2e.ts",
+    "**/*.d.ts"
   ]
 }

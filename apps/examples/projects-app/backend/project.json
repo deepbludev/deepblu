@@ -5,14 +5,18 @@
   "targets": {
     "build": {
       "executor": "@nrwl/webpack:webpack",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "target": "node",
         "compiler": "tsc",
         "outputPath": "dist/apps/examples/projects-app/backend",
         "main": "apps/examples/projects-app/backend/src/main.ts",
         "tsConfig": "apps/examples/projects-app/backend/tsconfig.app.json",
-        "assets": ["apps/examples/projects-app/backend/src/assets"]
+        "assets": [
+          "apps/examples/projects-app/backend/src/assets"
+        ]
       },
       "configurations": {
         "production": {
@@ -41,16 +45,29 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/examples/projects-app/backend/**/*.ts"]
+        "lintFilePatterns": [
+          "apps/examples/projects-app/backend/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/examples/projects-app/backend/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "e2e": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "apps/examples/projects-app/backend/e2e/jest.e2e.config.ts",
         "passWithNoTests": true
       }
     }
