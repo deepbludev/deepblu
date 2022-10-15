@@ -39,6 +39,7 @@
     "@nrwl/express": "^14.8.3",
     "@nrwl/jest": "14.7.5",
     "@nrwl/linter": "14.7.5",
+    "@nrwl/nest": "^15.0.0",
     "@nrwl/react": "14.7.5",
     "@nrwl/web": "14.7.5",
     "@nrwl/workspace": "14.7.5",
