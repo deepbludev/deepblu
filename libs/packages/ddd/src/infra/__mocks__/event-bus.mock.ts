@@ -1,6 +1,6 @@
 import { IDomainEvent } from '../../domain/event/domain-event.interface'
 import { IEventBus } from '../../domain/event/event-bus.interface'
-import { IEventSubscriber } from '../../domain'
+import { IEventSubscriber } from '../../application'
 
 export class EventBusMock implements IEventBus {
   private _registerMock: jest.Mock = jest.fn()

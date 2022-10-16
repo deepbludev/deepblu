@@ -3,7 +3,7 @@ import {
   AggregateToggledStub,
   PropsUpdatedStub,
 } from '../../domain/__mocks__/events.stub'
-import { IEventSubscriber } from '../../domain/event/event-subscriber.interface'
+import { IEventSubscriber } from '../event/event-subscriber.interface'
 import { IDomainEvent } from '../../domain'
 
 export class EventSubscriberMock

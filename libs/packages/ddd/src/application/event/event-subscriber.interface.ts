@@ -1,4 +1,4 @@
-import { DomainEventClass, IDomainEvent } from '..'
+import { DomainEventClass, IDomainEvent } from '../../domain'
 
 export interface IEventSubscriber<E extends IDomainEvent = IDomainEvent> {
   subscriptions: DomainEventClass[]

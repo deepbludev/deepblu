@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events'
-import { IDomainEvent, IEventBus, IEventSubscriber } from '../../../domain'
+import { IDomainEvent, IEventBus } from '../../../domain'
+import { IEventSubscriber } from '../../../application'
 
 export class InMemoryAsyncEventBus extends EventEmitter implements IEventBus {
   register(subscribers: IEventSubscriber[]): void {

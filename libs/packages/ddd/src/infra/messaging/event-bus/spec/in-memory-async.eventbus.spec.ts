@@ -7,7 +7,8 @@ import {
   AggregateToggledStub,
   PropsUpdatedStub,
 } from '../../../../domain/__mocks__'
-import { IEventSubscriber, IUniqueID } from '../../../../domain'
+import { IUniqueID } from '../../../../domain'
+import { IEventSubscriber } from '../../../../application'
 import { InMemoryAsyncEventBus } from '../in-memory-async.eventbus'
 
 describe(InMemoryAsyncEventBus, () => {

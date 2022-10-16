@@ -1,5 +1,5 @@
 import { textUtils as text } from '../../utils'
-import { IMessage, IPayload } from '../types'
+import { IMessage, IPayload, Payload } from '../types'
 import { IUniqueID } from '../uid/unique-id.vo'
 import { DomainEventID } from './domain-event-id.vo'
 import { IDomainEvent } from './domain-event.interface'
@@ -28,11 +28,11 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
    * Creates a new DomainEvent from payload and aggregateId
    * @factory
    */
-  static with<P extends IPayload = IPayload>(
-    payload: P,
-    id: IUniqueID
-  ): DomainEvent<P> {
-    return Reflect.construct(this, [payload, id.value])
+  static override with<E extends IMessage = DomainEvent>(
+    payload: Payload<E>,
+    ...[id]: IUniqueID[]
+  ): E {
+    return super.with<E>(payload, id.value)
   }
 
   /**
