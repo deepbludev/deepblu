@@ -1,9 +1,14 @@
 import { Constructor, IMessage, IPayload, Payload } from '../../domain'
 
-export abstract class Command<P extends IPayload = IPayload>
-  implements ICommand<P>
+export abstract class ICommand<P extends IPayload = IPayload>
+  implements IMessage<P>
 {
   constructor(public readonly payload: P) {}
+}
+
+export abstract class Command<
+  P extends IPayload = IPayload
+> extends ICommand<P> {
   /**
    * Creates a new DomainEvent from payload and aggregateId
    * @factory
@@ -12,9 +17,6 @@ export abstract class Command<P extends IPayload = IPayload>
     return Reflect.construct(this, [payload])
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ICommand<P extends IPayload = IPayload> extends IMessage<P> {}
 
 export interface ICommandFactory<P extends IPayload = IPayload> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

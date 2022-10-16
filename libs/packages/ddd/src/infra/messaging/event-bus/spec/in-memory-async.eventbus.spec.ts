@@ -8,7 +8,7 @@ import {
   EventSubscriberMock,
   OtherEventSubscriberMock,
 } from '../../../../application/__mocks__'
-import { InMemoryAsyncEventBus } from '../in-memory-async.eventbus'
+import { InMemoryAsyncEventBus } from '../in-memory-async.event-bus'
 
 describe(InMemoryAsyncEventBus, () => {
   it('should be defined', () => {

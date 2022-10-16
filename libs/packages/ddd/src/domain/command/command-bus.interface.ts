@@ -1,5 +1,6 @@
+import { Result } from '../core/result'
 import { ICommand } from './command.abstract'
 
 export interface ICommandBus {
-  send(command: ICommand): Promise<void>
+  dispatch<E extends Error>(command: ICommand): Promise<Result<void, E>>
 }

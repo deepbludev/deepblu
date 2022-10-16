@@ -5,8 +5,8 @@ export * from './core/errors'
 export * from './core/result'
 export * from './core/result.interface'
 
-export * from './command/command-bus.interface'
 export * from './command/command.abstract'
+export * from './command/command-bus.interface'
 export * from './command/command-handler.interface'
 
 export * from './entity/entity'
