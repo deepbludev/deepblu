@@ -1,12 +1,12 @@
-import { AggregateStub } from '../../../../domain/__mocks__'
 import { IDomainEvent, UUID } from '../../../../domain'
+import { AggregateStub } from '../../../../domain/__mocks__'
 import {
   EventBusMock,
   EventStoreMock,
   EventStreamMock,
 } from '../../../__mocks__'
-import { EventStore } from '../event-store'
 import { ConcurrencyError } from '../errors/event-sourcing.errors'
+import { EventStore } from '../event-store'
 
 describe(EventStore, () => {
   let eventstream: EventStreamMock

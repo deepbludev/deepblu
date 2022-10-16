@@ -1,6 +1,5 @@
-import { IEventPublisherRepo } from '../../domain/repo/event-publiser-repo.abstract'
-import { IUniqueID } from '../../domain/uid/unique-id.vo'
-import { AggregateStub } from '../../domain/__mocks__/aggregate.stub'
+import { IEventPublisherRepo, IUniqueID } from '../../domain'
+import { AggregateStub } from '../../domain/__mocks__'
 
 export class AggregateRepoMock extends IEventPublisherRepo<AggregateStub> {
   readonly aggregates: Map<string, AggregateStub> = new Map()
