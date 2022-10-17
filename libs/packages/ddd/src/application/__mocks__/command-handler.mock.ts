@@ -21,6 +21,7 @@ export class CreateAggregateHandlerMock extends ICommandHandler<CreateAggregateS
     return Result.ok()
   }
 }
+
 export class UpdatePropsHandlerMock extends ICommandHandler<UpdatePropsStub> {
   static override readonly subscription = UpdatePropsStub
   _handle: jest.Mock = jest.fn()
