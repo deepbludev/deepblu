@@ -1,4 +1,5 @@
 import { ICommand } from '../command/command.abstract'
+import { IQuery } from '../query/query.abstract'
 
 /**
  * @class InvalidPropError
@@ -35,5 +36,16 @@ export class CommandNotRegisteredError extends Error {
 
   static with(command: ICommand) {
     return new CommandNotRegisteredError(command)
+  }
+}
+
+export class QueryNotRegisteredError extends Error {
+  constructor(public readonly query: IQuery) {
+    super(`Query ${query.constructor.name} not registered`)
+    this.name = QueryNotRegisteredError.name
+  }
+
+  static with(query: IQuery) {
+    return new QueryNotRegisteredError(query)
   }
 }

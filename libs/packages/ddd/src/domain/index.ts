@@ -10,6 +10,11 @@ export * from './command/command-bus.interface'
 export * from './command/command-handler.interface'
 export * from './command/utils/command-handler.decorator'
 
+export * from './query/query.abstract'
+export * from './query/query-bus.interface'
+export * from './query/query-handler.interface'
+export * from './query/utils/query-handler.decorator'
+
 export * from './entity/entity'
 export * from './entity/entity.abstract'
 export * from './entity/utils/unique.decorator'

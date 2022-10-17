@@ -6,7 +6,7 @@ import {
 import {
   commandHandler,
   ICommandHandler,
-  ICommandHandlerResponse,
+  CommandResponse,
   Result,
 } from '../../domain'
 
@@ -16,7 +16,7 @@ export class CreateAggregateHandlerMock extends ICommandHandler<CreateAggregateS
 
   async handle<E extends Error>(
     command: CreateAggregateStub
-  ): ICommandHandlerResponse<E> {
+  ): CommandResponse<E> {
     this._handle(command)
     return Result.ok()
   }
@@ -26,9 +26,7 @@ export class UpdatePropsHandlerMock extends ICommandHandler<UpdatePropsStub> {
   static override readonly subscription = UpdatePropsStub
   _handle: jest.Mock = jest.fn()
 
-  async handle<E extends Error>(
-    command: UpdatePropsStub
-  ): ICommandHandlerResponse<E> {
+  async handle<E extends Error>(command: UpdatePropsStub): CommandResponse<E> {
     this._handle(command)
     return Result.ok()
   }

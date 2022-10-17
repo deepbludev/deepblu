@@ -2,7 +2,7 @@ import {
   CreateAggregateHandlerMock,
   ToggleAggregateHandlerMock,
   UpdatePropsHandlerMock,
-} from '../../../application/__mocks__/command-handler.mock'
+} from '../../../application/__mocks__'
 import { IUniqueID, Result } from '../../../domain'
 import {
   CreateAggregateStub,
