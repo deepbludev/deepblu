@@ -1,4 +1,7 @@
+import { ICommandHandler } from '../command/command-handler.abstract'
 import { ICommand } from '../command/command.abstract'
+import { IEventSubscriber } from '../event/event-subscriber.interface'
+import { IQueryHandler } from '../query/query-handler.interface'
 import { IQuery } from '../query/query.abstract'
 
 /**
@@ -47,5 +50,40 @@ export class QueryNotRegisteredError extends Error {
 
   static with(query: IQuery) {
     return new QueryNotRegisteredError(query)
+  }
+}
+
+export class EmptyEventSubscriberError extends Error {
+  constructor(subscriber: IEventSubscriber) {
+    super(
+      `${subscriber.constructor.name} must be subscribed to at least one event`
+    )
+    this.name = EmptyEventSubscriberError.name
+  }
+
+  static with(subscriber: IEventSubscriber) {
+    return new this(subscriber)
+  }
+}
+
+export class EmptyCommandHandlerError extends Error {
+  constructor(handler: ICommandHandler) {
+    super(`${handler.constructor.name} is not subscribed to any command`)
+    this.name = EmptyCommandHandlerError.name
+  }
+
+  static with(handler: ICommandHandler) {
+    return new this(handler)
+  }
+}
+
+export class EmptyQueryHandlerError extends Error {
+  constructor(handler: IQueryHandler) {
+    super(`${handler.constructor.name} is not subscribed to any query`)
+    this.name = EmptyQueryHandlerError.name
+  }
+
+  static with(handler: IQueryHandler) {
+    return new this(handler)
   }
 }

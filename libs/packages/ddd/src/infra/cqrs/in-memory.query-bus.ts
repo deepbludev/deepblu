@@ -1,4 +1,5 @@
 import {
+  EmptyQueryHandlerError,
   IQuery,
   IQueryBus,
   QueryNotRegisteredError,
@@ -10,8 +11,9 @@ export class InMemoryQueryBus implements IQueryBus {
   private readonly handlers: Map<string, IQueryHandler> = new Map()
 
   register(handlers: IQueryHandler[]) {
-    handlers.forEach(handler => {
-      this.handlers.set(handler.subscription.name, handler)
+    handlers.forEach(h => {
+      if (!h.subscription) throw EmptyQueryHandlerError.with(h)
+      this.handlers.set(h.subscription.name, h)
     })
   }
 

@@ -2,10 +2,11 @@
 import {
   aggregates,
   AllAggregatesHandlerMock,
+  EmptyQueryHandlerMock,
   FilteredAggregatesHandlerMock,
   ToggledAggregatesHandlerMock,
 } from '../../../application/__mocks__'
-import { Result } from '../../../domain'
+import { EmptyQueryHandlerError, Result } from '../../../domain'
 import {
   AllAggregatesStub,
   FilteredAggregatesStub,
@@ -27,6 +28,7 @@ describe(InMemoryQueryBus, () => {
   let allHandler: AllAggregatesHandlerMock
   let filteredHandler: FilteredAggregatesHandlerMock
   let toggledHandler: ToggledAggregatesHandlerMock
+  let emptyQueryHandler: EmptyQueryHandlerMock
 
   let allHandlerSpy: jest.SpyInstance
   let filteredHandlerSpy: jest.SpyInstance
@@ -46,6 +48,8 @@ describe(InMemoryQueryBus, () => {
 
     toggledHandler = new ToggledAggregatesHandlerMock()
     toggledHandlerSpy = jest.spyOn(toggledHandler, 'handle')
+
+    emptyQueryHandler = new EmptyQueryHandlerMock()
 
     querybus.register([allHandler, filteredHandler])
   })
@@ -67,5 +71,11 @@ describe(InMemoryQueryBus, () => {
 
   it('should throw error when command is not registered', () => {
     expect(querybus.get(toggledQuery)).rejects.toThrow()
+  })
+
+  it('should throw error when registering query handler not subscribed to any query', () => {
+    expect(() => querybus.register([emptyQueryHandler])).toThrowError(
+      EmptyQueryHandlerError.with(emptyQueryHandler)
+    )
   })
 })

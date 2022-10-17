@@ -1,9 +1,10 @@
 import {
   CreateAggregateHandlerMock,
+  EmptyCommandHandlerMock,
   ToggleAggregateHandlerMock,
   UpdatePropsHandlerMock,
 } from '../../../application/__mocks__'
-import { IUniqueID, Result } from '../../../domain'
+import { EmptyCommandHandlerError, IUniqueID, Result } from '../../../domain'
 import {
   CreateAggregateStub,
   ToggleAggregateStub,
@@ -25,6 +26,7 @@ describe(InMemoryCommandBus, () => {
   let createHandler: CreateAggregateHandlerMock
   let updatePropsHandler: UpdatePropsHandlerMock
   let toggleAggregateHandler: ToggleAggregateHandlerMock
+  let emptyCommandHandler: EmptyCommandHandlerMock
 
   let createHandlerSpy: jest.SpyInstance
   let updatePropsHandlerSpy: jest.SpyInstance
@@ -57,6 +59,8 @@ describe(InMemoryCommandBus, () => {
     toggleAggregateHandler = new ToggleAggregateHandlerMock()
     toggleAggregateHandlerSpy = jest.spyOn(toggleAggregateHandler, 'handle')
 
+    emptyCommandHandler = new EmptyCommandHandlerMock()
+
     commandbus.register([createHandler, updatePropsHandler])
   })
 
@@ -77,5 +81,11 @@ describe(InMemoryCommandBus, () => {
 
   it('should throw error when command is not registered', () => {
     expect(commandbus.dispatch(toggleCommand)).rejects.toThrow()
+  })
+
+  it('should throw error when registering command handler not subscribed to any command', () => {
+    expect(() => commandbus.register([emptyCommandHandler])).toThrowError(
+      EmptyCommandHandlerError.with(emptyCommandHandler)
+    )
   })
 })

@@ -7,7 +7,7 @@ export * from './core/result.interface'
 
 export * from './command/command.abstract'
 export * from './command/command-bus.interface'
-export * from './command/command-handler.interface'
+export * from './command/command-handler.abstract'
 export * from './command/utils/command-handler.decorator'
 
 export * from './query/query.abstract'
@@ -25,6 +25,7 @@ export * from './event/domain-event.interface'
 export * from './event/event-bus.interface'
 export * from './event/event-subscriber.interface'
 export * from './event/utils/domain-event.decorator'
+export * from './event/utils/event-subscriber.decorator'
 
 export * from './repo/entity-repo.abstract'
 export * from './repo/event-publiser-repo.abstract'
