@@ -3,47 +3,43 @@ import {
   ToggleAggregateStub,
   UpdatePropsStub,
 } from '../../domain/__mocks__'
-import { ICommandHandler, InvalidPropError, Result } from '../../domain'
+import {
+  commandHandler,
+  ICommandHandler,
+  ICommandHandlerResponse,
+  Result,
+} from '../../domain'
 
-export class CreateAggregateHandlerMock
-  implements ICommandHandler<CreateAggregateStub>
-{
-  get subscription() {
-    return CreateAggregateStub
-  }
+@commandHandler(CreateAggregateStub)
+export class CreateAggregateHandlerMock extends ICommandHandler<CreateAggregateStub> {
+  _handle: jest.Mock = jest.fn()
 
-  private _handle: jest.Mock = jest.fn()
-  async handle<E extends Error = InvalidPropError>(
+  async handle<E extends Error>(
     command: CreateAggregateStub
-  ): Promise<Result<void, E>> {
+  ): ICommandHandlerResponse<E> {
     this._handle(command)
     return Result.ok()
   }
 }
-export class UpdatePropsHandlerMock
-  implements ICommandHandler<UpdatePropsStub>
-{
-  get subscription() {
-    return UpdatePropsStub
-  }
+export class UpdatePropsHandlerMock extends ICommandHandler<UpdatePropsStub> {
+  static override readonly subscription = UpdatePropsStub
+  _handle: jest.Mock = jest.fn()
 
-  private _handle: jest.Mock = jest.fn()
   async handle<E extends Error>(
     command: UpdatePropsStub
-  ): Promise<Result<void, E>> {
+  ): ICommandHandlerResponse<E> {
     this._handle(command)
     return Result.ok()
   }
 }
 
-export class ToggleAggregateHandlerMock
-  implements ICommandHandler<ToggleAggregateStub>
-{
-  get subscription() {
+export class ToggleAggregateHandlerMock extends ICommandHandler<ToggleAggregateStub> {
+  _handle: jest.Mock = jest.fn()
+
+  override get subscription() {
     return ToggleAggregateStub
   }
 
-  private _handle: jest.Mock = jest.fn()
   async handle<E extends Error>(
     command: ToggleAggregateStub
   ): Promise<Result<void, E>> {

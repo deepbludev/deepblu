@@ -8,6 +8,7 @@ export * from './core/result.interface'
 export * from './command/command.abstract'
 export * from './command/command-bus.interface'
 export * from './command/command-handler.interface'
+export * from './command/utils/command-handler.decorator'
 
 export * from './entity/entity'
 export * from './entity/entity.abstract'

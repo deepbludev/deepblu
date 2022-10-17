@@ -2,7 +2,18 @@ import { Result } from '../core/result'
 import { Constructor } from '../types'
 import { ICommand } from './command.abstract'
 
-export interface ICommandHandler<C extends ICommand = ICommand> {
-  subscription: Constructor<ICommand>
-  handle<E extends Error = Error>(command: C): Promise<Result<void, E>>
+export type ICommandHandlerResponse<E extends Error = Error> = Promise<
+  Result<void, E>
+>
+
+export abstract class ICommandHandler<C extends ICommand = ICommand> {
+  static readonly subscription: Constructor<ICommand>
+
+  get subscription(): Constructor<ICommand> {
+    return (this.constructor as typeof ICommandHandler).subscription
+  }
+
+  abstract handle<E extends Error = Error>(
+    command: C
+  ): ICommandHandlerResponse<E>
 }
