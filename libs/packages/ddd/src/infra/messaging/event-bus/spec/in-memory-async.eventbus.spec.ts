@@ -1,14 +1,14 @@
-import {
-  EventSubscriberMock,
-  OtherEventSubscriberMock,
-} from '../../../../application/__mocks__'
+import { IUniqueID, IEventSubscriber } from '../../../../domain'
 import {
   AggregateCreatedStub,
   AggregateToggledStub,
   PropsUpdatedStub,
 } from '../../../../domain/__mocks__'
-import { IEventSubscriber, IUniqueID } from '../../../../domain'
-import { InMemoryAsyncEventBus } from '../in-memory-async.eventbus'
+import {
+  EventSubscriberMock,
+  OtherEventSubscriberMock,
+} from '../../../../application/__mocks__'
+import { InMemoryAsyncEventBus } from '../in-memory-async.event-bus'
 
 describe(InMemoryAsyncEventBus, () => {
   it('should be defined', () => {

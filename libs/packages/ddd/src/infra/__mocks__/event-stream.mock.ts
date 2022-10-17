@@ -1,5 +1,5 @@
 import { IDomainEvent } from '../../domain'
-import { AggregateStub } from '../../domain/__mocks__/aggregate.stub'
+import { AggregateStub } from '../../domain/__mocks__'
 import { IEventStream } from '../persistence/event-sourcing/event-stream.interface'
 import { eventstream } from '../persistence/event-sourcing/utils/event-stream.decorator'
 

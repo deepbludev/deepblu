@@ -1,7 +1,7 @@
 import { IAggregateRoot } from '../../aggregate-root/aggregate-root.abstract'
 import { Props } from '../../types'
 import { IUniqueID } from '../../uid/unique-id.vo'
-import { DomainEvent } from '../domain-event'
+import { DomainEvent } from '../domain-event.abstract'
 import { DomainEventID } from '../domain-event-id.vo'
 import { domainEvent } from '../utils/domain-event.decorator'
 
@@ -38,7 +38,7 @@ describe(DomainEvent, () => {
   const payload = { foo: 'bar', is: true }
   const aggregate = new TestAggregate(payload)
   const event = new TestEvent(payload, aggregate.id.value)
-  const otherEvent = OtherTestEvent.with(payload, aggregate.id)
+  const otherEvent: OtherTestEvent = OtherTestEvent.with(payload, aggregate.id)
   const eventWithoutPayload = EventWithoutPayload.with({}, aggregate.id)
 
   it('should have an id', () => {

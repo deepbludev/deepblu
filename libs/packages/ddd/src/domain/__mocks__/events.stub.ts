@@ -1,4 +1,4 @@
-import { DomainEvent } from '../event/domain-event'
+import { DomainEvent } from '../event/domain-event.abstract'
 import { domainEvent } from '../event/utils/domain-event.decorator'
 import { Payload, Props } from '../types'
 import { AggregateStub } from './aggregate.stub'

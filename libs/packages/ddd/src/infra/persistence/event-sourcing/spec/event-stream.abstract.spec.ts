@@ -1,6 +1,6 @@
 import { IDomainEvent } from '../../../../domain'
-import { AggregateStub } from '../../../../domain/__mocks__/aggregate.stub'
-import { EventStreamMock } from '../../../__mocks__/event-stream.mock'
+import { AggregateStub } from '../../../../domain/__mocks__'
+import { EventStreamMock } from '../../../__mocks__'
 import { IEventStream } from '../event-stream.interface'
 
 describe(IEventStream, () => {
