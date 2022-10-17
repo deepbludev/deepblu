@@ -1,10 +1,15 @@
-import { IUniqueID, IEventSubscriber } from '../../../../domain'
+import {
+  IUniqueID,
+  IEventSubscriber,
+  EmptyEventSubscriberError,
+} from '../../../../domain'
 import {
   AggregateCreatedStub,
   AggregateToggledStub,
   PropsUpdatedStub,
 } from '../../../../domain/__mocks__'
 import {
+  EmptyEventSubscriberMock,
   EventSubscriberMock,
   OtherEventSubscriberMock,
 } from '../../../../application/__mocks__'
@@ -15,9 +20,11 @@ describe(InMemoryAsyncEventBus, () => {
     expect(InMemoryAsyncEventBus).toBeDefined()
   })
 
+  let eventbus: InMemoryAsyncEventBus
   let subscriber: IEventSubscriber
   let otherSubscriber: IEventSubscriber
-  let eventbus: InMemoryAsyncEventBus
+  let emptySubscriber: IEventSubscriber
+
   let aggrId: IUniqueID
   let createEvent: AggregateCreatedStub
   let updateEvent: PropsUpdatedStub
@@ -26,9 +33,10 @@ describe(InMemoryAsyncEventBus, () => {
   let emitSpy: jest.SpyInstance
 
   beforeAll(async () => {
+    eventbus = new InMemoryAsyncEventBus()
     subscriber = new EventSubscriberMock()
     otherSubscriber = new OtherEventSubscriberMock()
-    eventbus = new InMemoryAsyncEventBus()
+    emptySubscriber = new EmptyEventSubscriberMock()
 
     aggrId = IUniqueID.create()
     createEvent = AggregateCreatedStub.with({ foo: 'bar', is: true }, aggrId)
@@ -52,5 +60,11 @@ describe(InMemoryAsyncEventBus, () => {
     expect(emitSpy).toHaveBeenCalledWith(createEvent.canonical, createEvent)
     expect(emitSpy).toHaveBeenCalledWith(updateEvent.canonical, updateEvent)
     expect(emitSpy).toHaveBeenCalledWith(toggleEvent.canonical, toggleEvent)
+  })
+
+  it('should throw when registering an empty subscriber', () => {
+    expect(() => eventbus.register([emptySubscriber])).toThrowError(
+      EmptyEventSubscriberError.with(emptySubscriber)
+    )
   })
 })

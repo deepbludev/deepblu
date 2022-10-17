@@ -46,3 +46,14 @@ export class ToggleAggregateHandlerMock extends ICommandHandler<ToggleAggregateS
     return Result.ok()
   }
 }
+
+export class EmptyCommandHandlerMock extends ICommandHandler<ToggleAggregateStub> {
+  _handle: jest.Mock = jest.fn()
+
+  async handle<E extends Error>(
+    command: ToggleAggregateStub
+  ): Promise<Result<void, E>> {
+    this._handle(command)
+    return Result.ok()
+  }
+}

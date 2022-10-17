@@ -1,4 +1,4 @@
-import { CommandResponse } from './command-handler.interface'
+import { CommandResponse } from './command-handler.abstract'
 import { ICommand } from './command.abstract'
 
 export interface ICommandBus {

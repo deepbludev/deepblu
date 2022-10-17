@@ -57,3 +57,14 @@ export class ToggledAggregatesHandlerMock extends IQueryHandler<ToggledAggregate
     return Result.ok<AggregateStub[], E>([aggregates[1]])
   }
 }
+
+export class EmptyQueryHandlerMock extends IQueryHandler<ToggledAggregatesStub> {
+  _handle: jest.Mock = jest.fn()
+
+  async handle<E extends Error>(
+    query: ToggledAggregatesStub
+  ): QueryResponse<AggregateStub[], E> {
+    this._handle(query)
+    return Result.ok<AggregateStub[], E>([aggregates[1]])
+  }
+}

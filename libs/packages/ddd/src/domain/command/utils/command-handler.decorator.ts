@@ -1,5 +1,5 @@
 import { Constructor } from '../../types'
-import { ICommandHandler } from '../command-handler.interface'
+import { ICommandHandler } from '../command-handler.abstract'
 import { ICommand } from '../command.abstract'
 
 export const commandHandler = (command: Constructor<ICommand>) =>
