@@ -10,7 +10,7 @@ export abstract class Command<
   P extends IPayload = IPayload
 > extends ICommand<P> {
   /**
-   * Creates a new DomainEvent from payload and aggregateId
+   * Creates a new Command from payload and aggregateId
    * @factory
    */
   static with<C extends ICommand = ICommand>(payload: Payload<C>): C {
