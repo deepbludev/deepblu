@@ -1,4 +1,4 @@
-import { textUtils as text } from '../../utils'
+import { textUtils as text } from '../../utils/text.utils'
 import { IPayload, Payload } from '../types'
 import { IUniqueID } from '../uid/unique-id.vo'
 import { DomainEventID } from './domain-event-id.vo'
