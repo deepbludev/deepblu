@@ -5,7 +5,7 @@ export type Filterlist = { WHITELIST: string[]; BLACKLIST: string[] }
 const empty: Filterlist = { WHITELIST: [], BLACKLIST: [] }
 
 /**
- * Custom string decorator
+ * Sets the whitelist and blacklist for the given Email class
  * @decorator
  *
  * @example
@@ -21,10 +21,7 @@ const empty: Filterlist = { WHITELIST: [], BLACKLIST: [] }
  * class WhitelistedEmail extends Email {}
  *
  */
-export const customEmail = (opts: {
-  whitelist?: string[]
-  blacklist?: string[]
-}) =>
+const customEmail = (opts: { whitelist?: string[]; blacklist?: string[] }) =>
   function <
     T extends {
       validate: StringValidator
@@ -47,3 +44,25 @@ export const customEmail = (opts: {
     }
     return EmailClass
   }
+
+/**
+ * Sets the whitelist for the given Email class
+ * @decorator
+ *
+ * @example
+ * @whitelist('gmail.com', 'outlook.com')
+ * class WhitelistedEmail extends Email {}
+ */
+export const whitelist = (...domains: string[]) =>
+  customEmail({ whitelist: domains })
+
+/**
+ * Sets the blacklist for the given Email class
+ * @decorator
+ *
+ * @example
+ * @blacklist('gmail.com', 'outlook.com')
+ * class BlacklistedEmail extends Email {}
+ */
+export const blacklist = (...domains: string[]) =>
+  customEmail({ blacklist: domains })

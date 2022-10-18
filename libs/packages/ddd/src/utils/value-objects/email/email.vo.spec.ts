@@ -1,4 +1,4 @@
-import { customEmail } from './custom-email.decorator'
+import { blacklist, whitelist } from './custom-email.decorator'
 import { Email } from './email.vo'
 import { InvalidEmailError } from './invalid-email.error'
 
@@ -53,10 +53,16 @@ describe(Email, () => {
   })
 
   describe('when providing whitelisted/blacklisted domains', () => {
-    @customEmail({ whitelist: ['gmail.com', 'hotmail.com', 'yahoo.com'] })
+    @whitelist(
+      'gmail.com',
+      'hotmail.com',
+      'yahoo.com',
+      'aol.com',
+      'outlook.com'
+    )
     class WhitelistedEmail extends Email {}
 
-    @customEmail({ blacklist: ['mailinator.com', 'guerrillamail.com'] })
+    @blacklist('mailinator.com', 'guerrillamail.com')
     class BlacklistedEmail extends Email {}
 
     it('should only accept domains from valid domain list, if provided', () => {
