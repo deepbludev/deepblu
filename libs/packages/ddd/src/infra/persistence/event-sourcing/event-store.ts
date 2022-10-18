@@ -32,14 +32,10 @@ export abstract class EventStore<
     expectedVersion?: number
   ): Promise<void> {
     const current = await this.version(aggregate.id)
-    if (current !== (expectedVersion ?? aggregate.version))
-      throw new ConcurrencyError(aggregate, current)
-    const { id, version, changes } = aggregate
-    await this.stream.append(
-      id.value,
-      changes,
-      (expectedVersion ?? version) + changes.length
-    )
+    const version = expectedVersion ?? aggregate.version
+    if (current !== version) throw new ConcurrencyError(aggregate, current)
+    const { id, changes } = aggregate
+    await this.stream.append(id.value, changes, version + changes.length)
   }
 
   async get(id: IUniqueID): Promise<A | null> {
