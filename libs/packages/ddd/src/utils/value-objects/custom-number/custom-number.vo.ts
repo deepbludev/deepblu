@@ -32,11 +32,19 @@ export class CustomNumber extends ValueObject<{ value: number }> {
     validator?: NumberValidator,
     message?: NumberValidatorMessage
   ): Result<T, InvalidNumberError> {
-    const result = validator ? validator(value) : this.validate(value)
+    const result = validator ? validator(value) : this.isValid(value)
     const resultMsg = message ? message(value) : this.message(value)
     return result
       ? Result.ok(Reflect.construct(this, [{ value }]))
       : Result.fail(InvalidNumberError.with(resultMsg))
+  }
+
+  static isValid(value: number): boolean {
+    return this.validate(value)
+  }
+
+  public static override isValidProps(props: { value: number }): boolean {
+    return this.isValid(props.value)
   }
 
   get value(): number {

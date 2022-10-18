@@ -32,11 +32,19 @@ export class CustomString extends ValueObject<{ value: string }> {
     validator?: StringValidator,
     message?: StringValidatorMessage
   ): Result<S, InvalidStringError> {
-    const result = validator ? validator(value) : this.validate(value)
+    const result = validator ? validator(value) : this.isValid(value)
     const resultMsg = message ? message(value) : this.message(value)
     return result
       ? Result.ok(Reflect.construct(this, [{ value }]))
       : Result.fail(InvalidStringError.with(resultMsg))
+  }
+
+  static isValid(value: string): boolean {
+    return this.validate(value)
+  }
+
+  public static override isValidProps(props: { value: string }): boolean {
+    return this.isValid(props.value)
   }
 
   get value(): string {
