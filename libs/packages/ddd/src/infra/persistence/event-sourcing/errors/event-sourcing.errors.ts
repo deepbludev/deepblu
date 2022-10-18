@@ -3,7 +3,7 @@ import { IAggregateRoot } from '../../../../domain'
 export class EventSourcingError extends Error {
   constructor(message: string) {
     super(message)
-    this.name = 'EventSourcingError'
+    this.name = EventSourcingError.name
   }
 }
 
@@ -13,6 +13,6 @@ export class ConcurrencyError extends EventSourcingError {
       `${aggregate.hashcode} has version ${aggregate.version} ` +
       `but the eventstore has version ${version}`
     super(message)
-    this.name = 'ConcurrencyError'
+    this.name = ConcurrencyError.name
   }
 }
