@@ -71,9 +71,10 @@ describe(EventStore, () => {
   })
 
   it('should throw a ConcurrencyError when trying to save an aggregate with a version that differs from the current stream version', async () => {
+    const original = await eventstore.get(aggregate.id)
     const fetched = await eventstore.get(aggregate.id)
 
-    if (fetched) {
+    if (fetched && original) {
       fetched.updateProps({ foo: 'qux' })
       fetched.toggle()
       expect(fetched?.version).toEqual(4)
@@ -82,6 +83,18 @@ describe(EventStore, () => {
 
       await eventstore.save(fetched)
       expect(await eventstore.version(aggregate.id)).toBe(6)
+
+      expect(async () => {
+        await eventstore.save(original)
+      }).rejects.toThrowError(ConcurrencyError.with(original, 6))
+
+      expect(async () => {
+        await eventstore.save(original, 6)
+      }).not.toThrowError()
+
+      expect(async () => {
+        await eventstore.save(original, 4)
+      }).rejects.toThrowError(ConcurrencyError.with(original, 6))
     }
 
     const refetched = await eventstore.get(aggregate.id)
