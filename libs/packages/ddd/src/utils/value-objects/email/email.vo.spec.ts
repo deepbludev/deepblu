@@ -53,14 +53,10 @@ describe(Email, () => {
   })
 
   describe('when providing whitelisted/blacklisted domains', () => {
-    @customEmail({
-      whitelist: ['gmail.com', 'hotmail.com', 'yahoo.com'],
-    })
+    @customEmail({ whitelist: ['gmail.com', 'hotmail.com', 'yahoo.com'] })
     class WhitelistedEmail extends Email {}
 
-    @customEmail({
-      blacklist: ['mailinator.com', 'guerrillamail.com'],
-    })
+    @customEmail({ blacklist: ['mailinator.com', 'guerrillamail.com'] })
     class BlacklistedEmail extends Email {}
 
     it('should only accept domains from valid domain list, if provided', () => {
