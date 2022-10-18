@@ -21,17 +21,21 @@ export class CustomNumber extends ValueObject<{ value: number }> {
    * Creates a new string with the given value, validator and error message
    * @factory
    */
-  static create<N extends CustomNumber>(value: number): Result<N>
+  static create<N extends CustomNumber>(
+    value: number
+  ): Result<N, InvalidNumberError>
+
   static create<N extends CustomNumber>(
     value: number,
     validator: NumberValidator,
     message: NumberValidatorMessage
-  ): Result<N>
-  static create<T extends CustomNumber>(
+  ): Result<N, InvalidNumberError>
+
+  static create<N extends CustomNumber>(
     value: number,
     validator?: NumberValidator,
     message?: NumberValidatorMessage
-  ): Result<T, InvalidNumberError> {
+  ): Result<N, InvalidNumberError> {
     const result = validator ? validator(value) : this.isValid(value)
     const resultMsg = message ? message(value) : this.message(value)
     return result
