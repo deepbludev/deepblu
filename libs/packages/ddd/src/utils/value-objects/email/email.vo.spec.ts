@@ -1,3 +1,4 @@
+import { customEmail } from './custom-email.decorator'
 import { Email } from './email.vo'
 import { InvalidEmailError } from './invalid-email.error'
 
@@ -49,5 +50,37 @@ describe(Email, () => {
   it('should get the email tld', () => {
     expect(email.tld).toEqual('com')
     expect(otherEmail.tld).toEqual('solutions')
+  })
+
+  describe('when providing whitelisted/blacklisted domains', () => {
+    @customEmail({
+      whitelist: ['gmail.com', 'hotmail.com', 'yahoo.com'],
+    })
+    class WhitelistedEmail extends Email {}
+
+    @customEmail({
+      blacklist: ['mailinator.com', 'guerrillamail.com'],
+    })
+    class BlacklistedEmail extends Email {}
+
+    it('should only accept domains from valid domain list, if provided', () => {
+      const validEmail = WhitelistedEmail.create('foo@gmail.com')
+      const otherValidEmail = WhitelistedEmail.create('foo@hotmail.com')
+      const invalidEmail = WhitelistedEmail.create('foo@baz.com')
+      const otherInvalidEmail = WhitelistedEmail.create('foo @gmail.com')
+
+      expect(validEmail.isOk).toBe(true)
+      expect(otherValidEmail.isOk).toBe(true)
+      expect(invalidEmail.isOk).toBe(false)
+      expect(otherInvalidEmail.isOk).toBe(false)
+    })
+
+    it('should reject blacklisted domains, if provided', () => {
+      const validEmail = BlacklistedEmail.create('foo@bar.com')
+      const invalidEmail = BlacklistedEmail.create('bar@guerrillamail.com')
+
+      expect(validEmail.isOk).toBe(true)
+      expect(invalidEmail.isOk).toBe(false)
+    })
   })
 })

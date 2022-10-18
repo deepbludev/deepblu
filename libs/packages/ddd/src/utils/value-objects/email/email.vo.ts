@@ -9,6 +9,9 @@ import { InvalidEmailError } from './invalid-email.error'
   message: (email: string) => email,
 })
 export class Email extends CustomString {
+  static readonly WHITELIST: string[] = []
+  static readonly BLACKLIST: string[] = []
+
   /**
    * Creates a new email with the given value, validator and error message
    * @factory

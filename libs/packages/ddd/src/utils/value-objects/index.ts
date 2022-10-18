@@ -8,5 +8,6 @@ export * from './custom-string/custom-string.vo'
 
 export * from './custom-text/custom-text.vo'
 
+export * from './email/custom-email.decorator'
 export * from './email/email.vo'
 export * from './email/invalid-email.error'
