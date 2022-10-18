@@ -5,8 +5,8 @@ export type StringValidator = (value: string) => boolean
 export type StringValidatorMessage = (value: string) => string
 
 export class CustomString extends ValueObject<{ value: string }> {
-  public static readonly MIN = 1
-  public static readonly MAX = 255
+  private static readonly MIN = 1
+  private static readonly MAX = 255
 
   public static readonly validate: StringValidator = (value: string): boolean =>
     value.length >= CustomString.MIN && value.length <= CustomString.MAX
@@ -14,24 +14,24 @@ export class CustomString extends ValueObject<{ value: string }> {
   public static readonly message: StringValidatorMessage = (
     value: string
   ): string =>
-    `Custom string must not be empty and must be less than ${CustomString.MAX} characters.
-     Received ${value.length} characters.`
+    `Custom string must not be empty and must be less than ${CustomString.MAX} characters. ` +
+    `Received ${value.length} characters.`
 
   /**
    * Creates a new string with the given value, validator and error message
    * @factory
    */
-  static create<T extends CustomString>(value: string): Result<T>
-  static create<T extends CustomString>(
+  static create<S extends CustomString>(value: string): Result<S>
+  static create<S extends CustomString>(
     value: string,
     validator: StringValidator,
     message: StringValidatorMessage
-  ): Result<T>
-  static create<T extends CustomString>(
+  ): Result<S>
+  static create<S extends CustomString>(
     value: string,
     validator?: StringValidator,
     message?: StringValidatorMessage
-  ): Result<T> {
+  ): Result<S, InvalidStringError> {
     const result = validator ? validator(value) : this.validate(value)
     const resultMsg = message ? message(value) : this.message(value)
     return result

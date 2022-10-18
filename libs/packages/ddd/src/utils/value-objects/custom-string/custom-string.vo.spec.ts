@@ -10,7 +10,7 @@ describe(CustomString, () => {
     expect(CustomString.create).toBeDefined()
   })
 
-  it('should create a valid string withour custom validator', () => {
+  it('should create a valid string without custom validator', () => {
     expect(CustomString.create('valid string').isOk).toBeTruthy()
   })
 
