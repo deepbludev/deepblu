@@ -43,9 +43,7 @@ export const customEmail = (opts: {
 
       if (WHITELIST.includes(domain)) return true
       if (BLACKLIST.includes(domain)) return false
-      if (WHITELIST.length > 0) return false
-
-      return true
+      return !WHITELIST.length
     }
     return EmailClass
   }
