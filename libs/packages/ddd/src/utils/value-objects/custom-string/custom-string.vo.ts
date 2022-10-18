@@ -21,12 +21,16 @@ export class CustomString extends ValueObject<{ value: string }> {
    * Creates a new string with the given value, validator and error message
    * @factory
    */
-  static create<S extends CustomString>(value: string): Result<S>
+  static create<S extends CustomString>(
+    value: string
+  ): Result<S, InvalidStringError>
+
   static create<S extends CustomString>(
     value: string,
     validator: StringValidator,
     message: StringValidatorMessage
-  ): Result<S>
+  ): Result<S, InvalidStringError>
+
   static create<S extends CustomString>(
     value: string,
     validator?: StringValidator,
