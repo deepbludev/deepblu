@@ -15,4 +15,8 @@ export class ConcurrencyError extends EventSourcingError {
     super(message)
     this.name = ConcurrencyError.name
   }
+
+  static with(aggregate: IAggregateRoot, version: number): ConcurrencyError {
+    return new ConcurrencyError(aggregate, version)
+  }
 }
