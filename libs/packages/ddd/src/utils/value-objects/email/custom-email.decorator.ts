@@ -7,12 +7,18 @@ const empty: Filterlist = { WHITELIST: [], BLACKLIST: [] }
 /**
  * Custom string decorator
  * @decorator
+ *
  * @example
- * @customString({
- *   validator: (value) => value.startsWith('valid'),
- *   message: (value) => 'Custom error message: ' + value
+ * @customEmail({
+ *   blacklist: ['mailinator.com', 'guerrillamail.com'],
  * })
- * class MyString extends CustomString {}
+ * class BlacklistedEmail extends Email {}
+ *
+ * @example
+ * @customEmail({
+ *   whitelist: ['gmail.com', 'hotmail.com', 'yahoo.com'],
+ * })
+ * class WhitelistedEmail extends Email {}
  *
  */
 export const customEmail = (opts: {
