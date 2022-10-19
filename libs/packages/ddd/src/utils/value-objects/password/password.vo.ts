@@ -42,11 +42,29 @@ export class Password extends ValueObject<{
     return this.encrypter.encrypt(password)
   }
 
-  public get original(): string | undefined {
+  static isPassword(password: unknown): password is Password {
+    return password instanceof Password
+  }
+
+  async compare(password: string): Promise<boolean>
+  async compare(password: Password): Promise<boolean>
+  async compare(password: string | Password): Promise<boolean> {
+    return Password.isPassword(password)
+      ? this.original
+        ? Password.encrypter.compare(this.original, password.encrypted)
+        : this.encrypted === password.encrypted
+      : this.encrypter.compare(password, this.encrypted)
+  }
+
+  get original(): string | undefined {
     return this.props.original
   }
 
-  public get encrypted(): string {
+  get encrypted(): string {
     return this.props.encrypted
+  }
+
+  get encrypter() {
+    return (this.constructor as typeof Password).encrypter
   }
 }
