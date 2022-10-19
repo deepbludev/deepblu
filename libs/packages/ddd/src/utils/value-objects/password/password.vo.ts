@@ -29,13 +29,11 @@ export class Password extends CustomString {
   static override create(
     original: string
   ): Result<Password, InvalidPasswordError>
-
   static override create(
     original: string,
     validator: StringValidator,
     error: StringValidatorError
   ): Result<Password, InvalidPasswordError>
-
   static override create(
     original: string,
     validator?: StringValidator,
