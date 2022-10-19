@@ -1,5 +1,4 @@
 import { Result } from '../../../domain'
-import { customString } from '../custom-string/custom-string.decorator'
 import { customPassword } from './custom-password.decorator'
 import { InvalidPasswordError } from './invalid-password.error'
 import { Password } from './password.vo'
