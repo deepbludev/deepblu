@@ -5,11 +5,11 @@ export type StringValidator = (value: string) => boolean
 export type StringValidatorError = (value: string) => InvalidStringError
 
 export class CustomString extends ValueObject<{ value: string }> {
-  private static readonly MIN = 1
-  private static readonly MAX = 255
+  protected static readonly MIN: number = 1
+  protected static readonly MAX: number = 255
 
   public static readonly validate: StringValidator = (value: string): boolean =>
-    value.length >= CustomString.MIN && value.length <= CustomString.MAX
+    value.length >= this.MIN && value.length <= this.MAX
 
   public static readonly error: StringValidatorError = (value: string) =>
     InvalidStringError.with(

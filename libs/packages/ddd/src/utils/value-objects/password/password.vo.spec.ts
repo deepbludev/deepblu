@@ -4,18 +4,22 @@ import { InvalidPasswordError } from './invalid-password.error'
 import { Password } from './password.vo'
 
 describe(Password, () => {
+  const original = 'valid_password'
   let password: Password
   let encrypted: Password
-  let other: Password
+
+  const otherOriginal = 'other_password'
+  let otherPassword: Password
   let otherEncrypted: Password
+
   let tooShort: Result<Password, InvalidPasswordError>
 
-  beforeAll(async () => {
-    password = (await Password.create('valid_password')).data
-    encrypted = Password.fromEncrypted(password.encrypted)
-    other = (await Password.create('other_password')).data
-    otherEncrypted = Password.fromEncrypted(other.encrypted)
-    tooShort = await Password.create('invalid')
+  beforeAll(() => {
+    password = Password.create(original).data
+    encrypted = Password.fromEncrypted(password.value)
+    otherPassword = Password.create(otherOriginal).data
+    otherEncrypted = Password.fromEncrypted(otherPassword.value)
+    tooShort = Password.create('invalid')
   })
 
   it('should be defined', () => {
@@ -23,13 +27,12 @@ describe(Password, () => {
   })
 
   it('should create a password and encrypt it', () => {
-    expect(password.original).toEqual('valid_password')
-    expect(password.encrypted).not.toEqual('valid_password')
-    expect(password.encrypted).not.toEqual('')
-    expect(password.encrypted).toBeTruthy()
+    expect(password.value).not.toEqual(original)
+    expect(password.value).not.toEqual('')
+    expect(password.value).toBeTruthy()
   })
 
-  it('should fail when creating with invalid password', async () => {
+  it('should fail when creating with invalid password', () => {
     expect(tooShort.isOk).toBe(false)
     expect(tooShort.error).toEqual(
       InvalidPasswordError.with(
@@ -38,51 +41,47 @@ describe(Password, () => {
     )
   })
 
-  it('should validate a password from string', async () => {
-    expect(Password.isValid('valid_password')).toBe(true)
+  it('should validate a password from string', () => {
+    expect(Password.isValid(original)).toBe(true)
     expect(Password.isValid('invalid')).toBe(false)
   })
 
-  it('should create a password from encrypted string', async () => {
-    expect(encrypted.original).toBeUndefined()
-    expect(encrypted.encrypted).toEqual(password.encrypted)
+  it('should create a password from encrypted string', () => {
+    expect(encrypted.value).toEqual(password.value)
   })
 
-  it('should compare passwords', async () => {
-    expect(await password.compare('valid_password')).toBe(true)
-    expect(await password.compare('invalid')).toBe(false)
-    expect(await encrypted.compare('valid_password')).toBe(true)
-    expect(await encrypted.compare('invalid')).toBe(false)
-    expect(await other.compare('other_password')).toBe(true)
-    expect(await otherEncrypted.compare('other_password')).toBe(true)
+  it('should compare passwords', () => {
+    expect(password.compare(original)).toBe(true)
+    expect(password.compare('invalid')).toBe(false)
+    expect(encrypted.compare(original)).toBe(true)
+    expect(encrypted.compare('invalid')).toBe(false)
+    expect(otherPassword.compare(otherOriginal)).toBe(true)
+    expect(otherEncrypted.compare(otherOriginal)).toBe(true)
 
-    expect(await password.compare(encrypted)).toBe(true)
-    expect(await encrypted.compare(password)).toBe(true)
-    expect(await password.compare(password)).toBe(true)
-    expect(await encrypted.compare(encrypted)).toBe(true)
+    expect(password.compare(encrypted)).toBe(true)
+    expect(encrypted.compare(password)).toBe(true)
+    expect(password.compare(password)).toBe(true)
+    expect(encrypted.compare(encrypted)).toBe(true)
 
-    expect(await other.compare(otherEncrypted)).toBe(true)
-    expect(await otherEncrypted.compare(other)).toBe(true)
+    expect(otherPassword.compare(otherEncrypted)).toBe(true)
+    expect(otherEncrypted.compare(otherPassword)).toBe(true)
 
-    expect(await password.compare(other)).toBe(false)
-    expect(await other.compare(password)).toBe(false)
-    expect(await encrypted.compare(other)).toBe(false)
-    expect(await other.compare(encrypted)).toBe(false)
-    expect(await encrypted.compare(otherEncrypted)).toBe(false)
-    expect(await otherEncrypted.compare(encrypted)).toBe(false)
+    expect(password.compare(otherPassword)).toBe(false)
+    expect(otherPassword.compare(password)).toBe(false)
+    expect(encrypted.compare(otherPassword)).toBe(false)
+    expect(otherPassword.compare(encrypted)).toBe(false)
+    expect(encrypted.compare(otherEncrypted)).toBe(false)
+    expect(otherEncrypted.compare(encrypted)).toBe(false)
   })
 
-  it('should generate valid random passwords', async () => {
-    const random = await Password.random()
-    expect(Password.isValid(random.original))
-    expect(random.original?.length).toBe(10)
-    expect(random.original).not.toEqual(random.encrypted)
-    expect(random.encrypted).not.toEqual('')
+  it('should generate valid random passwords', () => {
+    const random = Password.random()
+    expect(Password.isValid(random)).toBe(true)
+    expect(random.length).toBe(10)
 
-    const other = await Password.random(25)
-    expect(Password.isValid(other.original))
-    expect(other.original?.length).toBe(25)
-    expect(other.encrypted).not.toEqual('')
+    const other = Password.random(25)
+    expect(Password.isValid(other))
+    expect(other.length).toBe(25)
   })
 
   describe('Custom validators', () => {
@@ -90,33 +89,25 @@ describe(Password, () => {
     const errorFn = (original: string) =>
       InvalidPasswordError.with('Custom error message: ' + original)
 
-    it('should create a valid password if validator does not fail', async () => {
-      const { isOk } = await Password.create(
-        'valid_password',
-        validator,
-        errorFn
-      )
+    it('should create a valid password if validator does not fail', () => {
+      const { isOk } = Password.create('valid_password', validator, errorFn)
       expect(isOk).toBe(true)
     })
 
-    it('should fail if validator fails', async () => {
-      const { error } = await Password.create(
-        'invalid_password',
-        validator,
-        errorFn
-      )
+    it('should fail if validator fails', () => {
+      const { error } = Password.create('invalid_password', validator, errorFn)
       expect(error).toEqual(
         InvalidPasswordError.with('Custom error message: invalid_password')
       )
     })
 
     describe('@customPassword decorator', () => {
-      it('should set custom validator', async () => {
+      it('should set custom validator', () => {
         @customPassword({ validator, error: errorFn })
         class TestPassword extends Password {}
 
-        const validPassword = await TestPassword.create('valid_password')
-        const invalidPassword = await TestPassword.create('invalid_password')
+        const validPassword = TestPassword.create('valid_password')
+        const invalidPassword = TestPassword.create('invalid_password')
 
         expect(validPassword.isOk).toBeTruthy()
         expect(invalidPassword.isFail).toBeTruthy()
