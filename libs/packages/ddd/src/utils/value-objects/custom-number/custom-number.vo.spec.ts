@@ -98,21 +98,22 @@ describe(CustomNumber, () => {
 
   describe('Custom validator', () => {
     const validator = (value: number) => value > 0
-    const message = (value: number) => 'Custom error message: ' + value
+    const error = (value: number) =>
+      InvalidNumberError.with('Custom error message: ' + value)
 
     it('should create a valid number if validator does not fail', () => {
-      expect(CustomNumber.create(1, validator, message).isOk).toBe(true)
+      expect(CustomNumber.create(1, validator, error).isOk).toBe(true)
     })
 
     it('should fail if validator fails', () => {
-      expect(CustomNumber.create(-1, validator, message).error).toEqual(
+      expect(CustomNumber.create(-1, validator, error).error).toEqual(
         InvalidNumberError.with('Custom error message: -1')
       )
     })
 
     describe('@customNumber decorator', () => {
       it('should set custom validator', () => {
-        @customNumber({ validator, message })
+        @customNumber({ validator, error })
         class TestNumber extends CustomNumber {}
 
         const validNumber = TestNumber.create(1)

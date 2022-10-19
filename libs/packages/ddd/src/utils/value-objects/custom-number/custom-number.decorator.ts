@@ -1,4 +1,4 @@
-import { NumberValidator, NumberValidatorMessage } from './custom-number.vo'
+import { NumberValidator, NumberValidatorError } from './custom-number.vo'
 
 /**
  * Custom number decorator
@@ -6,22 +6,22 @@ import { NumberValidator, NumberValidatorMessage } from './custom-number.vo'
  * @example
  * @customNumber({
  *   validator: (value) => value > 0,
- *   message: (value) => 'Custom error message: ' + value
+ *   error: (value) => InvalidNumberError.with('Custom error message: ' + value)
  * })
  * class MyNumber extends CustomNumber {}
  *
  */
 export const customNumber = (opts: {
   validator: NumberValidator
-  message: NumberValidatorMessage
+  error: NumberValidatorError
 }) =>
   function <
     T extends {
       validate: NumberValidator
-      message: NumberValidatorMessage
+      error: NumberValidatorError
     }
   >(CustomNumberClass: T) {
     CustomNumberClass.validate = opts.validator
-    CustomNumberClass.message = opts.message
+    CustomNumberClass.error = opts.error
     return CustomNumberClass
   }

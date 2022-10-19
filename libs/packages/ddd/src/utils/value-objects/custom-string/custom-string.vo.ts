@@ -2,7 +2,7 @@ import { Result, ValueObject } from '../../../domain'
 import { InvalidStringError } from './invalid-string.error'
 
 export type StringValidator = (value: string) => boolean
-export type StringValidatorMessage = (value: string) => string
+export type StringValidatorError = (value: string) => InvalidStringError
 
 export class CustomString extends ValueObject<{ value: string }> {
   private static readonly MIN = 1
@@ -11,11 +11,11 @@ export class CustomString extends ValueObject<{ value: string }> {
   public static readonly validate: StringValidator = (value: string): boolean =>
     value.length >= CustomString.MIN && value.length <= CustomString.MAX
 
-  public static readonly message: StringValidatorMessage = (
-    value: string
-  ): string =>
-    `Custom string must not be empty and must be less than ${CustomString.MAX} characters. ` +
-    `Received ${value.length} characters.`
+  public static readonly error: StringValidatorError = (value: string) =>
+    InvalidStringError.with(
+      `Custom string must not be empty and must be less than ${CustomString.MAX} characters. ` +
+        `Received ${value.length} characters.`
+    )
 
   /**
    * Creates a new string with the given value, validator and error message
@@ -28,19 +28,19 @@ export class CustomString extends ValueObject<{ value: string }> {
   static create<S extends CustomString>(
     value: string,
     validator: StringValidator,
-    message: StringValidatorMessage
+    error: StringValidatorError
   ): Result<S, InvalidStringError>
 
   static create<S extends CustomString>(
     value: string,
     validator?: StringValidator,
-    message?: StringValidatorMessage
+    error?: StringValidatorError
   ): Result<S, InvalidStringError> {
     const result = validator ? validator(value) : this.isValid(value)
-    const resultMsg = message ? message(value) : this.message(value)
+    const resultError = error ? error(value) : this.error(value)
     return result
       ? Result.ok(Reflect.construct(this, [{ value }]))
-      : Result.fail(InvalidStringError.with(resultMsg))
+      : Result.fail(resultError)
   }
 
   static isValid(value: string): boolean {

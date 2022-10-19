@@ -2,7 +2,7 @@ import { Result, ValueObject } from '../../../domain'
 import { InvalidNumberError } from './invalid-number.error'
 
 export type NumberValidator = (value: number) => boolean
-export type NumberValidatorMessage = (value: number) => string
+export type NumberValidatorError = (value: number) => InvalidNumberError
 
 export class CustomNumber extends ValueObject<{ value: number }> {
   public static readonly MIN = Number.MIN_SAFE_INTEGER
@@ -11,11 +11,11 @@ export class CustomNumber extends ValueObject<{ value: number }> {
   public static readonly validate: NumberValidator = (value: number): boolean =>
     value >= CustomNumber.MIN && value <= CustomNumber.MAX
 
-  public static readonly message: NumberValidatorMessage = (
-    value: number
-  ): string =>
-    `Custom number must be within the range [${CustomNumber.MIN}, ${CustomNumber.MAX}]. ` +
-    `Received ${value} instead.`
+  public static readonly error: NumberValidatorError = (value: number) =>
+    InvalidNumberError.with(
+      `Custom number must be within the range [${CustomNumber.MIN}, ${CustomNumber.MAX}]. ` +
+        `Received ${value} instead.`
+    )
 
   /**
    * Creates a new string with the given value, validator and error message
@@ -28,19 +28,19 @@ export class CustomNumber extends ValueObject<{ value: number }> {
   static create<N extends CustomNumber>(
     value: number,
     validator: NumberValidator,
-    message: NumberValidatorMessage
+    message: NumberValidatorError
   ): Result<N, InvalidNumberError>
 
   static create<N extends CustomNumber>(
     value: number,
     validator?: NumberValidator,
-    message?: NumberValidatorMessage
+    error?: NumberValidatorError
   ): Result<N, InvalidNumberError> {
     const result = validator ? validator(value) : this.isValid(value)
-    const resultMsg = message ? message(value) : this.message(value)
+    const resultError = error ? error(value) : this.error(value)
     return result
       ? Result.ok(Reflect.construct(this, [{ value }]))
-      : Result.fail(InvalidNumberError.with(resultMsg))
+      : Result.fail(resultError)
   }
 
   static isValid(value: number): boolean {
