@@ -1,4 +1,5 @@
 import { Result, ValueObject } from '../../../domain'
+import { textUtils } from '../../text.utils'
 import {
   StringValidator,
   StringValidatorMessage,
@@ -17,6 +18,10 @@ export class Password extends ValueObject<{
   public static readonly validate: StringValidator = (value: string): boolean =>
     value.length >= this.MIN
 
+  public static async generate(length: number): Promise<Password> {
+    return (await this.create(textUtils.randomString(length))).data
+  }
+
   public static readonly message: StringValidatorMessage = (
     password: string
   ): string =>
@@ -34,8 +39,13 @@ export class Password extends ValueObject<{
     return new Password({ encrypted })
   }
 
-  static isValid(password: string) {
-    return this.validate(password)
+  public static random(length?: number) {
+    const l = length || this.MIN
+    return this.generate(l > this.MIN ? l : this.MIN)
+  }
+
+  static isValid(password?: string) {
+    return this.validate(password || '')
   }
 
   static async encrypt(password: string): Promise<string> {

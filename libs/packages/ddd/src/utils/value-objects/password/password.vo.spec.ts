@@ -70,4 +70,17 @@ describe(Password, () => {
     expect(await encrypted.compare(otherEncrypted)).toBe(false)
     expect(await otherEncrypted.compare(encrypted)).toBe(false)
   })
+
+  it('should generate valid random passwords', async () => {
+    const random = await Password.random()
+    expect(Password.isValid(random.original))
+    expect(random.original?.length).toBe(10)
+    expect(random.original).not.toEqual(random.encrypted)
+    expect(random.encrypted).not.toEqual('')
+
+    const other = await Password.random(25)
+    expect(Password.isValid(other.original))
+    expect(other.original?.length).toBe(25)
+    expect(other.encrypted).not.toEqual('')
+  })
 })
