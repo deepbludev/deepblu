@@ -5,8 +5,8 @@ import { StringValidator, StringValidatorError } from './custom-string.vo'
  * @decorator
  * @example
  * @customString({
- *   validator: (value) => value.startsWith('valid'),
- *   message: (value) => 'Custom error message: ' + value
+ *   validator: (value: string) => value.startsWith('valid'),
+ *   error: (value: string) => () => InvalidStringError.with('Custom error message: ' + value)
  * })
  * class MyString extends CustomString {}
  *

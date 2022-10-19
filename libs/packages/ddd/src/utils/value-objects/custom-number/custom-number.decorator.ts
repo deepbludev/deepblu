@@ -6,7 +6,7 @@ import { NumberValidator, NumberValidatorError } from './custom-number.vo'
  * @example
  * @customNumber({
  *   validator: (value) => value > 0,
- *   message: (value) => 'Custom error message: ' + value
+ *   error: (value) => InvalidNumberError.with('Custom error message: ' + value)
  * })
  * class MyNumber extends CustomNumber {}
  *

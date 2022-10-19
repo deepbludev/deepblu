@@ -82,24 +82,24 @@ describe(CustomString, () => {
 
   describe('Custom validator', () => {
     const validator = (value: string) => value.startsWith('valid')
-    const message = (value: string) =>
+    const error = (value: string) =>
       InvalidStringError.with('Custom error message: ' + value)
 
     it('should create a valid string if validator does not fail', () => {
-      expect(CustomString.create('valid string', validator, message).isOk).toBe(
+      expect(CustomString.create('valid string', validator, error).isOk).toBe(
         true
       )
     })
 
     it('should fail if validator fails', () => {
-      expect(CustomString.create('invalid', validator, message).error).toEqual(
+      expect(CustomString.create('invalid', validator, error).error).toEqual(
         InvalidStringError.with('Custom error message: invalid')
       )
     })
 
     describe('@customString decorator', () => {
       it('should set custom validator', () => {
-        @customString({ validator, error: message })
+        @customString({ validator, error })
         class TestString extends CustomString {}
 
         const validString = TestString.create('valid string')

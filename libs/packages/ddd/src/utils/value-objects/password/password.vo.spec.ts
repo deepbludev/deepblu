@@ -1,4 +1,6 @@
 import { Result } from '../../../domain'
+import { customString } from '../custom-string/custom-string.decorator'
+import { customPassword } from './custom-password.decorator'
 import { InvalidPasswordError } from './invalid-password.error'
 import { Password } from './password.vo'
 
@@ -84,27 +86,45 @@ describe(Password, () => {
     expect(other.encrypted).not.toEqual('')
   })
 
-  // describe('Custom validators', () => {
-  //   it('should validate a password with custom validator', async () => {
-  //     const custom = await Password.create('valid_password', {
-  //       validator: (value) => value.length >= 20,
-  //       error: InvalidPasswordError.with('Password must be at least 20 characters long.'),
-  //     })
-  //     expect(custom.isOk).toBe(false)
-  //     expect(custom.error).toEqual(
-  //       InvalidPasswordError.with('Password must be at least 20 characters long.')
-  //     )
-  //   })
+  describe('Custom validators', () => {
+    const validator = (original: string) => original.startsWith('valid')
+    const errorFn = (original: string) =>
+      InvalidPasswordError.with('Custom error message: ' + original)
 
-  //   it('should validate a password with custom validator and custom error', async () => {
-  //     const custom = await Password.create('valid_password', {
-  //       validator: (value) => value.length >= 20,
-  //       error: InvalidPasswordError.with('Password must be at least 20 characters long.'),
-  //     })
-  //     expect(custom.isOk).toBe(false)
-  //     expect(custom.error).toEqual(
-  //       InvalidPasswordError.with('Password must be at least 20 characters long.')
-  //     )
-  //   })
-  // })
+    it('should create a valid password if validator does not fail', async () => {
+      const { isOk } = await Password.create(
+        'valid_password',
+        validator,
+        errorFn
+      )
+      expect(isOk).toBe(true)
+    })
+
+    it('should fail if validator fails', async () => {
+      const { error } = await Password.create(
+        'invalid_password',
+        validator,
+        errorFn
+      )
+      expect(error).toEqual(
+        InvalidPasswordError.with('Custom error message: invalid_password')
+      )
+    })
+
+    describe('@customPassword decorator', () => {
+      it('should set custom validator', async () => {
+        @customPassword({ validator, error: errorFn })
+        class TestPassword extends Password {}
+
+        const validPassword = await TestPassword.create('valid_password')
+        const invalidPassword = await TestPassword.create('invalid_password')
+
+        expect(validPassword.isOk).toBeTruthy()
+        expect(invalidPassword.isFail).toBeTruthy()
+        expect(invalidPassword.error).toEqual(
+          InvalidPasswordError.with('Custom error message: invalid_password')
+        )
+      })
+    })
+  })
 })

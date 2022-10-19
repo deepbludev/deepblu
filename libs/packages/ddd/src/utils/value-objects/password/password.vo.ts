@@ -27,18 +27,36 @@ export class Password extends ValueObject<{
       `Password "${password}" is too short. It must be at least ${this.MIN} characters long.`
     )
 
-  public static async create(original: string): Promise<Result<Password>> {
-    if (!this.isValid(original)) return Result.fail(this.error(original))
+  static async create(
+    original: string
+  ): Promise<Result<Password, InvalidPasswordError>>
+
+  static async create(
+    original: string,
+    validator: StringValidator,
+    error: StringValidatorError
+  ): Promise<Result<Password, InvalidPasswordError>>
+
+  static async create(
+    original: string,
+    validator?: StringValidator,
+    error?: StringValidatorError
+  ): Promise<Result<Password, InvalidPasswordError>> {
+    const result = validator ? validator(original) : this.isValid(original)
+    const resultError = error ? error(original) : this.error(original)
+
+    if (!result) return Result.fail(resultError)
 
     const encrypted = await Password.encrypt(original)
-    return Result.ok(new Password({ original, encrypted }))
+    return Result.ok(Reflect.construct(this, [{ original, encrypted }]))
+    // return Result.ok(new Password({ original, encrypted }))
   }
 
-  public static fromEncrypted(encrypted: string): Password {
+  static fromEncrypted(encrypted: string): Password {
     return new Password({ encrypted })
   }
 
-  public static random(length?: number) {
+  static random(length?: number) {
     const l = length || this.MIN
     return this.generate(l > this.MIN ? l : this.MIN)
   }
