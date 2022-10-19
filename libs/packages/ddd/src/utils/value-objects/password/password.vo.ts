@@ -2,7 +2,7 @@ import { Result, ValueObject } from '../../../domain'
 import { textUtils } from '../../text.utils'
 import {
   StringValidator,
-  StringValidatorMessage,
+  StringValidatorError,
 } from '../custom-string/custom-string.vo'
 import { BCryptPasswordEncrypter } from './encrypter/bcrypt.password-encrypter'
 import { PasswordEncrypter } from './encrypter/password-encrypter.interface'
@@ -22,14 +22,13 @@ export class Password extends ValueObject<{
     return (await this.create(textUtils.randomString(length))).data
   }
 
-  public static readonly message: StringValidatorMessage = (
-    password: string
-  ): string =>
-    `Password "${password}" is too short. It must be at least ${this.MIN} characters long.`
+  public static readonly error: StringValidatorError = (password: string) =>
+    InvalidPasswordError.with(
+      `Password "${password}" is too short. It must be at least ${this.MIN} characters long.`
+    )
 
   public static async create(original: string): Promise<Result<Password>> {
-    if (!this.isValid(original))
-      return Result.fail(InvalidPasswordError.with(this.message(original)))
+    if (!this.isValid(original)) return Result.fail(this.error(original))
 
     const encrypted = await Password.encrypt(original)
     return Result.ok(new Password({ original, encrypted }))

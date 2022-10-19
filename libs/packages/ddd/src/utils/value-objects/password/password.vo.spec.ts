@@ -83,4 +83,28 @@ describe(Password, () => {
     expect(other.original?.length).toBe(25)
     expect(other.encrypted).not.toEqual('')
   })
+
+  // describe('Custom validators', () => {
+  //   it('should validate a password with custom validator', async () => {
+  //     const custom = await Password.create('valid_password', {
+  //       validator: (value) => value.length >= 20,
+  //       error: InvalidPasswordError.with('Password must be at least 20 characters long.'),
+  //     })
+  //     expect(custom.isOk).toBe(false)
+  //     expect(custom.error).toEqual(
+  //       InvalidPasswordError.with('Password must be at least 20 characters long.')
+  //     )
+  //   })
+
+  //   it('should validate a password with custom validator and custom error', async () => {
+  //     const custom = await Password.create('valid_password', {
+  //       validator: (value) => value.length >= 20,
+  //       error: InvalidPasswordError.with('Password must be at least 20 characters long.'),
+  //     })
+  //     expect(custom.isOk).toBe(false)
+  //     expect(custom.error).toEqual(
+  //       InvalidPasswordError.with('Password must be at least 20 characters long.')
+  //     )
+  //   })
+  // })
 })

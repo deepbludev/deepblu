@@ -1,4 +1,4 @@
-import { StringValidator, StringValidatorMessage } from './custom-string.vo'
+import { StringValidator, StringValidatorError } from './custom-string.vo'
 
 /**
  * Custom string decorator
@@ -13,15 +13,15 @@ import { StringValidator, StringValidatorMessage } from './custom-string.vo'
  */
 export const customString = (opts: {
   validator: StringValidator
-  message: StringValidatorMessage
+  error: StringValidatorError
 }) =>
   function <
     T extends {
       validate: StringValidator
-      message: StringValidatorMessage
+      error: StringValidatorError
     }
   >(CustomStringClass: T) {
     CustomStringClass.validate = opts.validator
-    CustomStringClass.message = opts.message
+    CustomStringClass.error = opts.error
     return CustomStringClass
   }

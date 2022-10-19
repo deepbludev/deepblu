@@ -6,7 +6,7 @@ import { InvalidEmailError } from './invalid-email.error'
 
 @customString({
   validator: (email: string) => textUtils.isValidEmail(email),
-  message: (email: string) => email,
+  error: (email: string) => InvalidEmailError.with(email),
 })
 export class Email extends CustomString {
   /**
@@ -19,7 +19,7 @@ export class Email extends CustomString {
     const result = super.create(value)
     return result.isOk
       ? (result as Result<E, InvalidEmailError>)
-      : Result.fail(InvalidEmailError.with(value))
+      : Result.fail(this.error(value))
   }
 
   get domain(): string {
