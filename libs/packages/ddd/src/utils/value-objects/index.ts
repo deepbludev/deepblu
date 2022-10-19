@@ -13,3 +13,5 @@ export * from './email/email.vo'
 export * from './email/invalid-email.error'
 
 export * from './password/password.vo'
+export * from './password/invalid-password.error'
+export * from './password/encrypter/password-encrypter.interface'
