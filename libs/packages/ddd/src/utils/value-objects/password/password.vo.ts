@@ -49,7 +49,6 @@ export class Password extends ValueObject<{
 
     const encrypted = await Password.encrypt(original)
     return Result.ok(Reflect.construct(this, [{ original, encrypted }]))
-    // return Result.ok(new Password({ original, encrypted }))
   }
 
   static fromEncrypted(encrypted: string): Password {
