@@ -21,26 +21,26 @@ export class CustomString extends ValueObject<{ value: string }> {
    * Creates a new string with the given value, validator and error message
    * @factory
    */
-  static create<S extends CustomString>(
+  static create<S extends CustomString, E extends InvalidStringError>(
     value: string
-  ): Result<S, InvalidStringError>
+  ): Result<S, E>
 
-  static create<S extends CustomString>(
+  static create<S extends CustomString, E extends InvalidStringError>(
     value: string,
     validator: StringValidator,
     error: StringValidatorError
-  ): Result<S, InvalidStringError>
+  ): Result<S, E>
 
-  static create<S extends CustomString>(
+  static create<S extends CustomString, E extends InvalidStringError>(
     value: string,
     validator?: StringValidator,
     error?: StringValidatorError
-  ): Result<S, InvalidStringError> {
+  ): Result<S, E> {
     const result = validator ? validator(value) : this.isValid(value)
     const resultError = error ? error(value) : this.error(value)
     return result
-      ? Result.ok(Reflect.construct(this, [{ value }]))
-      : Result.fail(resultError)
+      ? Result.ok<S, E>(Reflect.construct(this, [{ value }]))
+      : Result.fail<S, E>(resultError as E)
   }
 
   static isValid(value: string): boolean {

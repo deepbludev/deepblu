@@ -44,10 +44,9 @@ export class Password extends CustomString {
     const result = validator ? validator(original) : this.isValid(original)
     const resultError = error ? error(original) : this.error(original)
 
-    if (!result) return Result.fail(resultError)
-
-    const value = Password.encrypt(original)
-    return Result.ok(Reflect.construct(this, [{ value }]))
+    return result
+      ? Result.ok(new this({ value: Password.encrypt(original) }))
+      : Result.fail(resultError)
   }
 
   static fromEncrypted(encrypted: string): Password {
