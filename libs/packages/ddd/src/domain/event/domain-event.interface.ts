@@ -12,7 +12,7 @@ export interface IDomainEvent<P extends IPayload = IPayload>
   timestamp: number // in milliseconds
 }
 
-export interface DomainEventFactory<P extends IPayload = IPayload> {
+export interface IDomainEventFactory<P extends IPayload = IPayload> {
   aggregate: string
   canonical: string
   with: (payload: P, id: IUniqueID) => any
@@ -20,4 +20,4 @@ export interface DomainEventFactory<P extends IPayload = IPayload> {
 }
 
 export type DomainEventClass<P extends IPayload = IPayload> = Constructor &
-  DomainEventFactory<P>
+  IDomainEventFactory<P>

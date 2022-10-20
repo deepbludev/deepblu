@@ -27,11 +27,14 @@ export abstract class EventStore<
     super(eventbus)
   }
 
-  protected async persist(aggregate: A): Promise<void> {
+  protected async persist(
+    aggregate: A,
+    expectedVersion?: number
+  ): Promise<void> {
     const current = await this.version(aggregate.id)
-    if (current !== aggregate.version)
-      throw new ConcurrencyError(aggregate, current)
-    const { id, version, changes } = aggregate
+    const version = expectedVersion ?? aggregate.version
+    if (current !== version) throw new ConcurrencyError(aggregate, current)
+    const { id, changes } = aggregate
     await this.stream.append(id.value, changes, version + changes.length)
   }
 

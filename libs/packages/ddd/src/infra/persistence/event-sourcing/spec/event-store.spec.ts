@@ -1,12 +1,12 @@
-import { AggregateStub } from '../../../../domain/__mocks__'
 import { IDomainEvent, UUID } from '../../../../domain'
+import { AggregateStub } from '../../../../domain/__mocks__'
 import {
   EventBusMock,
   EventStoreMock,
   EventStreamMock,
 } from '../../../__mocks__'
-import { EventStore } from '../event-store'
 import { ConcurrencyError } from '../errors/event-sourcing.errors'
+import { EventStore } from '../event-store'
 
 describe(EventStore, () => {
   let eventstream: EventStreamMock
@@ -71,9 +71,10 @@ describe(EventStore, () => {
   })
 
   it('should throw a ConcurrencyError when trying to save an aggregate with a version that differs from the current stream version', async () => {
+    const original = await eventstore.get(aggregate.id)
     const fetched = await eventstore.get(aggregate.id)
 
-    if (fetched) {
+    if (fetched && original) {
       fetched.updateProps({ foo: 'qux' })
       fetched.toggle()
       expect(fetched?.version).toEqual(4)
@@ -82,6 +83,18 @@ describe(EventStore, () => {
 
       await eventstore.save(fetched)
       expect(await eventstore.version(aggregate.id)).toBe(6)
+
+      expect(async () => {
+        await eventstore.save(original)
+      }).rejects.toThrowError(ConcurrencyError.with(original, 6))
+
+      expect(async () => {
+        await eventstore.save(original, 6)
+      }).not.toThrowError()
+
+      expect(async () => {
+        await eventstore.save(original, 4)
+      }).rejects.toThrowError(ConcurrencyError.with(original, 6))
     }
 
     const refetched = await eventstore.get(aggregate.id)

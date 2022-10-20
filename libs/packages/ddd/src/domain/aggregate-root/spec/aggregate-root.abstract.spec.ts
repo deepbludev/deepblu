@@ -1,8 +1,8 @@
+import { AggregateStub } from '../../__mocks__'
 import {
-  AggregateStub,
-  PropsUpdatedStub,
   AggregateToggledStub,
-} from '../../__mocks__'
+  PropsUpdatedStub,
+} from '../../__mocks__/events.stub'
 import { IAggregateRoot } from '../aggregate-root.abstract'
 
 describe(IAggregateRoot, () => {

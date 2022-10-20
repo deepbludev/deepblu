@@ -14,5 +14,6 @@
     "**/*.spec.ts",
     "**/__mocks__/**/*.ts",
     "**/*.d.ts",
+    "src/application/subscriptions/event-subscriber.mock.ts",
   ]
 }
