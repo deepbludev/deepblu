@@ -1,8 +1,8 @@
 import { EventBusMock, AggregateRepoMock } from '../../../infra/__mocks__'
 import { AggregateStub } from '../../__mocks__'
-import { IRepo } from '../repo.abstract'
+import { IEventPublisherRepo } from '../event-publiser-repo.abstract'
 
-describe(IRepo, () => {
+describe(IEventPublisherRepo, () => {
   let repo: AggregateRepoMock
   let eventbus: EventBusMock
   let aggregage: AggregateStub
@@ -16,7 +16,7 @@ describe(IRepo, () => {
   })
 
   it('should be defined', () => {
-    expect(IRepo).toBeDefined()
+    expect(IEventPublisherRepo).toBeDefined()
     expect(AggregateRepoMock).toBeDefined()
   })
 

@@ -2,32 +2,37 @@ import {
   AggregateCreatedStub,
   AggregateToggledStub,
   PropsUpdatedStub,
-} from '../../domain/__mocks__/events.stub'
-import { IEventSubscriber } from '../../domain/event/event-subscriber.interface'
-import { IDomainEvent } from '../../domain'
+} from '../../domain/__mocks__'
+import { eventSubscriber, IDomainEvent, IEventSubscriber } from '../../domain'
 
-export class EventSubscriberMock
-  implements IEventSubscriber<AggregateCreatedStub | PropsUpdatedStub>
-{
+@eventSubscriber(AggregateCreatedStub, PropsUpdatedStub)
+export class EventSubscriberMock extends IEventSubscriber<
+  AggregateCreatedStub | PropsUpdatedStub
+> {
   private _on: jest.Mock = jest.fn()
   on(event: IDomainEvent): Promise<void> {
     return this._on(event)
   }
-
-  get subscriptions() {
-    return [AggregateCreatedStub, PropsUpdatedStub]
-  }
 }
 
-export class OtherEventSubscriberMock
-  implements IEventSubscriber<PropsUpdatedStub | AggregateToggledStub>
-{
+export class OtherEventSubscriberMock extends IEventSubscriber<
+  PropsUpdatedStub | AggregateToggledStub
+> {
+  override get subscriptions() {
+    return [AggregateToggledStub, PropsUpdatedStub]
+  }
+
   private _on: jest.Mock = jest.fn()
   on(event: AggregateToggledStub): Promise<void> {
     return this._on(event)
   }
+}
 
-  get subscriptions() {
-    return [AggregateToggledStub, PropsUpdatedStub]
+export class EmptyEventSubscriberMock extends IEventSubscriber<
+  PropsUpdatedStub | AggregateToggledStub
+> {
+  private _on: jest.Mock = jest.fn()
+  on(event: AggregateToggledStub): Promise<void> {
+    return this._on(event)
   }
 }

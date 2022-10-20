@@ -2,7 +2,7 @@ import {
   IAggregateRoot,
   IDomainEvent,
   IEventBus,
-  IRepo,
+  IEventPublisherRepo,
   IUniqueID,
 } from '../../../domain'
 import { ConcurrencyError } from './errors/event-sourcing.errors'
@@ -18,18 +18,23 @@ export interface AggregateType<A extends IAggregateRoot> {
  * It can be either extended or implemented as an interface.
  * It should be used to persist events in a stream
  */
-export abstract class EventStore<A extends IAggregateRoot> extends IRepo<A> {
+export abstract class EventStore<
+  A extends IAggregateRoot
+> extends IEventPublisherRepo<A> {
   protected aggregateClass: AggregateType<A> = IAggregateRoot
 
   constructor(protected readonly stream: IEventStream, eventbus: IEventBus) {
     super(eventbus)
   }
 
-  protected async persist(aggregate: A): Promise<void> {
+  protected async persist(
+    aggregate: A,
+    expectedVersion?: number
+  ): Promise<void> {
     const current = await this.version(aggregate.id)
-    if (current !== aggregate.version)
-      throw new ConcurrencyError(aggregate, current)
-    const { id, version, changes } = aggregate
+    const version = expectedVersion ?? aggregate.version
+    if (current !== version) throw new ConcurrencyError(aggregate, current)
+    const { id, changes } = aggregate
     await this.stream.append(id.value, changes, version + changes.length)
   }
 

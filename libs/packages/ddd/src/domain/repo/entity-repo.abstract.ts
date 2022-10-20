@@ -10,14 +10,14 @@ import { IUniqueID } from '../uid/unique-id.vo'
  * @abstract
  */
 export abstract class IEntityRepo<E extends IEntity> {
-  protected abstract persist(entity: E): Promise<void>
   abstract get(id: IUniqueID): Promise<E | null>
+  protected abstract persist(entity: E, expectedVersion?: number): Promise<void>
 
   async exists(id: IUniqueID): Promise<boolean> {
     return !!(await this.get(id))
   }
 
-  async save(entity: E): Promise<void> {
-    await this.persist(entity)
+  async save(entity: E, version?: number): Promise<void> {
+    await this.persist(entity, version)
   }
 }

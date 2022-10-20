@@ -1,8 +1,7 @@
-import { IRepo } from '../../domain/repo/repo.abstract'
-import { IUniqueID } from '../../domain/uid/unique-id.vo'
-import { AggregateStub } from '../../domain/__mocks__/aggregate.stub'
+import { IEventPublisherRepo, IUniqueID } from '../../domain'
+import { AggregateStub } from '../../domain/__mocks__'
 
-export class AggregateRepoMock extends IRepo<AggregateStub> {
+export class AggregateRepoMock extends IEventPublisherRepo<AggregateStub> {
   readonly aggregates: Map<string, AggregateStub> = new Map()
 
   protected async persist(entity: AggregateStub): Promise<void> {
