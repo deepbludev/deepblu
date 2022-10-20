@@ -11,7 +11,7 @@ describe(CustomText, () => {
     const subject = CustomText.create('')
     expect(subject.isFail).toBe(true)
     expect(subject.error).toEqual(
-      new InvalidStringError(`Custom text must not be empty.`)
+      new InvalidStringError('Custom text must not be empty')
     )
   })
 })

@@ -2,41 +2,53 @@ import { Result, ValueObject } from '../../../domain'
 import { InvalidStringError } from './invalid-string.error'
 
 export type StringValidator = (value: string) => boolean
-export type StringValidatorMessage = (value: string) => string
+export type StringValidatorError = (value: string) => InvalidStringError
 
 export class CustomString extends ValueObject<{ value: string }> {
-  public static readonly MIN = 1
-  public static readonly MAX = 255
+  protected static readonly MIN: number = 1
+  protected static readonly MAX: number = 255
 
   public static readonly validate: StringValidator = (value: string): boolean =>
-    value.length >= CustomString.MIN && value.length <= CustomString.MAX
+    value.length >= this.MIN && value.length <= this.MAX
 
-  public static readonly message: StringValidatorMessage = (
-    value: string
-  ): string =>
-    `Custom string must not be empty and must be less than ${CustomString.MAX} characters.
-     Received ${value.length} characters.`
+  public static readonly error: StringValidatorError = (value: string) =>
+    InvalidStringError.with(
+      `Custom string must not be empty and must be less than ${CustomString.MAX} characters. ` +
+        `Received ${value.length} characters.`
+    )
 
   /**
    * Creates a new string with the given value, validator and error message
    * @factory
    */
-  static create<T extends CustomString>(value: string): Result<T>
-  static create<T extends CustomString>(
+  static create<S extends CustomString, E extends InvalidStringError>(
+    value: string
+  ): Result<S, E>
+
+  static create<S extends CustomString, E extends InvalidStringError>(
     value: string,
     validator: StringValidator,
-    message: StringValidatorMessage
-  ): Result<T>
-  static create<T extends CustomString>(
+    error: StringValidatorError
+  ): Result<S, E>
+
+  static create<S extends CustomString, E extends InvalidStringError>(
     value: string,
     validator?: StringValidator,
-    message?: StringValidatorMessage
-  ): Result<T> {
-    const result = validator ? validator(value) : this.validate(value)
-    const resultMsg = message ? message(value) : this.message(value)
+    error?: StringValidatorError
+  ): Result<S, E> {
+    const result = validator ? validator(value) : this.isValid(value)
+    const resultError = error ? error(value) : this.error(value)
     return result
-      ? Result.ok(Reflect.construct(this, [{ value }]))
-      : Result.fail(InvalidStringError.with(resultMsg))
+      ? Result.ok<S, E>(Reflect.construct(this, [{ value }]))
+      : Result.fail<S, E>(resultError as E)
+  }
+
+  static isValid(value: string): boolean {
+    return this.validate(value)
+  }
+
+  public static override isValidProps(props: { value: string }): boolean {
+    return this.isValid(props.value)
   }
 
   get value(): string {

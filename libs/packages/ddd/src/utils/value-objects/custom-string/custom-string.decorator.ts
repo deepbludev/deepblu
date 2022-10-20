@@ -1,27 +1,27 @@
-import { StringValidator, StringValidatorMessage } from './custom-string.vo'
+import { StringValidator, StringValidatorError } from './custom-string.vo'
 
 /**
  * Custom string decorator
  * @decorator
  * @example
  * @customString({
- *   validator: (value) => value.startsWith('valid'),
- *   message: (value) => 'Custom error message: ' + value
+ *   validator: (value: string) => value.startsWith('valid'),
+ *   error: (value: string) => () => InvalidStringError.with('Custom error message: ' + value)
  * })
  * class MyString extends CustomString {}
  *
  */
 export const customString = (opts: {
   validator: StringValidator
-  message: StringValidatorMessage
+  error: StringValidatorError
 }) =>
   function <
     T extends {
       validate: StringValidator
-      message: StringValidatorMessage
+      error: StringValidatorError
     }
   >(CustomStringClass: T) {
     CustomStringClass.validate = opts.validator
-    CustomStringClass.message = opts.message
+    CustomStringClass.error = opts.error
     return CustomStringClass
   }
