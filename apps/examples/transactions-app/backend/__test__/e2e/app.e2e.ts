@@ -1,5 +1,5 @@
 import { HttpStatus } from '@nestjs/common'
-import { txInputStub } from '@examples/transactions-app/contexts/core/tx/modules/transaction/test'
+import { txInputStub } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/test'
 import { TestEnvironment } from '../utils/test-environment.util'
 
 describe('AppController (e2e)', () => {
