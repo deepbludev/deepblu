@@ -37,7 +37,7 @@
       "@deepblu/ioc": [
         "libs/packages/ioc/src/index.ts"
       ],
-      "@examples/transactions-app/contexts/core/tx/modules/transaction/test": [
+      "@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/test": [
         "libs/examples/transactions-app/contexts/core/tx/modules/transaction/test/src/index.ts"
       ]
     }
