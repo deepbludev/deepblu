@@ -4,6 +4,6 @@ import { Controller, Get } from '@nestjs/common'
 export class StatusController {
   @Get('status')
   status() {
-    return { message: '[projects-app API] All systems operational.' }
+    return { message: '[transactions-app] All systems operational.' }
   }
 }
