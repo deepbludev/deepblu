@@ -32,13 +32,13 @@ describe('AppController (e2e)', () => {
             .expect(HttpStatus.CREATED)
         })
 
-        it('should return 400 when body is invalid', () => {
-          return e2e
-            .request()
-            .post('/transaction')
-            .send({ clientId: '1' })
-            .expect(HttpStatus.BAD_REQUEST)
-        })
+        // it('should return 400 when body is invalid', () => {
+        //   return e2e
+        //     .request()
+        //     .post('/transaction')
+        //     .send({ clientId: '1' })
+        //     .expect(HttpStatus.BAD_REQUEST)
+        // })
       })
     })
   })

@@ -11,13 +11,20 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2022", "dom"],
+    "lib": [
+      "es2022",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@deepblu/ddd": ["libs/packages/ddd/src/index.ts"],
-      "@deepblu/ddd-utils": ["libs/packages/ddd-utils/src/index.ts"],
+      "@deepblu/ddd": [
+        "libs/packages/ddd/src/index.ts"
+      ],
+      "@deepblu/ddd-utils": [
+        "libs/packages/ddd-utils/src/index.ts"
+      ],
       "@deepblu/examples/transactions-app/contexts/core/tx/main": [
         "libs/examples/transactions-app/contexts/core/tx/main/src/index.ts"
       ],
@@ -27,11 +34,16 @@
       "@deepblu/examples/transactions-app/contexts/core/tx/shared/domain": [
         "libs/examples/transactions-app/contexts/core/tx/shared/domain/src/index.ts"
       ],
-      "@deepblu/ioc": ["libs/packages/ioc/src/index.ts"],
+      "@deepblu/ioc": [
+        "libs/packages/ioc/src/index.ts"
+      ],
       "@examples/transactions-app/contexts/core/tx/modules/transaction/test": [
         "libs/examples/transactions-app/contexts/core/tx/modules/transaction/test/src/index.ts"
       ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
