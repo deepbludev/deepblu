@@ -1,4 +1,4 @@
 {
-  "name": "@examples/transactions-app/contexts/core/tx/modules/transaction/test",
+  "name": "@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/test",
   "version": "0.0.1"
 }
