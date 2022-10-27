@@ -1,4 +1,5 @@
 import { HttpStatus } from '@nestjs/common'
+import { txInputStub } from '@examples/transactions-app/contexts/core/tx/modules/transaction/test'
 import { TestEnvironment } from '../utils/test-environment.util'
 
 describe('AppController (e2e)', () => {
@@ -20,25 +21,25 @@ describe('AppController (e2e)', () => {
     })
   })
 
-  // describe('/transaction', () => {
-  //   describe('POST', () => {
-  //     describe('when touching endpoint', () => {
-  //       it('should return 200 when body is valid', () => {
-  //         return e2e
-  //           .request()
-  //           .post('/transaction')
-  //           .send(txInputStub({ clientId: 1 }))
-  //           .expect(HttpStatus.CREATED)
-  //       })
+  describe('/transaction', () => {
+    describe('POST', () => {
+      describe('when touching endpoint', () => {
+        it('should return 200 when body is valid', () => {
+          return e2e
+            .request()
+            .post('/transaction')
+            .send(txInputStub({ clientId: '1' }))
+            .expect(HttpStatus.CREATED)
+        })
 
-  //       it('should return 400 when body is invalid', () => {
-  //         return e2e
-  //           .request()
-  //           .post('/transaction')
-  //           .send({ clientId: 1 })
-  //           .expect(HttpStatus.BAD_REQUEST)
-  //       })
-  //     })
-  //   })
-  // })
+        it('should return 400 when body is invalid', () => {
+          return e2e
+            .request()
+            .post('/transaction')
+            .send({ clientId: '1' })
+            .expect(HttpStatus.BAD_REQUEST)
+        })
+      })
+    })
+  })
 })
