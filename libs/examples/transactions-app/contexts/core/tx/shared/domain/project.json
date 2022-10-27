@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/examples/transactions-app/contexts/core/tx/shared/domain/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/examples/transactions-app/contexts/core/tx/shared/domain",
+        "tsConfig": "libs/examples/transactions-app/contexts/core/tx/shared/domain/tsconfig.lib.json",
+        "packageJson": "libs/examples/transactions-app/contexts/core/tx/shared/domain/package.json",
+        "main": "libs/examples/transactions-app/contexts/core/tx/shared/domain/src/index.ts",
+        "assets": [
+          "libs/examples/transactions-app/contexts/core/tx/shared/domain/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/examples/transactions-app/contexts/core/tx/shared/domain/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/examples/transactions-app/contexts/core/tx/shared/domain/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
