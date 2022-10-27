@@ -67,7 +67,7 @@
     "e2e": {
       "executor": "@nrwl/jest:jest",
       "options": {
-        "jestConfig": "apps/examples/transactions-app/backend/e2e/jest.e2e.config.ts",
+        "jestConfig": "apps/examples/transactions-app/backend/__test__/jest.e2e.config.ts",
         "passWithNoTests": true
       }
     }

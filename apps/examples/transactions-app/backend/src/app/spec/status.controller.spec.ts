@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { StatusController } from './status.controller'
+import { StatusController } from '../status.controller'
 
 describe('StatusController', () => {
   let app: TestingModule

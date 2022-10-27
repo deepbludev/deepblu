@@ -9,7 +9,7 @@
     ]
   },
   "include": [
-    "e2e/jest.e2e.config.ts",
+    "__test__/jest.e2e.config.ts",
     "**/*.e2e.ts",
     "**/*.d.ts"
   ]
