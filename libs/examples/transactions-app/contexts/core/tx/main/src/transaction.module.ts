@@ -23,4 +23,9 @@ export class TransactionModule implements NestModule {
       .apply(LoggerMiddleware)
       .forRoutes({ path: 'transaction', method: RequestMethod.POST })
   }
+
+  onModuleInit() {
+    console.log('TransactionModule initialized')
+    // const commandbus = this.moduleRef.get<ICommandBus>(ICommandBus)
+  }
 }
