@@ -1,5 +1,11 @@
-import { Module } from '@nestjs/common'
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common'
 import { TransactionController } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/ui'
+import { LoggerMiddleware } from '@deepblu/examples/transactions-app/contexts/core/tx/shared/infra'
 
 @Module({
   imports: [],
@@ -7,12 +13,10 @@ import { TransactionController } from '@deepblu/examples/transactions-app/contex
   providers: [],
   exports: [],
 })
-export class TransactionModule {}
-
-// export class TransactionModule implements NestModule {
-//   configure(consumer: MiddlewareConsumer) {
-//     consumer
-//       .apply(LoggerMiddleware)
-//       .forRoutes({ path: 'transaction', method: RequestMethod.POST })
-//   }
-// }
+export class TransactionModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes({ path: 'transaction', method: RequestMethod.POST })
+  }
+}
