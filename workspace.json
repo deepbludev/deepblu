@@ -7,6 +7,7 @@
     "examples-projects-app-frontend-e2e": "apps/examples/projects-app/frontend-e2e",
     "examples-transactions-app-backend": "apps/examples/transactions-app/backend",
     "examples-transactions-app-contexts-core-tx-main": "libs/examples/transactions-app/contexts/core/tx/main",
+    "examples-transactions-app-contexts-core-tx-modules-transaction-application": "libs/examples/transactions-app/contexts/core/tx/modules/transaction/application",
     "examples-transactions-app-contexts-core-tx-modules-transaction-test": "libs/examples/transactions-app/contexts/core/tx/modules/transaction/test",
     "examples-transactions-app-contexts-core-tx-modules-transaction-ui": "libs/examples/transactions-app/contexts/core/tx/modules/transaction/ui",
     "examples-transactions-app-contexts-core-tx-shared-domain": "libs/examples/transactions-app/contexts/core/tx/shared/domain",
