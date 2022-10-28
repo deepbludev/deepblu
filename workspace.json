@@ -10,6 +10,7 @@
     "examples-transactions-app-contexts-core-tx-modules-transaction-application": "libs/examples/transactions-app/contexts/core/tx/modules/transaction/application",
     "examples-transactions-app-contexts-core-tx-modules-transaction-test": "libs/examples/transactions-app/contexts/core/tx/modules/transaction/test",
     "examples-transactions-app-contexts-core-tx-modules-transaction-ui": "libs/examples/transactions-app/contexts/core/tx/modules/transaction/ui",
+    "examples-transactions-app-contexts-core-tx-shared-application": "libs/examples/transactions-app/contexts/core/tx/shared/application",
     "examples-transactions-app-contexts-core-tx-shared-domain": "libs/examples/transactions-app/contexts/core/tx/shared/domain",
     "examples-transactions-app-contexts-core-tx-shared-infra": "libs/examples/transactions-app/contexts/core/tx/shared/infra",
     "packages-ddd": "libs/packages/ddd",

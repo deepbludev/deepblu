@@ -4,15 +4,17 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common'
+import { ICommandBus } from '@deepblu/ddd'
 import {
   CreateTransactionController,
   LoggerMiddleware,
 } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/ui'
+import { CommandBus } from '@deepblu/examples/transactions-app/contexts/core/tx/shared/infra'
 
 @Module({
   imports: [],
   controllers: [CreateTransactionController],
-  providers: [],
+  providers: [{ provide: ICommandBus, useClass: CommandBus }],
   exports: [],
 })
 export class TransactionModule implements NestModule {

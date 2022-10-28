@@ -1,21 +1,20 @@
+import { ICommandBus } from '@deepblu/ddd'
 import { Controller, Post, Body, UsePipes } from '@nestjs/common'
 import { BodyValidationPipe } from '../../pipes/body.validation.pipe'
 import {
-  CreateTransactionSchema,
+  CreateTransaction,
   CreateTransactionDTO,
-} from './create.transaction.dto'
+  CreateTransactionSchema,
+} from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/application'
 
 @Controller('transaction')
 export class CreateTransactionController {
-  // constructor(private readonly creator: TransactionCreator) {}
+  constructor(private readonly commandbus: ICommandBus) {}
 
   @Post()
   @UsePipes(BodyValidationPipe.with(CreateTransactionSchema))
   async create(@Body() input: CreateTransactionDTO) {
-    // const { amount, currency } = await this.creator.run({
-    //   ...input,
-    //   amount: +input.amount,
-    // })
+    this.commandbus.dispatch(CreateTransaction.with(input))
 
     return { status: 'Success', input }
   }

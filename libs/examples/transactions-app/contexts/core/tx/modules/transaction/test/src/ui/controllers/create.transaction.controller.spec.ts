@@ -1,11 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing'
+import { ICommandBus } from '@deepblu/ddd'
 import { CreateTransactionController } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/ui'
+import { CreateTransaction } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/application'
 import { transactionModuleMock } from '../../__mocks__/transaction.module.mock'
 import { txInputStub } from '../../__mocks__/transaction-input.stub'
 
 describe(CreateTransactionController.name, () => {
   let txCtrl: CreateTransactionController
-  // let txCreatorSpy: jest.SpyInstance
+  let dispatchSpy: jest.SpyInstance
 
   beforeAll(async () => {
     const app: TestingModule = await Test.createTestingModule(
@@ -13,10 +15,7 @@ describe(CreateTransactionController.name, () => {
     ).compile()
 
     txCtrl = app.get(CreateTransactionController)
-    // txCreatorSpy = jest.spyOn(
-    //   app.get<TransactionCreator>(TransactionCreator),
-    //   'run'
-    // )
+    dispatchSpy = jest.spyOn(app.get<ICommandBus>(ICommandBus), 'dispatch')
   })
 
   it('should be defined', () => {
@@ -29,10 +28,8 @@ describe(CreateTransactionController.name, () => {
       const result = await txCtrl.create(input)
 
       expect(result).toEqual({ status: 'Success', input })
-      // expect(txCreatorSpy).toHaveBeenCalledWith({
-      //   ...input,
-      //   amount: +input.amount,
-      // })
+      // expect(dispatchSpy).toHaveBeenCalled()
+      expect(dispatchSpy).toHaveBeenCalledWith(CreateTransaction.with(input))
     })
   })
 })

@@ -1,5 +1,5 @@
 import { Currency } from '@deepblu/examples/transactions-app/contexts/core/tx/shared/domain'
-import { CreateTransactionDTO } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/ui'
+import { CreateTransactionDTO } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/application'
 
 export const txInputStub = (
   props?: Partial<CreateTransactionDTO>

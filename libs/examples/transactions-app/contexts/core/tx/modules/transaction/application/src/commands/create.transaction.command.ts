@@ -1,4 +1,5 @@
 import { string, z } from 'zod'
+import { Command } from '@deepblu/ddd'
 import {
   CURRENCIES,
   Currency,
@@ -18,3 +19,5 @@ export const CreateTransactionSchema = z.object({
 })
 
 export type CreateTransactionDTO = z.infer<typeof CreateTransactionSchema>
+
+export class CreateTransaction extends Command<CreateTransactionDTO> {}

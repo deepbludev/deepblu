@@ -1,1 +1,1 @@
-export * from './lib/examples-transactions-app-contexts-core-tx-modules-transaction-application'
+export * from './commands/create.transaction.command'
