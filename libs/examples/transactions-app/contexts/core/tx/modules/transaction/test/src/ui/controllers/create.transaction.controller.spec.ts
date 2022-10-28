@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { TransactionController } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/ui'
+import { CreateTransactionController } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/ui'
 import { transactionModuleMock } from '../../__mocks__/transaction.module.mock'
 import { txInputStub } from '../../__mocks__/transaction-input.stub'
 
-describe(TransactionController.name, () => {
-  let txCtrl: TransactionController
+describe(CreateTransactionController.name, () => {
+  let txCtrl: CreateTransactionController
   // let txCreatorSpy: jest.SpyInstance
 
   beforeAll(async () => {
@@ -12,7 +12,7 @@ describe(TransactionController.name, () => {
       transactionModuleMock()
     ).compile()
 
-    txCtrl = app.get(TransactionController)
+    txCtrl = app.get(CreateTransactionController)
     // txCreatorSpy = jest.spyOn(
     //   app.get<TransactionCreator>(TransactionCreator),
     //   'run'
@@ -28,7 +28,7 @@ describe(TransactionController.name, () => {
       const input = txInputStub()
       const result = await txCtrl.create(input)
 
-      expect(result).toEqual({ status: 'success', input })
+      expect(result).toEqual({ status: 'Success', input })
       // expect(txCreatorSpy).toHaveBeenCalledWith({
       //   ...input,
       //   amount: +input.amount,

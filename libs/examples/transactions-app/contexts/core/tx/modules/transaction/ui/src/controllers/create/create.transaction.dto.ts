@@ -17,6 +17,4 @@ export const CreateTransactionSchema = z.object({
   clientId: string().uuid({ message: 'Client ID must be a valid UUID' }),
 })
 
-export type CreateTransactionRequestDTO = z.infer<
-  typeof CreateTransactionSchema
->
+export type CreateTransactionDTO = z.infer<typeof CreateTransactionSchema>
