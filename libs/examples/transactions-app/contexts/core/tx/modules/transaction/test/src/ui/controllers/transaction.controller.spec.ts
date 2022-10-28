@@ -25,7 +25,7 @@ describe(TransactionController.name, () => {
 
   describe('create', () => {
     it('should return success when body is valid', async () => {
-      const input = txInputStub({ clientId: '1' })
+      const input = txInputStub()
       const result = await txCtrl.create(input)
 
       expect(result).toEqual({ status: 'success', input })

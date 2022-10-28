@@ -40,7 +40,7 @@ export class TestEnvironment {
     ])
   }
 
-  public logger: TestLogger
+  public logger: TestLogger = new TestLogger()
 
   useLogger(logger?: TestLogger) {
     this.logger = logger || this.logger || new TestLogger()

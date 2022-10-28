@@ -170,4 +170,6 @@ export enum Currency {
   ZWL = 'ZWL',
 }
 
+export const CURRENCIES = Object.values(Currency)
+
 export type CurrencyType = keyof typeof Currency

@@ -28,7 +28,7 @@ describe('AppController (e2e)', () => {
           return e2e
             .request()
             .post('/transaction')
-            .send(txInputStub({ clientId: '1' }))
+            .send(txInputStub())
             .expect(HttpStatus.CREATED)
         })
 
