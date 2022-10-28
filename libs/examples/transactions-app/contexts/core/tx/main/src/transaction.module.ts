@@ -4,8 +4,10 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common'
-import { TransactionController } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/ui'
-import { LoggerMiddleware } from '@deepblu/examples/transactions-app/contexts/core/tx/shared/infra'
+import {
+  TransactionController,
+  LoggerMiddleware,
+} from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/ui'
 
 @Module({
   imports: [],

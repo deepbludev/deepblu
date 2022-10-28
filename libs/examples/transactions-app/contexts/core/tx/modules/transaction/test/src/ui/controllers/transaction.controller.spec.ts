@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { TransactionController } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/ui'
-import { transactionModuleMock } from '../__mocks__/transaction.module.mock'
-import { txInputStub } from '../__mocks__/transaction-input.stub'
+import { transactionModuleMock } from '../../__mocks__/transaction.module.mock'
+import { txInputStub } from '../../__mocks__/transaction-input.stub'
 
 describe(TransactionController.name, () => {
   let txCtrl: TransactionController
