@@ -1,7 +1,7 @@
 import { Currency } from '@deepblu/examples/transactions-app/contexts/shared/domain'
 import { CreateTransactionDTO } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
 
-export const txInputStub = (
+export const createTxDTOStub = (
   props?: Partial<CreateTransactionDTO>
 ): CreateTransactionDTO => ({
   date: props?.date ?? new Date().toISOString().split('T')[0],
