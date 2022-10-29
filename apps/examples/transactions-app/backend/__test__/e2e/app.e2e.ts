@@ -1,5 +1,5 @@
 import { HttpStatus } from '@nestjs/common'
-import { txInputStub } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
+import { createTxDTOStub } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
 import { TestEnvironment } from '../utils/test-environment.util'
 
 describe('AppController (e2e)', () => {
@@ -28,7 +28,7 @@ describe('AppController (e2e)', () => {
           return e2e
             .request()
             .post('/transaction')
-            .send(txInputStub())
+            .send(createTxDTOStub())
             .expect(HttpStatus.CREATED)
         })
 
