@@ -22,12 +22,6 @@
       "@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/application": [
         "libs/examples/transactions-app/contexts/core/tx/modules/transaction/application/src/index.ts"
       ],
-      "@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/test": [
-        "libs/examples/transactions-app/contexts/core/tx/modules/transaction/test/src/index.ts"
-      ],
-      "@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/ui": [
-        "libs/examples/transactions-app/contexts/core/tx/modules/transaction/ui/src/index.ts"
-      ],
       "@deepblu/examples/transactions-app/contexts/core/tx/shared": [
         "libs/examples/transactions-app/contexts/core/tx/shared/application/src/index.ts"
       ],

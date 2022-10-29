@@ -4,15 +4,13 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common'
-import {
-  CreateTransactionController,
-  LoggerMiddleware,
-} from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/ui'
+
+import { TransactionController } from './controllers/transaction.controller'
+import { LoggerMiddleware } from '../shared/middleware/logger/logger.middleware'
 
 @Module({
   imports: [],
-  controllers: [CreateTransactionController],
-
+  controllers: [TransactionController],
   exports: [],
 })
 export class TransactionModule implements NestModule {

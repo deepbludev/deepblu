@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common'
 import { ICommandBus } from '@deepblu/ddd'
-import { CommandBus } from '@deepblu/examples/transactions-app/contexts/core/tx/shared/infra'
+import { CommandBus } from './commandbus'
 import { transactionCommandHandlers } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/application'
 
 const commandbus = new CommandBus()
