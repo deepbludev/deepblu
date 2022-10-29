@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common'
-import { TransactionModule } from '@deepblu/examples/transactions-app/contexts/core/tx/main'
 import { StatusController } from './status.controller'
+import { CqrsModule } from '../modules/cqrs/cqrs.module'
+import { TransactionModule } from '../modules/transactions/transaction.module'
 
 @Module({
-  imports: [TransactionModule],
+  imports: [TransactionModule, CqrsModule],
   controllers: [StatusController],
-  providers: [],
 })
 export class AppModule {}
