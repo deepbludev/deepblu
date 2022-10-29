@@ -12,6 +12,8 @@ export * from './email/custom-email.decorator'
 export * from './email/email.vo'
 export * from './email/invalid-email.error'
 
+export * from './object-id/object-id.vo'
+
 export * from './password/custom-password.decorator'
 export * from './password/invalid-password.error'
 export * from './password/password.vo'

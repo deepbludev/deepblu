@@ -18,7 +18,6 @@
     "baseUrl": ".",
     "paths": {
       "@deepblu/ddd": ["libs/packages/ddd/src/index.ts"],
-      "@deepblu/ddd-utils": ["libs/packages/ddd-utils/src/index.ts"],
       "@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/application": [
         "libs/examples/transactions-app/contexts/core/tx/modules/transaction/application/src/index.ts"
       ],

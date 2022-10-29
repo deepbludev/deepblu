@@ -1,4 +1,4 @@
-import { ObjectID } from '../object-id.vo'
+import { ObjectID } from './object-id.vo'
 
 describe('ObjectID', () => {
   const validId = '62cc6052063ff8fbbb578397' // valid ObjectID taken from actual MongoDB document

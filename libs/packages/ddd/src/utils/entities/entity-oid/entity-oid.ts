@@ -1,5 +1,5 @@
 import { IEntity, IEntityProps, unique } from '@deepblu/ddd'
-import { ObjectID } from '../value-objects/object-id.vo'
+import { ObjectID } from '../../value-objects/object-id/object-id.vo'
 
 @unique(ObjectID)
 export class EntityOID<P extends IEntityProps> extends IEntity<P, ObjectID> {

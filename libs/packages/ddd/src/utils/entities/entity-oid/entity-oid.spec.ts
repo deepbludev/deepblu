@@ -1,5 +1,5 @@
-import { ObjectID } from '../../value-objects/object-id.vo'
-import { EntityOID } from '../entity-oid'
+import { ObjectID } from '../../value-objects'
+import { EntityOID } from './entity-oid'
 
 interface Props {
   foo: string
