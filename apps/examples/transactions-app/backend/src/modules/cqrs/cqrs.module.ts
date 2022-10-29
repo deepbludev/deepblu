@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common'
 import { ICommandBus } from '@deepblu/ddd'
 import { CommandBus } from './commandbus'
-import { transactionCommandHandlers } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/application'
+import { transactionCommandHandlers } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
 
 const commandbus = new CommandBus()
 commandbus.register(transactionCommandHandlers.map(handler => new handler()))

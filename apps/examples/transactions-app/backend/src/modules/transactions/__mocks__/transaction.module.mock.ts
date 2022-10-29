@@ -1,4 +1,4 @@
-import { transactionCommandHandlers } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/application'
+import { transactionCommandHandlers } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
 import { CommandBus } from '../../cqrs/commandbus'
 import { CqrsModule } from '../../cqrs/cqrs.module'
 import { TransactionController } from '../controllers/transaction.controller'

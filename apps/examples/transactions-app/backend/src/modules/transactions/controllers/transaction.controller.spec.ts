@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { ICommandBus } from '@deepblu/ddd'
-import { CreateTransaction } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/application'
-import { txInputStub } from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/application'
+import { CreateTransaction } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
+import { txInputStub } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
 import { transactionModuleMock } from '../__mocks__/transaction.module.mock'
 import { TransactionController } from './transaction.controller'
 

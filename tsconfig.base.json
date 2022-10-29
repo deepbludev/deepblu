@@ -18,17 +18,11 @@
     "baseUrl": ".",
     "paths": {
       "@deepblu/ddd": ["libs/packages/ddd/src/index.ts"],
-      "@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/application": [
-        "libs/examples/transactions-app/contexts/core/tx/modules/transaction/application/src/index.ts"
+      "@deepblu/examples/transactions-app/contexts/core/transaction/application": [
+        "libs/examples/transactions-app/contexts/core/transaction/application/src/index.ts"
       ],
-      "@deepblu/examples/transactions-app/contexts/core/tx/shared": [
-        "libs/examples/transactions-app/contexts/core/tx/shared/application/src/index.ts"
-      ],
-      "@deepblu/examples/transactions-app/contexts/core/tx/shared/domain": [
-        "libs/examples/transactions-app/contexts/core/tx/shared/domain/src/index.ts"
-      ],
-      "@deepblu/examples/transactions-app/contexts/core/tx/shared/infra": [
-        "libs/examples/transactions-app/contexts/core/tx/shared/infra/src/index.ts"
+      "@deepblu/examples/transactions-app/contexts/shared/domain": [
+        "libs/examples/transactions-app/contexts/shared/domain/src/index.ts"
       ],
       "@deepblu/ioc": ["libs/packages/ioc/src/index.ts"]
     }

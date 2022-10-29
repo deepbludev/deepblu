@@ -5,7 +5,7 @@ import {
   CreateTransaction,
   CreateTransactionDTO,
   CreateTransactionSchema,
-} from '@deepblu/examples/transactions-app/contexts/core/tx/modules/transaction/application'
+} from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
 
 @Controller('transaction')
 export class TransactionController {
