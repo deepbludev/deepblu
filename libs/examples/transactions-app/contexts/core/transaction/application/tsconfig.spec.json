@@ -3,18 +3,26 @@
   "compilerOptions": {
     "outDir": "../../../../../../../dist/out-tsc",
     "module": "commonjs",
-    "types": ["jest", "node"]
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "include": [
     "jest.config.ts",
     "**/*.test.ts",
     "**/*.spec.ts",
+    "**/*.mock.ts",
     "**/*.test.tsx",
     "**/*.spec.tsx",
+    "**/*.mock.tsx",
     "**/*.test.js",
     "**/*.spec.js",
+    "**/*.mock.js",
     "**/*.test.jsx",
     "**/*.spec.jsx",
-    "**/*.d.ts"
+    "**/*.mock.jsx",
+    "**/*.d.ts",
+    "**/__mocks__/**/*.ts",
   ]
 }

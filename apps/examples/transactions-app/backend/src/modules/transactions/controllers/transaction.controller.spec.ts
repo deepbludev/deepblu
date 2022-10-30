@@ -37,7 +37,9 @@ describe(TransactionController, () => {
 
   describe('#create', () => {
     beforeAll(async () => {
-      commandbusMock.dispatch.mockReturnValue(Promise.resolve(Result.ok()))
+      commandbusMock.dispatch = jest
+        .fn()
+        .mockReturnValue(Promise.resolve(Result.ok()))
       dispatchSpy = jest.spyOn(commandbusMock, 'dispatch')
     })
 

@@ -13,7 +13,8 @@
     "jest.config.ts",
     "**/*.spec.ts",
     "**/*.test.ts",
-    "**/*.e2e.ts"
+    "**/*.e2e.ts",
+    "**/__mocks__/**/*.ts",
   ],
   "include": [
     "**/*.ts"

@@ -1,8 +1,8 @@
 import { Global, Module } from '@nestjs/common'
-import { ICommandBus } from '@deepblu/ddd'
+import { ICommandBus, Result } from '@deepblu/ddd'
 
 export const commandbusMock = {
-  dispatch: jest.fn(),
+  dispatch: () => Promise.resolve(Result.ok()),
 }
 
 @Global()

@@ -11,6 +11,7 @@
   "include": [
     "__test__/jest.e2e.config.ts",
     "**/*.e2e.ts",
+    "**/__mocks__/**/*.ts",
     "**/*.d.ts"
   ]
 }

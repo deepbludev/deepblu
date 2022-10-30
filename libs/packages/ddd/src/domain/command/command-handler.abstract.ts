@@ -11,5 +11,5 @@ export abstract class ICommandHandler<C extends ICommand = ICommand> {
     return (this.constructor as typeof ICommandHandler).subscription
   }
 
-  abstract handle<E extends Error = Error>(command: C): CommandResponse<E>
+  abstract handle(command: C): CommandResponse
 }
