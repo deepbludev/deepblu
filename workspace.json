@@ -7,6 +7,7 @@
     "examples-projects-app-frontend-e2e": "apps/examples/projects-app/frontend-e2e",
     "examples-transactions-app-backend": "apps/examples/transactions-app/backend",
     "examples-transactions-app-contexts-core-transaction-application": "libs/examples/transactions-app/contexts/core/transaction/application",
+    "examples-transactions-app-contexts-shared-application": "libs/examples/transactions-app/contexts/shared/application",
     "examples-transactions-app-contexts-shared-domain": "libs/examples/transactions-app/contexts/shared/domain",
     "packages-ddd": "libs/packages/ddd",
     "packages-ioc": "libs/packages/ioc"

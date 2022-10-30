@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../../dist/out-tsc",
+    "outDir": "../../../../../../dist/out-tsc",
     "module": "commonjs",
     "types": [
       "jest",
@@ -12,7 +12,13 @@
     "jest.config.ts",
     "**/*.test.ts",
     "**/*.spec.ts",
-    "**/__mocks__/**/*.ts",
+    "**/*.test.tsx",
+    "**/*.spec.tsx",
+    "**/*.test.js",
+    "**/*.spec.js",
+    "**/*.test.jsx",
+    "**/*.spec.jsx",
     "**/*.d.ts",
+    "**/__mocks__/**/*.ts",
   ]
 }

@@ -21,6 +21,9 @@
       "@deepblu/examples/transactions-app/contexts/core/transaction/application": [
         "libs/examples/transactions-app/contexts/core/transaction/application/src/index.ts"
       ],
+      "@deepblu/examples/transactions-app/contexts/shared/application": [
+        "libs/examples/transactions-app/contexts/shared/application/src/index.ts"
+      ],
       "@deepblu/examples/transactions-app/contexts/shared/domain": [
         "libs/examples/transactions-app/contexts/shared/domain/src/index.ts"
       ],
