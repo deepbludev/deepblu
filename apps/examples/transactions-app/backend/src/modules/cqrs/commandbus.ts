@@ -1,11 +1,14 @@
-import { Injectable } from '@nestjs/common'
-import { InMemoryCommandBus } from '@deepblu/ddd'
-import { transactionCommandHandlers } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
+import { Inject, Injectable } from '@nestjs/common'
+import { ICommandHandler, InMemoryCommandBus } from '@deepblu/ddd'
 
+export const COMMAND_HANDLERS = 'COMMAND_HANDLERS'
 @Injectable()
 export class CommandBus extends InMemoryCommandBus {
-  constructor() {
+  constructor(
+    @Inject(COMMAND_HANDLERS)
+    private readonly commandHandlers: ICommandHandler[]
+  ) {
     super()
-    this.register(transactionCommandHandlers.map(handler => new handler()))
+    this.register(this.commandHandlers)
   }
 }
