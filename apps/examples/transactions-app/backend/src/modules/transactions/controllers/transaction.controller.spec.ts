@@ -1,13 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { ICommandBus } from '@deepblu/ddd'
+import { Currency } from '@deepblu/examples/transactions-app/contexts/shared/domain'
 import { CreateTransaction } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
 import { createTxDTOStub } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
 import { TransactionController } from './transaction.controller'
-import { CqrsModuleMock } from '@deepblu/examples/transactions-app/contexts/shared/application'
+import {
+  commandbusMock,
+  CqrsModuleMock,
+} from '@deepblu/examples/transactions-app/contexts/shared/application'
+import { HttpStatus } from '@nestjs/common'
 
 describe(TransactionController, () => {
   let txCtrl: TransactionController
   let dispatchSpy: jest.SpyInstance
+  const dto = createTxDTOStub()
+  const response = {
+    statusCode: HttpStatus.CREATED,
+    status: 'Transaction created successfully',
+    data: { ...dto, commission: 1, currency: Currency.EUR },
+  }
 
   beforeAll(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -15,8 +25,9 @@ describe(TransactionController, () => {
       controllers: [TransactionController],
     }).compile()
 
+    commandbusMock.dispatch.mockReturnValue(Promise.resolve(response))
     txCtrl = app.get(TransactionController)
-    dispatchSpy = jest.spyOn(app.get<ICommandBus>(ICommandBus), 'dispatch')
+    dispatchSpy = jest.spyOn(commandbusMock, 'dispatch')
   })
 
   it('should be defined', () => {
@@ -24,11 +35,8 @@ describe(TransactionController, () => {
   })
 
   describe('create', () => {
-    it('should return success when body is valid', async () => {
-      const dto = createTxDTOStub()
-      const result = await txCtrl.create(dto)
-
-      expect(result).toEqual({ status: 'Success', dto })
+    it('should return success and delegate to commandbus when body is valid', async () => {
+      expect(await txCtrl.create(dto)).toEqual(response)
       expect(dispatchSpy).toHaveBeenCalledWith(CreateTransaction.with(dto))
     })
   })

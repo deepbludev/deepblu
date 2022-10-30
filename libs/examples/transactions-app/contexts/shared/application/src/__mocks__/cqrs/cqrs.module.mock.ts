@@ -1,14 +1,13 @@
-import { Global, Injectable, Module } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 import { ICommandBus } from '@deepblu/ddd'
 
-@Injectable()
-export class CommandBusMock implements ICommandBus {
-  dispatch = jest.fn()
+export const commandbusMock = {
+  dispatch: jest.fn(),
 }
 
 @Global()
 @Module({
-  providers: [{ provide: ICommandBus, useClass: CommandBusMock }],
+  providers: [{ provide: ICommandBus, useValue: commandbusMock }],
   exports: [ICommandBus],
 })
 export class CqrsModuleMock {}
