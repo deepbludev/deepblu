@@ -1,6 +1,9 @@
-export const transactionRepoMock = {
-  exists: jest.fn(),
-  get: jest.fn(),
-  save: jest.fn(),
-  persist: jest.fn(),
+import { IEntityRepo } from '@deepblu/ddd'
+import { TransactionAggregate } from '@deepblu/examples/transactions-app/contexts/core/transaction/domain'
+
+export class TransactionRepoMock extends IEntityRepo<TransactionAggregate> {
+  exists = jest.fn()
+  get = jest.fn()
+  save = jest.fn()
+  persist = jest.fn()
 }

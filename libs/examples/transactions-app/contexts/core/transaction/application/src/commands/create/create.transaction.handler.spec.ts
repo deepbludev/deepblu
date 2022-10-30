@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { TransactionRepo } from '@deepblu/examples/transactions-app/contexts/core/transaction/domain'
 import { createTxDTOStub } from '../../__mocks__/create.transaction.dto.stub'
-import { transactionRepoMock } from '../../__mocks__/transaction.repo.mock'
+import { TransactionRepoMock } from '../../__mocks__/transaction.repo.mock'
 import { CreateTransaction } from './create.transaction.command'
 import { CreateTransactionHandler } from './create.transaction.handler'
 import { Result } from '@deepblu/ddd'
@@ -26,7 +26,7 @@ describe(CreateTransactionHandler, () => {
         CreateTransactionHandler,
         {
           provide: TransactionRepo,
-          useValue: transactionRepoMock,
+          useClass: TransactionRepoMock,
         },
       ],
     }).compile()
