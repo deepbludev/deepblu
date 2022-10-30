@@ -19,15 +19,17 @@ export class CreateTransactionHandler extends ICommandHandler<CreateTransaction>
     super()
   }
 
-  async handle(command: CreateTransaction): CommandResponse {
-    if (await this.repo.exists(UUID.from(command.payload.id).data))
+  async handle({ payload }: CreateTransaction): CommandResponse {
+    const { data: id } = UUID.from(payload.id)
+
+    // TODO: throw custom error if transaction already exists
+    if (await this.repo.exists(id))
       return Result.fail(new Error('Transaction already exists'))
 
-    const result = TransactionAggregate.create(command.payload)
-    if (result.isFail) return Result.fail(result.error)
+    const { data: tx, isFail, error } = TransactionAggregate.create(payload)
+    if (isFail) return Result.fail(error)
 
-    await this.repo.save(result.data)
-
+    await this.repo.save(tx)
     return Result.ok()
   }
 }
