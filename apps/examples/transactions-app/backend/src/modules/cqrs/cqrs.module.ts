@@ -5,19 +5,15 @@ import { CommandBus, COMMAND_HANDLERS } from './commandbus'
 
 const commandHandlers = [...transactionCommandHandlers]
 
-export const commandHandlerProviders = [
-  ...commandHandlers,
-  {
-    provide: COMMAND_HANDLERS,
-    useFactory: (...handlers: ICommandHandler[]) => handlers,
-    inject: commandHandlers,
-  },
-]
-
 @Global()
 @Module({
   providers: [
-    ...commandHandlerProviders,
+    ...commandHandlers,
+    {
+      provide: COMMAND_HANDLERS,
+      useFactory: (...handlers: ICommandHandler[]) => handlers,
+      inject: commandHandlers,
+    },
     { provide: ICommandBus, useClass: CommandBus },
   ],
   exports: [ICommandBus],

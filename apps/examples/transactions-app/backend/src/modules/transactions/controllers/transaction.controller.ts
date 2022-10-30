@@ -15,10 +15,14 @@ export class TransactionController {
   @UsePipes(BodyValidationPipe.with(CreateTransactionSchema))
   async create(@Body() dto: CreateTransactionDTO) {
     const response = await this.commandbus.dispatch(CreateTransaction.with(dto))
-    return {
-      statusCode: HttpStatus.CREATED,
-      status: 'Transaction created successfully',
-      data: response.data,
-    }
+
+    if (response.isOk)
+      return {
+        statusCode: HttpStatus.CREATED,
+        status: 'Transaction created successfully',
+        data: {
+          id: dto.id,
+        },
+      }
   }
 }

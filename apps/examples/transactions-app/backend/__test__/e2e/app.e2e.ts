@@ -25,19 +25,16 @@ describe('AppController (e2e)', () => {
     describe('POST', () => {
       describe('when touching endpoint', () => {
         it('should return 201 when body is valid', () => {
+          const dto = createTxDTOStub()
           return e2e
             .request()
             .post('/transaction')
-            .send(createTxDTOStub())
+            .send(dto)
             .expect(HttpStatus.CREATED)
             .expect({
               statusCode: HttpStatus.CREATED,
               status: 'Transaction created successfully',
-              data: {
-                ...createTxDTOStub(),
-                commission: 0.5,
-                currency: 'EUR',
-              },
+              data: { id: dto.id },
             })
         })
 
@@ -46,9 +43,10 @@ describe('AppController (e2e)', () => {
             .request()
             .post('/transaction')
             .send({
-              date: '2022-10-241',
+              id: '88cc384c-eb13-4eee-af43-9f64c36f9e99_',
+              date: '2022-10-24_',
               amount: -1000.0,
-              currency: 'USDA',
+              currency: 'USD_',
               clientId: '88cc384c-eb13-4eee-af43-9f64c36f9e98_',
             })
             .expect(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -56,10 +54,13 @@ describe('AppController (e2e)', () => {
               statusCode: 422,
               message:
                 'Input validation failed - ' +
-                'date: Date must be a valid date, ' +
-                'amount: Amount must be a positive number, ' +
-                'currency: Currency must be a valid currency (e.g. USD, EUR, GBP, JPY), ' +
-                'clientId: Client ID must be a valid UUID',
+                [
+                  'id: Transaction ID must be a valid UUID',
+                  'clientId: Client ID must be a valid UUID',
+                  'date: Date must be a valid date',
+                  'amount: Amount must be a positive number',
+                  'currency: Currency must be a valid currency (e.g. USD, EUR, GBP, JPY)',
+                ].join(', '),
               error: 'Unprocessable Entity',
             })
         })
