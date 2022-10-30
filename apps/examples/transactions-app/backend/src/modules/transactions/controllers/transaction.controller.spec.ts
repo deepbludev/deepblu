@@ -24,11 +24,11 @@ describe(TransactionController, () => {
 
   describe('create', () => {
     it('should return success when body is valid', async () => {
-      const input = createTxDTOStub()
-      const result = await txCtrl.create(input)
+      const dto = createTxDTOStub()
+      const result = await txCtrl.create(dto)
 
-      expect(result).toEqual({ status: 'Success', input })
-      expect(dispatchSpy).toHaveBeenCalledWith(CreateTransaction.with(input))
+      expect(result).toEqual({ status: 'Success', dto })
+      expect(dispatchSpy).toHaveBeenCalledWith(CreateTransaction.with(dto))
     })
   })
 })

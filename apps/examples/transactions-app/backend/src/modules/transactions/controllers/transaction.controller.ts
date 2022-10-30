@@ -13,9 +13,9 @@ export class TransactionController {
 
   @Post()
   @UsePipes(BodyValidationPipe.with(CreateTransactionSchema))
-  async create(@Body() input: CreateTransactionDTO) {
-    this.commandbus.dispatch(CreateTransaction.with(input))
+  async create(@Body() dto: CreateTransactionDTO) {
+    this.commandbus.dispatch(CreateTransaction.with(dto))
 
-    return { status: 'Success', input }
+    return { status: 'Success', dto }
   }
 }

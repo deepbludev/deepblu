@@ -37,7 +37,7 @@ describe('AppController (e2e)', () => {
             .request()
             .post('/transaction')
             .send({ clientId: '1' })
-            .expect(HttpStatus.BAD_REQUEST)
+            .expect(HttpStatus.UNPROCESSABLE_ENTITY)
         })
       })
     })
