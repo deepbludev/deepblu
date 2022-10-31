@@ -1,6 +1,5 @@
 export * from './__mocks__/create.transaction.dto.stub'
 
-export * from './transaction.repo'
-export * from './transaction.aggregate'
-
-export * from './transaction.dto'
+export * from './model/transaction.repo'
+export * from './model/transaction.aggregate'
+export * from './dto/create.transaction.dto'

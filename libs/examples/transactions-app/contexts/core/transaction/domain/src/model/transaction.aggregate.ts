@@ -10,7 +10,7 @@ import {
   Currencies,
   InvalidCurrencyError,
 } from '@deepblu/examples/transactions-app/contexts/shared/domain'
-import { CreateTransactionDTO } from './transaction.dto'
+import { CreateTransactionDTO } from '../dto/create.transaction.dto'
 
 export class TxID extends UUID {}
 export class ClientID extends UUID {}
@@ -23,7 +23,11 @@ export class TxAmount extends PositiveNumber {}
 export class TxCurrency extends CustomString {}
 
 export class TransactionAggregate extends IAggregateRoot<
-  { clientId: ClientID; amount: TxAmount; currency: TxCurrency },
+  {
+    clientId: ClientID
+    amount: TxAmount
+    currency: TxCurrency
+  },
   TxID
 > {
   static create(props: CreateTransactionDTO): Result<TransactionAggregate> {
