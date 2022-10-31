@@ -13,7 +13,7 @@ import {
   InvalidCurrencyError,
   TxID,
 } from '@deepblu/examples/transactions-app/contexts/shared/domain'
-import { TransactionDTO } from '../dto/create.transaction.dto'
+import { TransactionDTO } from './transaction.dto'
 import { TransactionCreated } from './transaction.events'
 
 /**

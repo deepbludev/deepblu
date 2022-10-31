@@ -1,6 +1,6 @@
-import { createTxDTOStub } from '../__mocks__/create.transaction.dto.stub'
-import { Transaction } from '../model/transaction.aggregate'
-import { CreateTransactionDTO } from '../dto/create.transaction.dto'
+import { createTxDTOStub } from '../../__mocks__/create.transaction.dto.stub'
+import { Transaction } from './transaction.aggregate'
+import { CreateTransactionDTO } from './transaction.dto'
 
 describe(Transaction, () => {
   it('should be defined', () => {
