@@ -3,7 +3,6 @@ import {
   CustomString,
   IAggregateRoot,
   NonNegativeNumber,
-  Payload,
   PositiveNumber,
   Props,
   Result,
@@ -101,12 +100,15 @@ export class Transaction extends IAggregateRoot<
     const result = Result.combine<Transaction>([txId, ...results])
     if (result.isFail) return result
 
-    const payload: Payload<TransactionCreated> = {
-      ...props,
-      createdAt: new Date(),
-    }
     const tx = Reflect.construct(Transaction, [])
-    tx.apply(TransactionCreated.with(payload, txId.data))
+    const event: TransactionCreated = TransactionCreated.with(
+      {
+        ...props,
+        createdAt: new Date(),
+      },
+      txId.data
+    )
+    tx.apply(event)
 
     return Result.ok(tx)
   }
