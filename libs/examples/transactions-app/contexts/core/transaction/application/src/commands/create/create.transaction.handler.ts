@@ -28,7 +28,11 @@ export class CreateTransactionHandler extends ICommandHandler<CreateTransaction>
         AggregateAlreadyExistsError.with(payload.id, Transaction.name)
       )
 
-    const { data: tx, isFail, error } = Transaction.create(payload)
+    const {
+      data: tx,
+      isFail,
+      error,
+    } = Transaction.create({ ...payload, commission: 0.05 })
     if (isFail) return Result.fail(error)
 
     await this.repo.save(tx)

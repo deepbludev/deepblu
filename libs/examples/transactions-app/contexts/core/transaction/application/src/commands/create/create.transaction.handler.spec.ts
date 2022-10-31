@@ -57,6 +57,8 @@ describe(CreateTransactionHandler, () => {
         expect(saveSpy).toHaveBeenCalled()
       })
 
+      it.todo('should delegate commission calculation to CommissionService')
+
       it('should fail if tx id already exists', async () => {
         repo.exists = jest.fn().mockResolvedValue(true)
 

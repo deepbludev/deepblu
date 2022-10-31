@@ -8,7 +8,7 @@ describe(Transaction, () => {
   })
 
   describe('#create', () => {
-    const validTx = createTxDTOStub()
+    const validTx = { ...createTxDTOStub(), commission: 0.05 }
 
     describe('when given a valid transaction DTO', () => {
       const { data: tx, isOk } = Transaction.create(validTx)
@@ -20,14 +20,21 @@ describe(Transaction, () => {
         expect(tx.clientId.value).toEqual(validTx.clientId)
         expect(tx.amount.value).toEqual(validTx.amount)
         expect(tx.currency.value).toEqual(validTx.currency)
+        expect(tx.commission.value).toEqual(validTx.commission)
       })
       it.todo('should set the tx createdAt date')
       it.todo('should emit a transaction created event')
     })
 
     describe('when given an invalid transaction DTO', () => {
-      const expectFailureWith = (invalidTx: CreateTransactionDTO) => {
-        const { data, isFail, error } = Transaction.create(invalidTx)
+      const expectFailureWith = (
+        invalidTx: CreateTransactionDTO,
+        commission?: number
+      ) => {
+        const { data, isFail, error } = Transaction.create({
+          ...invalidTx,
+          commission: commission ?? 0.05,
+        })
         expect(isFail).toBe(true)
         expect(data).toBeNull()
         expect(error).toEqual(error)
@@ -44,6 +51,9 @@ describe(Transaction, () => {
 
       it('should fail with an invalid tx currency', () =>
         expectFailureWith(createTxDTOStub({ currency: 'invalid-currency' })))
+
+      it('should fail with an invalid tx commission', () =>
+        expectFailureWith(createTxDTOStub(), -0.05))
     })
   })
 })
