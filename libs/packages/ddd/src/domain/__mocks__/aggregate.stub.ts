@@ -30,7 +30,7 @@ export class AggregateStub extends IAggregateRoot<
     id?: IUniqueID
   ): Result<AggregateStub> {
     const aggregate = new AggregateStub(payload, id)
-    aggregate.apply(AggregateCreatedStub.with(payload, aggregate.id))
+    aggregate.apply(AggregateCreatedStub.with(aggregate.id, payload))
     return Result.ok(aggregate)
   }
 
@@ -48,7 +48,7 @@ export class AggregateStub extends IAggregateRoot<
    */
 
   updateProps(payload: Payload<PropsUpdatedStub>): void {
-    this.apply(PropsUpdatedStub.with(payload, this.id))
+    this.apply(PropsUpdatedStub.with(this.id, payload))
   }
 
   protected onPropsUpdatedStub(event: PropsUpdatedStub): void {
@@ -65,7 +65,7 @@ export class AggregateStub extends IAggregateRoot<
    */
 
   toggle(): void {
-    this.apply(AggregateToggledStub.with({}, this.id))
+    this.apply(AggregateToggledStub.with(this.id, {}))
   }
 
   protected onAggregateToggledStub(): void {

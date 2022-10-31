@@ -101,13 +101,10 @@ export class Transaction extends IAggregateRoot<
     if (result.isFail) return result
 
     const tx = Transaction.createEmpty<Transaction>()
-    const event: TransactionCreated = TransactionCreated.with(
-      {
-        ...props,
-        createdAt: new Date(),
-      },
-      txId.data
-    )
+    const event: TransactionCreated = TransactionCreated.with(txId.data, {
+      ...props,
+      createdAt: new Date(),
+    })
     tx.apply(event)
 
     return Result.ok(tx)

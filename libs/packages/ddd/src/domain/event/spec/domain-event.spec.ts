@@ -38,8 +38,8 @@ describe(DomainEvent, () => {
   const payload = { foo: 'bar', is: true }
   const aggregate = new TestAggregate(payload)
   const event = new TestEvent(payload, aggregate.id.value)
-  const otherEvent: OtherTestEvent = OtherTestEvent.with(payload, aggregate.id)
-  const eventWithoutPayload = EventWithoutPayload.with({}, aggregate.id)
+  const otherEvent: OtherTestEvent = OtherTestEvent.with(aggregate.id, payload)
+  const eventWithoutPayload = EventWithoutPayload.with(aggregate.id, {})
 
   it('should have an id', () => {
     expect(event.id).toBeDefined()
