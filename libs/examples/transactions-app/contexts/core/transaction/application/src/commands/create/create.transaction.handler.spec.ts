@@ -1,10 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { TransactionRepo } from '@deepblu/examples/transactions-app/contexts/core/transaction/domain'
+import {
+  TransactionAggregate,
+  TransactionRepo,
+} from '@deepblu/examples/transactions-app/contexts/core/transaction/domain'
 import { createTxDTOStub } from '../../__mocks__/create.transaction.dto.stub'
 import { TransactionRepoMock } from '../../__mocks__/transaction.repo.mock'
 import { CreateTransaction } from './create.transaction.command'
 import { CreateTransactionHandler } from './create.transaction.handler'
-import { Result } from '@deepblu/ddd'
+import { AggregateAlreadyExistsError, Result } from '@deepblu/ddd'
 
 describe(CreateTransactionHandler, () => {
   let handler: CreateTransactionHandler
@@ -54,7 +57,12 @@ describe(CreateTransactionHandler, () => {
         const result = await handler.handle(command)
 
         expect(result).toEqual(
-          Result.fail(new Error('Transaction already exists'))
+          Result.fail(
+            AggregateAlreadyExistsError.with(
+              validTx.id,
+              TransactionAggregate.name
+            )
+          )
         )
         expect(saveSpy).not.toHaveBeenCalled()
       })

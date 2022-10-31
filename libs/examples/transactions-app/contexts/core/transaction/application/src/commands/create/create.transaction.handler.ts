@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import {
+  AggregateAlreadyExistsError,
   commandHandler,
   CommandResponse,
   ICommandHandler,
@@ -22,9 +23,10 @@ export class CreateTransactionHandler extends ICommandHandler<CreateTransaction>
   async handle({ payload }: CreateTransaction): CommandResponse {
     const { data: id } = UUID.from(payload.id)
 
-    // TODO: throw custom error if transaction already exists
     if (await this.repo.exists(id))
-      return Result.fail(new Error('Transaction already exists'))
+      return Result.fail(
+        AggregateAlreadyExistsError.with(payload.id, TransactionAggregate.name)
+      )
 
     const { data: tx, isFail, error } = TransactionAggregate.create(payload)
     if (isFail) return Result.fail(error)
