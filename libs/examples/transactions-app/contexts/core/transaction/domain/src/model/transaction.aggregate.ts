@@ -5,16 +5,15 @@ import {
   NonNegativeNumber,
   PositiveNumber,
   Result,
-  UUID,
 } from '@deepblu/ddd'
 import {
+  ClientID,
   Currencies,
   InvalidCurrencyError,
+  TxID,
 } from '@deepblu/examples/transactions-app/contexts/shared/domain'
 import { CreateTransactionDTO } from '../dto/create.transaction.dto'
 
-export class TxID extends UUID {}
-export class ClientID extends UUID {}
 export class TxAmount extends PositiveNumber {}
 export class TxCommission extends NonNegativeNumber {}
 
@@ -30,6 +29,7 @@ export class Transaction extends IAggregateRoot<
     amount: TxAmount
     currency: TxCurrency
     commission: TxCommission
+    createdAt: Date
   },
   TxID
 > {
@@ -56,6 +56,7 @@ export class Transaction extends IAggregateRoot<
         amount: txAmount.data,
         currency: txCurrency.data,
         commission: txCommission.data,
+        createdAt: new Date(),
       },
       txId.data
     )
@@ -77,5 +78,9 @@ export class Transaction extends IAggregateRoot<
 
   get commission(): TxCommission {
     return this.props.commission
+  }
+
+  get createdAt(): Date {
+    return new Date(this.props.createdAt)
   }
 }

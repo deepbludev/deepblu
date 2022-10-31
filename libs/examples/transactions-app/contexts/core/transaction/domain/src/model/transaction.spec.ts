@@ -11,6 +11,7 @@ describe(Transaction, () => {
     const validTx = { ...createTxDTOStub(), commission: 0.05 }
 
     describe('when given a valid transaction DTO', () => {
+      const today = new Date().setMilliseconds(0)
       const { data: tx, isOk } = Transaction.create(validTx)
 
       it('should create a transaction', () => {
@@ -22,7 +23,9 @@ describe(Transaction, () => {
         expect(tx.currency.value).toEqual(validTx.currency)
         expect(tx.commission.value).toEqual(validTx.commission)
       })
-      it.todo('should set the tx createdAt date')
+      it('should set the tx createdAt date to today', () => {
+        expect(tx.createdAt.setMilliseconds(0)).toEqual(today)
+      })
       it.todo('should emit a transaction created event')
     })
 
