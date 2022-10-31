@@ -14,7 +14,7 @@ describe(Transaction, () => {
       const today = new Date().setMilliseconds(0)
       const { data: tx, isOk } = Transaction.create(validTx)
 
-      it('should create a transaction', () => {
+      it('should create a transaction with the given props', () => {
         expect(isOk).toBe(true)
         expect(tx).toBeDefined()
         expect(tx.id.value).toEqual(validTx.id)
@@ -23,10 +23,20 @@ describe(Transaction, () => {
         expect(tx.currency.value).toEqual(validTx.currency)
         expect(tx.commission.value).toEqual(validTx.commission)
       })
+
       it('should set the tx createdAt date to today', () => {
         expect(tx.createdAt.setMilliseconds(0)).toEqual(today)
       })
-      it.todo('should emit a transaction created event')
+
+      it('should emit a transaction created event', () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { id, ...props } = validTx
+        const { changes, createdAt } = tx
+
+        expect(changes).toHaveLength(1)
+        expect(changes[0].aggregateId).toEqual(validTx.id)
+        expect(changes[0].payload).toEqual({ ...props, createdAt })
+      })
     })
 
     describe('when given an invalid transaction DTO', () => {

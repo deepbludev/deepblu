@@ -25,10 +25,7 @@ export abstract class DomainEvent<P extends IPayload = IPayload>
    * Creates a new DomainEvent from payload and aggregateId
    * @factory
    */
-  static with<E extends DomainEvent = DomainEvent>(
-    payload: Payload<E>,
-    id: IUniqueID
-  ): E {
+  static with<E extends DomainEvent>(payload: Payload<E>, id: IUniqueID): E {
     return Reflect.construct(this, [payload, id.value])
   }
 

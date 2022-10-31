@@ -19,4 +19,5 @@ export type CreateTransactionDTO = z.infer<typeof CreateTransactionSchema>
 
 export type TransactionDTO = CreateTransactionDTO & {
   commission: number
+  createdAt: Date
 }
