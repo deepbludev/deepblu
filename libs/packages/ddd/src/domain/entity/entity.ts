@@ -7,7 +7,7 @@ import { IEntity, IEntityProps } from './entity.abstract'
  * Entity class using UUID as ID.
  */
 @unique(UUID)
-export class Entity<P extends IEntityProps> extends IEntity<P, UUID> {
+export class Entity<P extends IEntityProps> extends IEntity<UUID, P> {
   constructor(props: P, id?: UUID) {
     super(props, id)
   }

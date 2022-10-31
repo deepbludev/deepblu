@@ -8,8 +8,8 @@ import { IAggregateRoot, IAggregateProps } from './aggregate-root.abstract'
  */
 @unique(UUID)
 export class AggregateRoot<P extends IAggregateProps> extends IAggregateRoot<
-  P,
-  UUID
+  UUID,
+  P
 > {
   constructor(props: P, id?: UUID) {
     super(props, id)

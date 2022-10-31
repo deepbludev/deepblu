@@ -10,7 +10,7 @@ interface TestProps {
   is: boolean
 }
 
-class TestAggregate extends IAggregateRoot<TestProps> {
+class TestAggregate extends IAggregateRoot<IUniqueID, TestProps> {
   constructor(props: TestProps, id?: IUniqueID) {
     super(props, id)
   }

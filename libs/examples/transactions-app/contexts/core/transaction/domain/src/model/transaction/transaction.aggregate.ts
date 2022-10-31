@@ -69,14 +69,14 @@ function createProps(dto: Omit<TransactionDTO, 'createdAt'>) {
  * @property {Date} createdAt - The transaction creation date
  */
 export class Transaction extends IAggregateRoot<
+  TxID,
   {
     clientId: ClientID
     amount: TxAmount
     currency: TxCurrency
     commission: TxCommission
     createdAt: Date
-  },
-  TxID
+  }
 > {
   protected constructor(
     props: Omit<Props<Transaction>, 'createdAt'>,

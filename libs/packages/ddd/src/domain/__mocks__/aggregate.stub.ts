@@ -8,11 +8,14 @@ import {
   AggregateToggledStub,
 } from './events.stub'
 
-export class AggregateStub extends IAggregateRoot<{
-  foo: string
-  bar?: number
-  is?: boolean
-}> {
+export class AggregateStub extends IAggregateRoot<
+  IUniqueID,
+  {
+    foo: string
+    bar?: number
+    is?: boolean
+  }
+> {
   /**
    * Creates a new aggregate stub from initial props
    * @factory
