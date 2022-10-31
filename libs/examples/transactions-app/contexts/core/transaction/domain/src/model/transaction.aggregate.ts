@@ -91,14 +91,15 @@ export class Transaction extends IAggregateRoot<
    * @param dto
    * @returns a new valid Transaction object
    */
-  static create(dto: Omit<TransactionDTO, 'createdAt'>): Result<Transaction> {
-    const [txId, ...results] = createProps(dto)
+  static create({
+    id,
+    ...props
+  }: Omit<TransactionDTO, 'createdAt'>): Result<Transaction> {
+    const [txId, ...results] = createProps({ id, ...props })
 
     const result = Result.combine<Transaction>([txId, ...results])
     if (result.isFail) return result
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { id, ...props } = dto
     const payload = { ...props, createdAt: new Date() }
 
     const tx = Reflect.construct(Transaction, [])
