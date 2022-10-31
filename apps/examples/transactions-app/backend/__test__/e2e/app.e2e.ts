@@ -44,7 +44,6 @@ describe('AppController (e2e)', () => {
             .post('/transaction')
             .send({
               id: '88cc384c-eb13-4eee-af43-9f64c36f9e99_',
-              date: '2022-10-24_',
               amount: -1000.0,
               currency: 'USD_',
               clientId: '88cc384c-eb13-4eee-af43-9f64c36f9e98_',
@@ -57,7 +56,6 @@ describe('AppController (e2e)', () => {
                 [
                   'id: Transaction ID must be a valid UUID',
                   'clientId: Client ID must be a valid UUID',
-                  'date: Date must be a valid date',
                   'amount: Amount must be a positive number',
                   'currency: Currency must be a valid currency (e.g. USD, EUR, GBP, JPY)',
                 ].join(', '),

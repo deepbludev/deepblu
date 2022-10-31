@@ -7,9 +7,6 @@ import {
 export const CreateTransactionSchema = z.object({
   id: string().uuid({ message: 'Transaction ID must be a valid UUID' }),
   clientId: string().uuid({ message: 'Client ID must be a valid UUID' }),
-  date: z.string().refine(v => !isNaN(Date.parse(v)), {
-    message: 'Date must be a valid date',
-  }),
   amount: z.number().positive({ message: 'Amount must be a positive number' }),
   currency: z
     .string()
