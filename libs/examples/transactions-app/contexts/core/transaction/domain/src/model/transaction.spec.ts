@@ -11,8 +11,9 @@ describe(Transaction, () => {
     const validTx = createTxDTOStub()
 
     describe('when given a valid transaction DTO', () => {
+      const { data: tx, isOk } = Transaction.create(validTx)
+
       it('should create a transaction', () => {
-        const { data: tx, isOk } = Transaction.create(validTx)
         expect(isOk).toBe(true)
         expect(tx).toBeDefined()
         expect(tx.id.value).toEqual(validTx.id)
@@ -20,6 +21,8 @@ describe(Transaction, () => {
         expect(tx.amount.value).toEqual(validTx.amount)
         expect(tx.currency.value).toEqual(validTx.currency)
       })
+      it.todo('should set the tx createdAt date')
+      it.todo('should emit a transaction created event')
     })
 
     describe('when given an invalid transaction DTO', () => {
