@@ -34,9 +34,10 @@ export class Result<V = void, E extends Error = Error>
     return new Result(false, null, error) as unknown as Result<V, E>
   }
 
-  public static combine<V, E extends Error>(
-    results: Result<V, E>[]
-  ): Result<void, E> {
+  public static combine<T = void>(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    results: Result<any>[]
+  ): Result<T> {
     for (const r of results) if (r.isFail) return Result.fail(r.error)
     return Result.ok()
   }
