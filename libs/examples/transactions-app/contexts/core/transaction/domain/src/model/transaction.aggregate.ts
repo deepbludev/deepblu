@@ -30,8 +30,8 @@ export class Transaction extends IAggregateRoot<
   },
   TxID
 > {
-  static create(props: CreateTransactionDTO): Result<Transaction> {
-    const { id, clientId, amount, currency } = props
+  static create(dto: CreateTransactionDTO): Result<Transaction> {
+    const { id, clientId, amount, currency } = dto
 
     const results = [
       TxID.from(id),
@@ -40,8 +40,8 @@ export class Transaction extends IAggregateRoot<
       TxCurrency.create(currency),
     ] as const
 
-    const errors = results.filter(result => result.isFail)
-    if (errors.length) return Result.fail(errors[0].error)
+    const result = Result.combine<Transaction>([...results])
+    if (result.isFail) return result
 
     const [txId, txClientId, txAmount, txCurrency] = results
     const tx = new Transaction(
