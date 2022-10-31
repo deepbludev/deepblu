@@ -32,10 +32,16 @@ describe(Transaction, () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id, ...props } = validTx
         const { changes, createdAt } = tx
+        const createdEvent = changes[0]
 
         expect(changes).toHaveLength(1)
-        expect(changes[0].aggregateId).toEqual(validTx.id)
-        expect(changes[0].payload).toEqual({ ...props, createdAt })
+        expect(createdEvent.aggregateId).toEqual(validTx.id)
+        expect(createdEvent.aggregateName).toEqual('Transaction')
+        expect(createdEvent.name).toEqual('TransactionCreated')
+        expect(createdEvent.canonical).toEqual(
+          'transaction.transaction_created'
+        )
+        expect(createdEvent.payload).toEqual({ ...props, createdAt })
       })
     })
 
