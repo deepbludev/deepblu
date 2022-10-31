@@ -1,4 +1,4 @@
-export enum Currency {
+export enum Currencies {
   AED = 'AED',
   AFN = 'AFN',
   ALL = 'ALL',
@@ -170,6 +170,6 @@ export enum Currency {
   ZWL = 'ZWL',
 }
 
-export const CURRENCIES = Object.values(Currency)
+export const CURRENCIES = Object.values(Currencies)
 
-export type CurrencyType = keyof typeof Currency
+export type CurrencyType = keyof typeof Currencies

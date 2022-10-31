@@ -1,7 +1,7 @@
 import { string, z } from 'zod'
 import {
   CURRENCIES,
-  Currency,
+  Currencies,
 } from '@deepblu/examples/transactions-app/contexts/shared/domain'
 
 export const CreateTransactionSchema = z.object({
@@ -10,7 +10,7 @@ export const CreateTransactionSchema = z.object({
   amount: z.number().positive({ message: 'Amount must be a positive number' }),
   currency: z
     .string()
-    .refine((value: string) => CURRENCIES.includes(value as Currency), {
+    .refine((value: string) => CURRENCIES.includes(value as Currencies), {
       message: 'Currency must be a valid currency (e.g. USD, EUR, GBP, JPY)',
     }),
 })

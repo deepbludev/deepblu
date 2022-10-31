@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { CreateTransaction } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
-import { createTxDTOStub } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
-import { TransactionController } from './transaction.controller'
+import { HttpStatus } from '@nestjs/common'
+import { Result } from '@deepblu/ddd'
 import {
   commandbusMock,
   CqrsModuleMock,
 } from '@deepblu/examples/transactions-app/contexts/shared/application'
-import { HttpStatus } from '@nestjs/common'
-import { Result } from '@deepblu/ddd'
+import { CreateTransaction } from '@deepblu/examples/transactions-app/contexts/core/transaction/application'
+import { createTxDTOStub } from '@deepblu/examples/transactions-app/contexts/core/transaction/domain'
+import { TransactionController } from './transaction.controller'
 
 describe(TransactionController, () => {
   let app: TestingModule

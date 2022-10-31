@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import {
+  createTxDTOStub,
   TransactionAggregate,
   TransactionRepo,
 } from '@deepblu/examples/transactions-app/contexts/core/transaction/domain'
-import { createTxDTOStub } from '../../__mocks__/create.transaction.dto.stub'
 import { TransactionRepoMock } from '../../__mocks__/transaction.repo.mock'
 import { CreateTransaction } from './create.transaction.command'
 import { CreateTransactionHandler } from './create.transaction.handler'
@@ -15,13 +15,12 @@ describe(CreateTransactionHandler, () => {
   let saveSpy: jest.SpyInstance
 
   const validTx = createTxDTOStub()
-  // const invalidTx = createTxDTOStub({
-  //   amount: -1000.0,
-  //   id: 'invalid-uuid',
-  //   clientId: 'invalid-uuid',
-  //   currency: 'invalid-currency',
-  //   date: 'invalid-date',
-  // })
+  const invalidTx = createTxDTOStub({
+    amount: -1000.0,
+    id: 'invalid-uuid',
+    clientId: 'invalid-uuid',
+    currency: 'invalid-currency',
+  })
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -51,6 +50,13 @@ describe(CreateTransactionHandler, () => {
         command = CreateTransaction.with(validTx)
       })
 
+      it('should delegate creation to TransactionRepo and return a successful result', async () => {
+        const result = await handler.handle(command)
+
+        expect(result.isOk).toBe(true)
+        expect(saveSpy).toHaveBeenCalled()
+      })
+
       it('should fail if tx id already exists', async () => {
         repo.exists = jest.fn().mockResolvedValue(true)
 
@@ -66,22 +72,14 @@ describe(CreateTransactionHandler, () => {
         )
         expect(saveSpy).not.toHaveBeenCalled()
       })
-
-      it('should delegate creation to TransactionRepo and return a successful result', async () => {
-        repo.exists = jest.fn().mockResolvedValue(false)
-        const result = await handler.handle(command)
-
-        expect(result.isOk).toBe(true)
-        expect(saveSpy).toHaveBeenCalled()
-      })
     })
 
-    // describe('when the command is invalid', () => {
-    //   it('should fail to create a transaction', async () => {
-    //     const result = await handler.handle(CreateTransaction.with(invalidTx))
-    //     expect(result.isFail).toBe(true)
-    //     expect(saveSpy).not.toHaveBeenCalled()
-    //   })
-    // })
+    describe('when the command is invalid', () => {
+      it('should fail to create a transaction', async () => {
+        const result = await handler.handle(CreateTransaction.with(invalidTx))
+        expect(result.isFail).toBe(true)
+        expect(saveSpy).not.toHaveBeenCalled()
+      })
+    })
   })
 })

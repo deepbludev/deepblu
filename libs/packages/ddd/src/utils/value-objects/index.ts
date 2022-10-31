@@ -18,3 +18,5 @@ export * from './password/custom-password.decorator'
 export * from './password/invalid-password.error'
 export * from './password/password.vo'
 export * from './password/encrypter/password-encrypter.interface'
+
+export * from './positive-number/positive-number.vo'
