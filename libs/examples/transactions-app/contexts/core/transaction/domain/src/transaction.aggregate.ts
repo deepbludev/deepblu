@@ -2,7 +2,6 @@ import {
   customString,
   CustomString,
   IAggregateRoot,
-  InvalidPropError,
   PositiveNumber,
   Result,
   UUID,
@@ -31,26 +30,16 @@ export class TransactionAggregate extends IAggregateRoot<
     const { id, clientId, amount, currency } = props
 
     const txId = TxID.from(id)
-    if (txId.isFail)
-      return Result.fail(InvalidPropError.with('id', txId.error.message))
+    if (txId.isFail) return Result.fail(txId.error)
 
     const txClientId = ClientID.from(clientId)
-    if (txClientId.isFail)
-      return Result.fail(
-        InvalidPropError.with('clientId', txClientId.error.message)
-      )
+    if (txClientId.isFail) return Result.fail(txClientId.error)
 
     const txAmount = TxAmount.create(amount)
-    if (txAmount.isFail)
-      return Result.fail(
-        InvalidPropError.with('amount', txAmount.error.message)
-      )
+    if (txAmount.isFail) return Result.fail(txAmount.error)
 
     const txCurrency = TxCurrency.create(currency)
-    if (txCurrency.isFail)
-      return Result.fail(
-        InvalidPropError.with('currency', txCurrency.error.message)
-      )
+    if (txCurrency.isFail) return Result.fail(txCurrency.error)
 
     const tx = new TransactionAggregate(
       {
@@ -62,5 +51,17 @@ export class TransactionAggregate extends IAggregateRoot<
     )
 
     return Result.ok(tx)
+  }
+
+  get clientId(): ClientID {
+    return this.props.clientId
+  }
+
+  get amount(): TxAmount {
+    return this.props.amount
+  }
+
+  get currency(): TxCurrency {
+    return this.props.currency
   }
 }
