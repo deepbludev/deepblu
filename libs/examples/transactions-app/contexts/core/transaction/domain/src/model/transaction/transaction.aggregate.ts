@@ -100,7 +100,7 @@ export class Transaction extends IAggregateRoot<
     const result = Result.combine<Transaction>([txId, ...results])
     if (result.isFail) return result
 
-    const tx = Reflect.construct(Transaction, [])
+    const tx = Transaction.createEmpty<Transaction>()
     const event: TransactionCreated = TransactionCreated.with(
       {
         ...props,
