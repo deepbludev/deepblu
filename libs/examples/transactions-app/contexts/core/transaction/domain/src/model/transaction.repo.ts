@@ -1,4 +1,4 @@
 import { IEventPublisherRepo } from '@deepblu/ddd'
-import { TransactionAggregate } from './transaction.aggregate'
+import { Transaction } from './transaction.aggregate'
 
-export abstract class TransactionRepo extends IEventPublisherRepo<TransactionAggregate> {}
+export abstract class TransactionRepo extends IEventPublisherRepo<Transaction> {}

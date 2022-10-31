@@ -1,10 +1,10 @@
 import { createTxDTOStub } from '../__mocks__/create.transaction.dto.stub'
-import { TransactionAggregate } from '../model/transaction.aggregate'
+import { Transaction } from '../model/transaction.aggregate'
 import { CreateTransactionDTO } from '../dto/create.transaction.dto'
 
-describe(TransactionAggregate, () => {
+describe(Transaction, () => {
   it('should be defined', () => {
-    expect(TransactionAggregate).toBeDefined()
+    expect(Transaction).toBeDefined()
   })
 
   describe('#create', () => {
@@ -12,7 +12,7 @@ describe(TransactionAggregate, () => {
 
     describe('when given a valid transaction DTO', () => {
       it('should create a transaction', () => {
-        const { data: tx, isOk } = TransactionAggregate.create(validTx)
+        const { data: tx, isOk } = Transaction.create(validTx)
         expect(isOk).toBe(true)
         expect(tx).toBeDefined()
         expect(tx.id.value).toEqual(validTx.id)
@@ -24,7 +24,7 @@ describe(TransactionAggregate, () => {
 
     describe('when given an invalid transaction DTO', () => {
       const expectFailureWith = (invalidTx: CreateTransactionDTO) => {
-        const { data, isFail, error } = TransactionAggregate.create(invalidTx)
+        const { data, isFail, error } = Transaction.create(invalidTx)
         expect(isFail).toBe(true)
         expect(data).toBeNull()
         expect(error).toEqual(error)

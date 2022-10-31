@@ -22,7 +22,7 @@ export class TxAmount extends PositiveNumber {}
 })
 export class TxCurrency extends CustomString {}
 
-export class TransactionAggregate extends IAggregateRoot<
+export class Transaction extends IAggregateRoot<
   {
     clientId: ClientID
     amount: TxAmount
@@ -30,22 +30,21 @@ export class TransactionAggregate extends IAggregateRoot<
   },
   TxID
 > {
-  static create(props: CreateTransactionDTO): Result<TransactionAggregate> {
+  static create(props: CreateTransactionDTO): Result<Transaction> {
     const { id, clientId, amount, currency } = props
 
-    const txId = TxID.from(id)
-    if (txId.isFail) return Result.fail(txId.error)
+    const results = [
+      TxID.from(id),
+      ClientID.from(clientId),
+      TxAmount.create(amount),
+      TxCurrency.create(currency),
+    ] as const
 
-    const txClientId = ClientID.from(clientId)
-    if (txClientId.isFail) return Result.fail(txClientId.error)
+    const errors = results.filter(result => result.isFail)
+    if (errors.length) return Result.fail(errors[0].error)
 
-    const txAmount = TxAmount.create(amount)
-    if (txAmount.isFail) return Result.fail(txAmount.error)
-
-    const txCurrency = TxCurrency.create(currency)
-    if (txCurrency.isFail) return Result.fail(txCurrency.error)
-
-    const tx = new TransactionAggregate(
+    const [txId, txClientId, txAmount, txCurrency] = results
+    const tx = new Transaction(
       {
         clientId: txClientId.data,
         amount: txAmount.data,

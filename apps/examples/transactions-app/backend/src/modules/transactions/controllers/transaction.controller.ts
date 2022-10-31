@@ -20,9 +20,7 @@ export class TransactionController {
       return {
         statusCode: HttpStatus.CREATED,
         status: 'Transaction created successfully',
-        data: {
-          id: dto.id,
-        },
+        data: { id: dto.id },
       }
   }
 }

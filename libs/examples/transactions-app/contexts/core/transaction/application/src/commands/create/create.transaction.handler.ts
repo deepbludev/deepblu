@@ -8,7 +8,7 @@ import {
   UUID,
 } from '@deepblu/ddd'
 import {
-  TransactionAggregate,
+  Transaction,
   TransactionRepo,
 } from '@deepblu/examples/transactions-app/contexts/core/transaction/domain'
 import { CreateTransaction } from './create.transaction.command'
@@ -25,10 +25,10 @@ export class CreateTransactionHandler extends ICommandHandler<CreateTransaction>
 
     if (await this.repo.exists(id))
       return Result.fail(
-        AggregateAlreadyExistsError.with(payload.id, TransactionAggregate.name)
+        AggregateAlreadyExistsError.with(payload.id, Transaction.name)
       )
 
-    const { data: tx, isFail, error } = TransactionAggregate.create(payload)
+    const { data: tx, isFail, error } = Transaction.create(payload)
     if (isFail) return Result.fail(error)
 
     await this.repo.save(tx)
