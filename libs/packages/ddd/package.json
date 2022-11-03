@@ -1,17 +1,19 @@
 {
   "name": "@deepblu/ddd",
   "version": "1.0.0",
-  "description": "Lightweight dependency injection / Inversion of Control library for JavaScript/TypeScript built on top of tysringe",
+  "description": "Lightweight Domain Driven Design (DDD) / CQRS / Event Sourcing Typescript library for  Node.js",
   "keywords": [
-    "ioc",
-    "inversion of control",
-    "di",
-    "dependency injection",
-    "dependency",
-    "injection",
-    "container",
+    "domain driven design",
+    "ddd",
+    "cqrs",
+    "command-query responsibility segregation",
+    "event sourcing",
+    "cqrs-es",
+    "clean architecture",
+    "hexagonal architecture",
     "javascript",
-    "typescript"
+    "typescript",
+    "node.js"
   ],
   "author": "Carlo Casorzo",
   "license": "ISC",
