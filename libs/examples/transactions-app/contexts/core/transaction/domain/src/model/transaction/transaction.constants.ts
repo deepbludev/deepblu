@@ -1,0 +1,1 @@
+export const DEFAULT_TX_COMMISSION = 0.05

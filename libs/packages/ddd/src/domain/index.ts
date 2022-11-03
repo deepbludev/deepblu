@@ -1,4 +1,5 @@
 export * from './aggregate-root/aggregate-root.abstract'
+export * from './aggregate-root/aggregate-root'
 
 export * from './core/domain-object.abstract'
 export * from './core/errors'

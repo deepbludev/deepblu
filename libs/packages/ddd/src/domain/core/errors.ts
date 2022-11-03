@@ -31,6 +31,17 @@ export class InvalidPropError extends Error {
   }
 }
 
+export class AggregateAlreadyExistsError extends Error {
+  constructor(public readonly id: string, public readonly aggregate: string) {
+    super(`Aggregate ${aggregate} with id ${id} already exists`)
+    this.name = AggregateAlreadyExistsError.name
+  }
+
+  static with(id: string, aggregate: string) {
+    return new AggregateAlreadyExistsError(id, aggregate)
+  }
+}
+
 export class CommandNotRegisteredError extends Error {
   constructor(public readonly command: ICommand) {
     super(`Command ${command.constructor.name} not registered`)

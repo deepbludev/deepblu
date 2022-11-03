@@ -26,9 +26,9 @@ export interface IAggregateProps extends IEntityProps {}
  */
 
 export abstract class IAggregateRoot<
-  P extends IAggregateProps = IAggregateProps,
-  I extends IUniqueID = IUniqueID
-> extends IEntity<P, I> {
+  I extends IUniqueID = IUniqueID,
+  P extends IAggregateProps = IAggregateProps
+> extends IEntity<I, P> {
   public override readonly domType: DomainObjectType =
     DomainObjects.AGGREGATE_ROOT
   private _version = -1
@@ -51,14 +51,14 @@ export abstract class IAggregateRoot<
     return commited
   }
 
-  snapshot<A extends IAggregateRoot<P, I>>(version?: number): A {
+  snapshot<A extends IAggregateRoot<I, P>>(version?: number): A {
     const snapshot = this.clone<A>()
     snapshot._version = version ?? this._version
     snapshot.commit()
     return snapshot
   }
 
-  static rehydrate<A extends IAggregateRoot<IAggregateProps>>(
+  static rehydrate<A extends IAggregateRoot>(
     id: IUniqueID,
     events: IDomainEvent[],
     snapshot?: A

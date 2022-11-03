@@ -1,5 +1,29 @@
 {
   "name": "@deepblu/ddd",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "Lightweight Domain Driven Design (DDD) / CQRS / Event Sourcing Typescript library for  Node.js",
+  "keywords": [
+    "domain driven design",
+    "ddd",
+    "cqrs",
+    "command-query responsibility segregation",
+    "event sourcing",
+    "cqrs-es",
+    "clean architecture",
+    "hexagonal architecture",
+    "javascript",
+    "typescript",
+    "node.js"
+  ],
+  "author": "Carlo Casorzo",
+  "license": "ISC",
+  "homepage": "https://deepblu.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deepbludev/deepblu"
+  },
+  "bugs": {
+    "url": "https://github.com/deepbludev/deepblu/issues"
+  },
   "type": "commonjs"
 }

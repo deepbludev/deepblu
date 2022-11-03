@@ -25,8 +25,8 @@ export interface IEntityProps extends IProps {}
  */
 
 export abstract class IEntity<
-    P extends IEntityProps = IEntityProps,
-    I extends IUniqueID = IUniqueID
+    I extends IUniqueID = IUniqueID,
+    P extends IEntityProps = IEntityProps
   >
   extends DomainObject<P>
   implements IIdentifiable<I>
@@ -45,7 +45,7 @@ export abstract class IEntity<
    * @param other - the other entity to compare.
    * @returns true if the entities are equal in props and id.
    */
-  equals(other: IEntity<P, I>): boolean {
+  equals(other: IEntity<I, P>): boolean {
     return this.isSameClass(other) && this.id.equals(other.id)
   }
 
@@ -53,7 +53,7 @@ export abstract class IEntity<
    * @description Get an instance copy.
    * @returns a copy of the entity.
    */
-  clone<E extends IEntity<P, I>>(): E {
+  clone<E extends IEntity<I, P>>(): E {
     const constructor = Reflect.getPrototypeOf(this)?.constructor
     if (!constructor)
       throw new Error('Cannot clone Entity: undefined constructor.')

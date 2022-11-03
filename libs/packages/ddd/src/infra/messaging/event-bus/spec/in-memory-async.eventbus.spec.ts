@@ -39,9 +39,9 @@ describe(InMemoryAsyncEventBus, () => {
     emptySubscriber = new EmptyEventSubscriberMock()
 
     aggrId = IUniqueID.create()
-    createEvent = AggregateCreatedStub.with({ foo: 'bar', is: true }, aggrId)
-    updateEvent = PropsUpdatedStub.with({ foo: 'baz' }, aggrId)
-    toggleEvent = AggregateToggledStub.with({}, aggrId)
+    createEvent = AggregateCreatedStub.with(aggrId, { foo: 'bar', is: true })
+    updateEvent = PropsUpdatedStub.with(aggrId, { foo: 'baz' })
+    toggleEvent = AggregateToggledStub.with(aggrId, {})
 
     emitSpy = jest.spyOn(eventbus, 'emit')
 

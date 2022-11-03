@@ -1,7 +1,7 @@
 import { IDomainEvent } from './domain-event.interface'
 import { IEventSubscriber } from './event-subscriber.interface'
 
-export interface IEventBus {
-  publish(events: IDomainEvent[]): Promise<void>
-  register(subscribers: IEventSubscriber[]): void
+export abstract class IEventBus {
+  abstract publish(events: IDomainEvent[]): Promise<void>
+  abstract register(subscribers: IEventSubscriber[]): void
 }

@@ -50,6 +50,5 @@
         "linter": "eslint"
       }
     }
-  },
-  "defaultProject": "examples-projects-app-frontend"
+  }
 }

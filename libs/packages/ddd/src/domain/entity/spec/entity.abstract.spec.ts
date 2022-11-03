@@ -8,14 +8,14 @@ interface Props extends IEntityProps {
 }
 
 @unique(UUID)
-class TestEntity extends IEntity<Props, UUID> {
+class TestEntity extends IEntity<UUID, Props> {
   constructor(props: Props, id?: UUID) {
     super(props, id)
   }
 }
 
 @unique(UUID)
-class TestEntity2 extends IEntity<Props, UUID> {
+class TestEntity2 extends IEntity<UUID, Props> {
   constructor(props: Props, id?: UUID) {
     super(props, id)
   }

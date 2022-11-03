@@ -15,7 +15,7 @@ export interface IDomainEvent<P extends IPayload = IPayload>
 export interface IDomainEventFactory<P extends IPayload = IPayload> {
   aggregate: string
   canonical: string
-  with: (payload: P, id: IUniqueID) => any
+  with: (id: IUniqueID, payload: P) => any
   from: (event: any) => any
 }
 

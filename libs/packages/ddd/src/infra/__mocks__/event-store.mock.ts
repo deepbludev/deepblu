@@ -1,7 +1,7 @@
 import { IEventBus } from '../../domain'
 import { AggregateStub } from '../../domain/__mocks__/aggregate.stub'
 import { EventStore } from '../persistence/event-sourcing/event-store'
-import { eventstore } from '../persistence/event-sourcing/utils/even-store.decorator'
+import { eventstore } from '../persistence/event-sourcing/utils/event-store.decorator'
 import { EventStreamMock } from './event-stream.mock'
 
 /**

@@ -61,4 +61,8 @@ export abstract class DomainObject<P extends IProps>
   public static isValidProps(props: IProps): boolean {
     return !this.validator.void(props)
   }
+
+  protected static createEmpty<O extends DomainObject<IProps>>(): O {
+    return Reflect.construct(this, [])
+  }
 }
