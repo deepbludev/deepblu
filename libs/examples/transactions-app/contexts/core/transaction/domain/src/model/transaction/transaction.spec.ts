@@ -29,13 +29,12 @@ describe(Transaction, () => {
       })
 
       it('should emit a transaction created event', () => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id, ...props } = validTx
         const { changes, createdAt } = tx
         const createdEvent = changes[0]
 
         expect(changes).toHaveLength(1)
-        expect(createdEvent.aggregateId).toEqual(validTx.id)
+        expect(createdEvent.aggregateId).toEqual(id)
         expect(createdEvent.aggregateName).toEqual('Transaction')
         expect(createdEvent.name).toEqual('TransactionCreated')
         expect(createdEvent.canonical).toEqual(
