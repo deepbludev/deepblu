@@ -8,6 +8,7 @@ import {
   UUID,
 } from '@deepblu/ddd'
 import {
+  DEFAULT_TX_COMMISSION,
   Transaction,
   TransactionRepo,
 } from '@deepblu/examples/transactions-app/contexts/core/transaction/domain'
@@ -32,7 +33,7 @@ export class CreateTransactionHandler extends ICommandHandler<CreateTransaction>
       data: tx,
       isFail,
       error,
-    } = Transaction.create({ ...payload, commission: 0.05 })
+    } = Transaction.create({ ...payload, commission: DEFAULT_TX_COMMISSION })
     if (isFail) return Result.fail(error)
 
     await this.repo.save(tx)
