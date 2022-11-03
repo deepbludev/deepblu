@@ -4,10 +4,14 @@ import {
   Currencies,
 } from '@deepblu/examples/transactions-app/contexts/shared/domain'
 
-export const CreateTransactionSchema = z.object({
+export const TransactionSchema = z.object({
   id: string().uuid({ message: 'Transaction ID must be a valid UUID' }),
   clientId: string().uuid({ message: 'Client ID must be a valid UUID' }),
   amount: z.number().positive({ message: 'Amount must be a positive number' }),
+  commission: z
+    .number()
+    .positive({ message: 'Amount must be a positive number' }),
+  createdAt: z.date(),
   currency: z
     .string()
     .refine((value: string) => CURRENCIES.includes(value as Currencies), {
@@ -15,9 +19,4 @@ export const CreateTransactionSchema = z.object({
     }),
 })
 
-export type CreateTransactionDTO = z.infer<typeof CreateTransactionSchema>
-
-export type TransactionDTO = CreateTransactionDTO & {
-  commission: number
-  createdAt: Date
-}
+export type TransactionDTO = z.infer<typeof TransactionSchema>
