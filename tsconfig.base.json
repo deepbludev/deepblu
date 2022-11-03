@@ -12,17 +12,12 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": [
-      "es2022",
-      "dom"
-    ],
+    "lib": ["es2022", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@deepblu/ddd": [
-        "libs/packages/ddd/src/index.ts"
-      ],
+      "@deepblu/ddd": ["libs/packages/ddd/src/index.ts"],
       "@deepblu/examples/transactions-app/contexts/core/transaction/application": [
         "libs/examples/transactions-app/contexts/core/transaction/application/src/index.ts"
       ],
@@ -35,13 +30,11 @@
       "@deepblu/examples/transactions-app/contexts/shared/domain": [
         "libs/examples/transactions-app/contexts/shared/domain/src/index.ts"
       ],
-      "@deepblu/ioc": [
-        "libs/packages/ioc/src/index.ts"
+      "@deepblu/ioc": ["libs/packages/ioc/src/index.ts"],
+      "@deepblu/libs/examples/transactions-app/contexts/core/transaction/infrastructure": [
+        "libs/examples/transactions-app/contexts/core/transaction/infrastructure/src/index.ts"
       ]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }
