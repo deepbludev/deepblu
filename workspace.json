@@ -2,9 +2,6 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "examples-projects-app-backend": "apps/examples/projects-app/backend",
-    "examples-projects-app-frontend": "apps/examples/projects-app/frontend",
-    "examples-projects-app-frontend-e2e": "apps/examples/projects-app/frontend-e2e",
     "examples-transactions-app-backend": "apps/examples/transactions-app/backend",
     "examples-transactions-app-contexts-core-transaction-application": "libs/examples/transactions-app/contexts/core/transaction/application",
     "examples-transactions-app-contexts-core-transaction-domain": "libs/examples/transactions-app/contexts/core/transaction/domain",
