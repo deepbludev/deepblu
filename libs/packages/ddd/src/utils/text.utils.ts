@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid'
-
 export const camelToSnake = (str: string) =>
   str.replace(/[A-Z]/g, (letter, index) =>
     index == 0 ? letter.toLowerCase() : '_' + letter.toLowerCase()
@@ -11,7 +9,16 @@ export const isValidEmail = (email: string) => {
   return regex.test(String(email).toLowerCase())
 }
 
-export const randomString = (length: number) => nanoid(length)
+const characters =
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+export const randomString = (length: number) => {
+  let result = ' '
+  const l = characters.length
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * l))
+  }
+  return result
+}
 
 export const textUtils = {
   camelToSnake,
