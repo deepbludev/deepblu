@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { TransactionSchema } from '@deepblu/examples/transactions-app/contexts/core/transaction/domain'
+import { TransactionSchema } from './transaction.dto'
 
 export const CreateTransactionSchema = TransactionSchema.pick({
   id: true,
