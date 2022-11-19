@@ -1,6 +1,6 @@
 {
   "name": "@deepblu/ddd",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Lightweight Domain Driven Design (DDD) / CQRS / Event Sourcing Typescript library for Node.js",
   "keywords": [
     "domain driven design",
