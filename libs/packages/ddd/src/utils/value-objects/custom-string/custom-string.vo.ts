@@ -9,12 +9,12 @@ export class CustomString extends ValueObject<{ value: string }> {
   protected static readonly MAX: number = 255
 
   public static readonly validate: StringValidator = (value: string): boolean =>
-    value.length >= this.MIN && value.length <= this.MAX
+    value?.length >= this.MIN && value?.length <= this.MAX
 
   public static readonly error: StringValidatorError = (value: string) =>
     InvalidStringError.with(
       `Custom string must not be empty and must be less than ${CustomString.MAX} characters. ` +
-        `Received ${value.length} characters.`
+        `Received ${value?.length ?? 0} characters.`
     )
 
   /**
