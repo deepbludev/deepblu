@@ -62,7 +62,7 @@ export abstract class DomainObject<P extends IProps>
     return !this.validator.void(props)
   }
 
-  protected static createEmpty<O extends DomainObject<IProps>>(): O {
+  static createEmpty<O extends DomainObject<IProps>>(): O {
     return Reflect.construct(this, [])
   }
 }

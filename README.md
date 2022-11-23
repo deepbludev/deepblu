@@ -1,4 +1,5 @@
-# DDD
+### @deepblu/ddd
+Lightweight Domain Driven Design (DDD) / CQRS / Event Sourcing Typescript library for Node.js
 
 Domain Driven Design (DDD) / CQRS / Event Sourcing library for Typescript.
 
@@ -24,3 +25,6 @@ Patterns and practices of DDD / CQRS / ES implemented in this library:
 - Event Handler
 
 There are working examples in the `apps/example` folder.
+
+### @deepblu/ioc
+Lightweight Dependency Injection / Inversion of Control library for Javascript/Typescript built on top of tysringe

@@ -38,7 +38,7 @@ export abstract class IAggregateRoot<
     super(props, id)
   }
 
-  protected apply(event: IDomainEvent, isFromHistory = false): void {
+  apply(event: IDomainEvent, isFromHistory = false): void {
     const self = this as any
     const handler = `on${event.name}`
     self[handler] && self[handler](event)

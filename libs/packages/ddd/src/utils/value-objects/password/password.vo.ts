@@ -11,7 +11,7 @@ import { PasswordEncrypter } from './encrypter/password-encrypter.interface'
 import { InvalidPasswordError } from './invalid-password.error'
 
 @customString({
-  validator: (value: string) => value.length >= Password.MIN,
+  validator: (value: string) => value?.length >= Password.MIN,
   error: (value: string) =>
     InvalidPasswordError.with(
       `Password "${value}" is too short. ` +
