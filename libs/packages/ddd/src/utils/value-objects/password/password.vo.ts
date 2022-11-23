@@ -6,7 +6,7 @@ import {
   StringValidator,
   StringValidatorError,
 } from '../custom-string/custom-string.vo'
-import { BCryptPasswordEncrypter } from './encrypter/bcrypt.password-encrypter'
+import { BcryptJsPasswordEncrypter } from './encrypter/bcryptjs.password-encrypter'
 import { PasswordEncrypter } from './encrypter/password-encrypter.interface'
 import { InvalidPasswordError } from './invalid-password.error'
 
@@ -20,7 +20,7 @@ import { InvalidPasswordError } from './invalid-password.error'
 })
 export class Password extends CustomString {
   protected static override readonly MIN: number = 10
-  static readonly encrypter: PasswordEncrypter = new BCryptPasswordEncrypter()
+  static readonly encrypter: PasswordEncrypter = new BcryptJsPasswordEncrypter()
 
   public static generate(length: number): string {
     return textUtils.randomString(length)
